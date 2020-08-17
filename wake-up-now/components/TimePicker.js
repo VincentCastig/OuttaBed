@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TimePicker = () => {
   const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
 
   const onChange = (event, selectedDate) => {
