@@ -10,7 +10,7 @@ import TimePicker from '../components/TimePicker';
 export default function HomeScreen() {
     return (
         <View>
-            <Text>Here is the home page</Text>
+            <Text>Here is the edit page</Text>
             <Button
             style={{fontSize: 20, color: 'green'}}
             styleDisabled={{color: 'red'}}

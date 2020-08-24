@@ -11,11 +11,6 @@ export default function HomeScreen() {
     return (
         <View>
             <Text>Here is the home page</Text>
-            <Button
-            style={{fontSize: 20, color: 'green'}}
-            styleDisabled={{color: 'red'}}
-            title="Press Me"></Button>
-            <TimePicker></TimePicker>
         </View>
     );
 }
