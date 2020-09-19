@@ -1,5 +1,6 @@
 import React from 'react';
 import HomeScreen from './screens/HomeScreen';
+import EditScreen from './screens/EditTime';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -11,6 +12,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={ HomeScreen } />
+        <Stack.Screen name="Edit" component={ EditScreen } />
       </Stack.Navigator>
     </NavigationContainer>
   );

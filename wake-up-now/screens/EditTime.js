@@ -7,7 +7,7 @@ import TimePicker from '../components/TimePicker';
 
 //import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function EditScreen() {
     return (
         <View>
             <Text>Here is the edit page</Text>
