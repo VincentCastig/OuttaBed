@@ -4,13 +4,10 @@ import * as WebBrowser from 'expo-web-browser';
 import TimePicker from '../components/TimePicker';
 
 
-
-//import { MonoText } from '../components/StyledText';
-
 export default function HomeScreen() {
     return (
-        <View>
-            <Text>Here is the home page</Text>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Home Screen</Text>
         </View>
     );
 }
