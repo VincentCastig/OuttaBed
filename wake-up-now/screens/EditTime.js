@@ -1,31 +1,57 @@
-import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native';
-import * as WebBrowser from 'expo-web-browser';
-import TimePicker from '../components/TimePicker';
+import React, {useState, Component} from 'react';
+import {View, Button, Platform} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
+const [date, setDate] = useState(new Date(1598051730000));
+const [mode, setMode] = useState('time');
+const [show, setShow] = useState(false);
 
+const onChange = (event, selectedDate) => {
+  const currentDate = selectedDate || date;
+  setShow(Platform.OS === 'ios');
+  setDate(currentDate);
+};
 
-//import { MonoText } from '../components/StyledText';
+const showMode = currentMode => {
+  setShow(true);
+  setMode(currentMode);
+};
 
-export default function EditScreen() {
-    return (
-        <View>
-            <Text>Here is the edit page</Text>
-            <Button
-            style={{fontSize: 20, color: 'green'}}
-            styleDisabled={{color: 'red'}}
-            title="Press Me"></Button>
-            <TimePicker></TimePicker>
-        </View>
-    );
-}
+const showDatepicker = () => {
+  showMode('date');
+};
 
+const showTimepicker = () => {
+  showMode('time');
+};
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ff000f',
-        height: 22,
-        width: 22,
-    }
-});
+export default class EditScreen extends Component {
+
+render(){
+  return (
+    <View>
+      <View>
+        <Button
+                style={{fontSize: 20, color: 'green'}}
+                styleDisabled={{color: 'red'}}
+                title="Press Me"
+                onPress={() => navigation.navigate("Home", { date: 86})}
+        />
+            
+        <Button onPress={showTimepicker} title="Show time picker!" />
+      </View>
+      {/* {show && ( */}
+        <DateTimePicker
+          testID="dateTimePicker"
+          timeZoneOffsetInMinutes={0}
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      {/* )} */}
+    </View>
+  );
+      }
+};
