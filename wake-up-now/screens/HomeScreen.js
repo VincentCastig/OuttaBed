@@ -9,10 +9,15 @@ import TimePicker from '../components/TimePicker';
 export default class HomeScreen extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            all: props.route.params,
+        }
        
       }
+      
     render() {
-        console.log(this.props.navigation);
+        console.log("props ", this.props.route.params);
+        console.log("home ", this.state.all);
         const Item = ({ title }) => (
             <View style={styles.item}>
               <Text style={styles.title}>{title}</Text>
@@ -53,8 +58,10 @@ export default class HomeScreen extends Component {
                 onPress={() => this.props.navigation.navigate("Edit")}
             />
              <Button
-                title="Go to Edit Page"
-                onPress={() => this.props.navigation.navigate("Edit")}
+                title="Go to the Page"
+                onPress={() => this.props.navigation.navigate("Edit", {
+                    newDate: date
+                })}
             />
             </SafeAreaView>
         

@@ -2,10 +2,12 @@ import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function EditScreen({navigation}) {
+export default function EditScreen({route, navigation}) {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
+
+  console.log(new Date(1598051730000));
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -26,6 +28,8 @@ export default function EditScreen({navigation}) {
     showMode('time');
   };
 
+  const { newDate } = route.params;
+
   return (
     <View>
       <View>
@@ -45,5 +49,3 @@ export default function EditScreen({navigation}) {
     </View>
   );
 };
-
-export default TimePicker;

@@ -1,50 +1,61 @@
-import React, {useState, Component} from 'react';
+import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const [date, setDate] = useState(new Date(1598051730000));
-const [mode, setMode] = useState('time');
-const [show, setShow] = useState(false);
+export default function EditScreen({route, navigation}) {
+  let [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('time');
+  const [show, setShow] = useState(false);
 
-const onChange = (event, selectedDate) => {
-  const currentDate = selectedDate || date;
-  setShow(Platform.OS === 'ios');
-  setDate(currentDate);
-};
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
 
-const showMode = currentMode => {
-  setShow(true);
-  setMode(currentMode);
-};
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
-const showDatepicker = () => {
-  showMode('date');
-};
+  const showDatepicker = () => {
+    showMode('date');
+  };
 
-const showTimepicker = () => {
-  showMode('time');
-};
+  const showTimepicker = () => {
+    showMode('time');
+  };
 
-export default class EditScreen extends Component {
+  const { newDate } = route.params;
 
-render(){
+  let savedDate = "";
+
+  console.log('newDate ', newDate)
+
+  if(typeof newDate == "number") {
+    savedDate = new Date(newDate);
+    console.log('new date ', date)
+  }
+
+  console.log("newDate ", newDate);
+  console.log("date ", date);
+
   return (
     <View>
       <View>
-        <Button
+      <Button
                 style={{fontSize: 20, color: 'green'}}
                 styleDisabled={{color: 'red'}}
-                title="Press Me"
-                onPress={() => navigation.navigate("Home", { date: 86})}
+                title="Save"
+                onPress={() => navigation.navigate("Home", { date: Date.parse(date)})}
         />
-            
         <Button onPress={showTimepicker} title="Show time picker!" />
       </View>
       {/* {show && ( */}
         <DateTimePicker
           testID="dateTimePicker"
           timeZoneOffsetInMinutes={0}
-          value={date}
+          value={savedDate || date}
           mode={mode}
           is24Hour={true}
           display="default"
@@ -53,5 +64,4 @@ render(){
       {/* )} */}
     </View>
   );
-      }
 };
