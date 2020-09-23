@@ -34,8 +34,21 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "axios": "^0.20.0",
     "babel-preset-expo": "^8.2.3",
-    "jest-expo": "^38.0.0"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest-expo": "^38.0.0",
+    "massive": "^6.6.0",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7"
   },
-  "private": true
+  "private": true,
+  "name": "wake-up-now",
+  "version": "1.0.0",
+  "description": "Motivation App to Get Out of Bed and Start the Day",
+  "author": "Vincent C",
+  "license": "ISC"
 }

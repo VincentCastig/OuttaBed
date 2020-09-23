@@ -17,14 +17,40 @@ export default class HomeScreen extends Component {
       
     render() {
         console.log("props ", this.props.route.params);
-        console.log("home ", this.state.all);
-        const Item = ({ title }) => (
-            <View style={styles.item}>
-              <Text style={styles.title}>{title}</Text>
+        
+          let { date } = this.props.route.params || "ok";
+          let time = "";
+          let period = "";
+          
+          if(typeof date == "number"){
+            let hours = new Date(date).getUTCHours();
+            if(hours >= 12){
+              period = "PM"
+            }
+            else{
+              period = "AM"
+            }
+            time = ((hours + 11) % 12 + 1).toString();
+            time += ":";
+            if(new Date(date).getUTCMinutes() < 10){
+              time += "0" + new Date(date).getUTCMinutes();
+            }
+            else{
+              time += new Date(date).getUTCMinutes();
+            }
+          }
+
+          const Item = ({ title }) => (
+            <View style={styles.itemBox}>
+              <Text style={styles.time}>{title} {period}</Text>
+              <Button
+                title="Edit Time"
+                onPress={() => this.props.navigation.navigate("Edit", {
+                    newDate: date
+                })}
+                />
             </View>
           );
-        
-          const { date } = this.props.route.params || "ok";
             const renderItem = ({ item }) => (
                 <Item title={item.title} />
               );
@@ -32,43 +58,31 @@ export default class HomeScreen extends Component {
               const DATA = [
                 {
                   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-                  title: date,
+                  title: time,
                 },
-                {
-                  id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-                  title: 'Second Item',
-                },
-                {
-                  id: '58694a0f-3da1-471f-bd96-145571e29d72',
-                  title: 'Third Item',
-                }
+                // {
+                //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+                //   title: 'Second Item',
+                // },
               ];
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={styles.container }>
             <View>
-                <Text style={styles.header}>Alarm </Text>
+                <Text style={styles.header}>Motivation Time </Text>
             </View>
 
-            <SafeAreaView>
+            <SafeAreaView style={styles.safeArea}>
             <FlatList
                 data={DATA}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 onPress={() => this.props.navigation.navigate("Edit")}
             />
-             <Button
-                title="Go to the Page"
-                onPress={() => this.props.navigation.navigate("Edit", {
-                    newDate: date
-                })}
-            />
+          
             </SafeAreaView>
         
-            <Button
-                title="Go to Edit Page"
-                onPress={() => this.props.navigation.navigate("Edit")}
-            />
+        
         </View>
     );
     }
@@ -78,11 +92,32 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ff000f',
-        height: 22,
-        width: 22,
+        backgroundColor: '#fff',
+        borderColor: 'red',
+        borderWidth: 2,
+        alignItems: 'center', 
+        justifyContent: 'center'
     },
     header: {
-        fontSize: 30
+        fontSize: 30,
+        marginBottom: 20,
+        marginTop: 10
+    },
+    itemBox: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexDirection: "row",
+      borderWidth: 2,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
+      width: "100%",
+      height: 63
+    },
+    safeArea: {
+      flex: 1
+    },
+    time:{
+      fontSize: 34
     }
 });

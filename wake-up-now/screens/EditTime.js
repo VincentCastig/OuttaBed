@@ -26,14 +26,15 @@ export default function EditScreen({route, navigation}) {
     showMode('time');
   };
 
-  const { newDate } = route.params;
+  let { newDate } = route.params;
 
-  let savedDate = "";
+  console.log('edit date ', date)
 
   console.log('newDate ', newDate)
 
   if(typeof newDate == "number") {
-    savedDate = new Date(newDate);
+    date = new Date(newDate);
+    route.params = "";
     console.log('new date ', date)
   }
 
@@ -49,13 +50,12 @@ export default function EditScreen({route, navigation}) {
                 title="Save"
                 onPress={() => navigation.navigate("Home", { date: Date.parse(date)})}
         />
-        <Button onPress={showTimepicker} title="Show time picker!" />
       </View>
       {/* {show && ( */}
         <DateTimePicker
           testID="dateTimePicker"
           timeZoneOffsetInMinutes={0}
-          value={savedDate || date}
+          value={date}
           mode={mode}
           is24Hour={true}
           display="default"
