@@ -7,7 +7,7 @@ const massive = require('massive');
 const cors = require('cors');
 const path = require('path');
 // const config = require('./config/config.js');
-//const userCtrl = require('./ctrl/userCtrl');
+const userController = require('./controllers/userController');
 
 
 const app = express();
@@ -22,9 +22,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(passport.initialize());
 // app.use(passport.session());
 const connectionString = process.env.DATABASE_URL; //Connects to heroku bro
-massive(connectionString).then(db => app.set('db', db).catch(
-    error => console.log(error)
-));
+massive(connectionString).then(db => app.set('db', db));
+
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
+app.post('/create-user', userController.createDeviceId)
 
 // app.post('/postMatch', userCtrl.post_match);
 // app.post('/addUser', userCtrl.post_user);
@@ -42,4 +44,4 @@ massive(connectionString).then(db => app.set('db', db).catch(
 
 
 
-app.listen(process.env.PORT, () => { console.log('Listening on port: 3000'); });
+app.listen(process.env.PORT, () => { console.log(`Listening on port: ${process.env.PORT}`); });

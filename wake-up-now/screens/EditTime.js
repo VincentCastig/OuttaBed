@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import axios from 'axios';
 
 export default function EditScreen({route, navigation}) {
   let [date, setDate] = useState(new Date(1598051730000));
@@ -30,7 +31,7 @@ export default function EditScreen({route, navigation}) {
 
   console.log('edit date ', date)
 
-  console.log('newDate ', newDate)
+  axios.post(`http://localhost:3000/create-user`, {deviceId: 2}).then(res => console.log(res));
 
   if(typeof newDate == "number") {
     date = new Date(newDate);
@@ -40,6 +41,7 @@ export default function EditScreen({route, navigation}) {
 
   console.log("newDate ", newDate);
   console.log("date ", date);
+
 
   return (
     <View>
