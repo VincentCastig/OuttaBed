@@ -1,2 +1,3 @@
-INSERT INTO time(first_name, school, occupation) VALUES($2,null,$4)
+INSERT INTO device_time(device_time, device_id) VALUES($1,$2) ON CONFLICT (device_time) 
+DO NOTHING;
 RETURNING *

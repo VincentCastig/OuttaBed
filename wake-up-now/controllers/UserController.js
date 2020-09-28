@@ -1,9 +1,12 @@
 module.exports = {
-    createDeviceId: (request, response) => {
-        console.log('request ', request);
-        const {deviceId} = request.body;
+    createDeviceId: (req, res) => {
+        console.log('device_time')
+        const db = req.app.get('db');
+        const {device_time, device_id} = req.body;
 
-        db.createDeviceId(deviceId).then((deviceId)=>res.status('200').send(deviceId)).catch(()=> res.status('200').send());
+        console.log(device_time, device_id)
+
+        db.createDeviceId(device_time, device_id).then((data)=>res.status('200').send(data)).catch((error)=> res.status('404').send(error));
     },
     post_user: (req,res) => {
         const db = req.app.get('db');
@@ -36,6 +39,6 @@ module.exports = {
         // if(work) {
         //     works = work[0].position.name
         // }
-        db.post_user([id, name, katkatAge, work, gender, picture.data.url]).then((user)=>res.status('200').send(user)).catch(()=> res.status('200').send());
+        db.post_user([id, name, katkatAge, work, gender, picture.data.url]).then((user)=>res.status('200').send(user)).catch((error)=> res.status('200').send(error));
     },
 }
