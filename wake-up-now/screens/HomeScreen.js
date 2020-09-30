@@ -17,7 +17,7 @@ export default class HomeScreen extends Component {
       }
       
     render() {
-        console.log("props ", this.props.route.params);
+        console.log("prdddops ", this.props.route.params);
         
           let { date } = this.props.route.params || "ok";
           let time = "";

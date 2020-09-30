@@ -30,7 +30,7 @@ export default function EditScreen({route, navigation}) {
 
   let { newDate } = route.params;
 
-  axios.post(`http://localhost:3000/create-user`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res).catch(error => console.log()));
+  axios.post(`http://localhost:3000/create-user`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res)).catch(error => console.log(error));
 
   if(typeof newDate == "number") {
     date = new Date(newDate);
@@ -38,8 +38,8 @@ export default function EditScreen({route, navigation}) {
     console.log('new date ', date)
   }
 
-  console.log("newDate ", newDate);
-  console.log("date ", date);
+  // console.log("newDate ", newDate);
+  // console.log("date ", date);
 
 
   return (
