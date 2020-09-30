@@ -3,6 +3,7 @@ import { Image, Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View
 import * as WebBrowser from 'expo-web-browser';
 import TimePicker from '../components/TimePicker';
 import Constants from 'expo-constants';
+import axios from 'axios';
 
 
 
@@ -13,16 +14,23 @@ export default class HomeScreen extends Component {
         this.state = {
             all: props.route.params,
         }
-       
       }
-      
+
     render() {
-        console.log("prdddops ", this.props.route.params);
-        
+        axios.get(`http://localhost:3000/get-device-id/${Constants.deviceId}`).then(res => {
+            console.log(res.data);
+            if (res.data[0].device_id) {
+                this.setState({all: res.data.device_id});
+                console.log('ok');
+            }
+        }).catch(error => console.log(error));
+
+        console.log("state ", this.state);
+
           let { date } = this.props.route.params || "ok";
           let time = "";
           let period = "";
-          
+
           if(typeof date == "number"){
             let hours = new Date(date).getUTCHours();
             if(hours >= 12){
@@ -80,10 +88,10 @@ export default class HomeScreen extends Component {
                 keyExtractor={item => item.id}
                 onPress={() => this.props.navigation.navigate("Edit")}
             />
-          
+
             </SafeAreaView>
-        
-        
+
+
         </View>
     );
     }
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderColor: 'red',
         borderWidth: 2,
-        alignItems: 'center', 
+        alignItems: 'center',
         justifyContent: 'center'
     },
     header: {

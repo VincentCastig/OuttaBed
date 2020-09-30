@@ -26,12 +26,12 @@ massive(connectionString).then(db => app.set('db', db));
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
-app.post('/create-user', userController.createDeviceId)
+app.post('/create-user', userController.createDeviceId);
 
 // app.post('/postMatch', userCtrl.post_match);
 // app.post('/addUser', userCtrl.post_user);
 
-// app.get('/getHome/:id', userCtrl.get_user_profile);
+app.get('/get-device-id/:device_id', userController.getDeviceId);
 // app.get('/getPreferences', userCtrl.get_user_preferences);
 // app.get('/shopTillYouDrop/:gender', userCtrl.get_shopping);
 
