@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import TimePicker from '../components/TimePicker';
@@ -8,30 +8,41 @@ import axios from 'axios';
 
 
 
-export default class HomeScreen extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            all: props.route.params,
+export default function HomeScreen({route, navigation}) {
+    let [date, setDate] = useState(0);
+
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         device_time: props.route.params,
+    //     }
+    //   }
+
+    if (!date){
+        date = new Date(1598051730000);
+        console.log('default date  ', date);
+        useEffect(() => {
+            axios.get(`http://localhost:3000/get-device-id/${Constants.deviceId}`).then(res => {
+                if (res.data[0].device_id) {
+                    const device_time = res.data[0].device_time;
+                    setDate(device_time);
+                }
+
+            }).catch(error => console.log('the error ', error));
+        }, []);
+    }
+
+
+        if (route.params) {
+            date = route.params.date;
+            console.log(route.params.data)
         }
-      }
 
-    render() {
-        axios.get(`http://localhost:3000/get-device-id/${Constants.deviceId}`).then(res => {
-            console.log(res.data);
-            if (res.data[0].device_id) {
-                this.setState({all: res.data.device_id});
-                console.log('ok');
-            }
-        }).catch(error => console.log(error));
 
-        console.log("state ", this.state);
-
-          let { date } = this.props.route.params || "ok";
           let time = "";
           let period = "";
 
-          if(typeof date == "number"){
+          // if(typeof date == "number"){
             let hours = new Date(date).getUTCHours();
             if(hours >= 12){
               period = "PM"
@@ -47,14 +58,14 @@ export default class HomeScreen extends Component {
             else{
               time += new Date(date).getUTCMinutes();
             }
-          }
+          // }
 
           const Item = ({ title }) => (
             <View style={styles.itemBox}>
               <Text style={styles.time}>{title} {period}</Text>
               <Button
                 title="Edit Time"
-                onPress={() => this.props.navigation.navigate("Edit", {
+                onPress={() => navigation.navigate("Edit", {
                     newDate: date
                 })}
                 />
@@ -75,6 +86,8 @@ export default class HomeScreen extends Component {
                 // },
               ];
 
+
+
     return (
         <View style={styles.container }>
             <View>
@@ -86,15 +99,13 @@ export default class HomeScreen extends Component {
                 data={DATA}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-                onPress={() => this.props.navigation.navigate("Edit")}
+                onPress={() => navigation.navigate("Edit")}
             />
 
             </SafeAreaView>
-
-
         </View>
     );
-    }
+
 }
 
 
