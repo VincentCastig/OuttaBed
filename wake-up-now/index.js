@@ -14,13 +14,7 @@ const app = express();
 app.use(json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(session({
-//     secret: "VincentChrisVuGentApp007",
-//     saveUninitialized: false,
-//     resave: true
-// }));
-// app.use(passport.initialize());
-// app.use(passport.session());
+
 const connectionString = process.env.DATABASE_URL; //Connects to heroku bro
 massive(connectionString).then(db => app.set('db', db));
 
@@ -28,16 +22,12 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 app.post('/create-user', userController.createDeviceId);
 
-// app.post('/postMatch', userCtrl.post_match);
-// app.post('/addUser', userCtrl.post_user);
+
 
 app.get('/get-device-id/:device_id', userController.getDeviceId);
 // app.get('/getPreferences', userCtrl.get_user_preferences);
-// app.get('/shopTillYouDrop/:gender', userCtrl.get_shopping);
 
 // app.put('/putPics', userCtrl.put_user_pics);
-// app.put('/putHome', userCtrl.put_user_profile);
-// app.put('/putBio', userCtrl.put_user_bio);
 
 // app.delete('/deleteMatch', userCtrl.delete_match);
 // app.get('/deleteUserAccount/:id', userCtrl.delete_user_account);
