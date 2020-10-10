@@ -1,6 +1,5 @@
 delete global.XMLHttpRequest;
-const dotenv = require('dotenv');
-require('dotenv').config();
+const dotenv = require('dotenv').config();
 const express = require('express');
 const { json } = require('body-parser');
 const massive = require('massive');
