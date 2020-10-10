@@ -5,6 +5,7 @@ import TimePicker from '../components/TimePicker';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import expoAxios from '../src/api/expoAxios';
+import localHost from '../src/api/localHost';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
@@ -14,46 +15,46 @@ import registerForPushNotificationsAsync from '../notifications';
 
 export default function HomeScreen({route, navigation}) {
     let [date, setDate] = useState(0);
-    const [expoPushToken, setExpoPushToken] = useState('');
+    const [expoPushToken, setExpoPushToken] = useState(null);
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    useEffect(() => {
-        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    // useEffect(() => {
+    //     registerForPushNotificationsAsync().then(token => {
+    //         console.log(token);
+    //         //setExpoPushToken(token);
+    //         sendToken(token);
+    //     });
+    //
+    //     // This listener is fired whenever a notification is received while the app is foregrounded
+    //     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+    //         setNotification(notification);
+    //     });
+    //
+    //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    //     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+    //         console.log(response);
+    //
+    //     });
+    //
+    //
+    //     return () => {
+    //         Notifications.removeNotificationSubscription(notificationListener);
+    //         Notifications.removeNotificationSubscription(responseListener);
+    //     };
+    // }, []);
 
-        // This listener is fired whenever a notification is received while the app is foregrounded
-        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-            setNotification(notification);
-        });
 
-        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log(response);
-        });
+    // const sendToken = async() => {
+        // console.log('sending ', token.data);
+        console.log('sending deviceId', Constants.deviceId);
 
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener);
-            Notifications.removeNotificationSubscription(responseListener);
-        };
-    }, []);
+        // localHost.post('/createUser', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
 
 
-    const sendNotification = async(expoPushToken) => {
-        console.log('sending ', expoPushToken);
-        try {
-            axios.post('https://exp.host/--/api/v2/push/send', {
+            axios.post('http://localhost:3000/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj2]', device_id: Constants.deviceId}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
 
-                    to: expoPushToken.data,
-                    sound: 'default',
-                    title: 'Marcus Aurelius',
-                    body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
-                    // data: {data: 'goes here'},
 
-            }).then((res) => console.log(res));
-        }
-        catch (e) {
-            console.log(e)
-        }
 
         // const message = {
         //     to: token,
@@ -73,7 +74,10 @@ export default function HomeScreen({route, navigation}) {
         //     body: JSON.stringify(message)
         // })
 
-    };
+
+    // };
+    //
+    // sendToken();
 
 
 
@@ -86,17 +90,23 @@ export default function HomeScreen({route, navigation}) {
 
 
 
+
     // if (!date){
-        date = new Date(1598051730000);
-        console.log('default date  ', date);
+    //     date = new Date(1598051730000);
+    //     console.log('default date  ', date);
+    //     console.log('device id on home page', Constants.deviceId);
+    let id = 'EFBD766B-FB1B-43AA-8189-679AAE20FC71';
         useEffect(() => {
-            axios.get(`http://localhost:3000/get-device-id/${Constants.deviceId}`).then(res => {
+            localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
+                console.log(res);
                 if (res.data[0].device_id) {
                     const device_time = res.data[0].device_time;
                     setDate(device_time);
                 }
 
-            }).catch(error => console.log('the error ', error));
+            }).catch(error => {
+                console.log('the get-device-id error ', error)
+            });
         }, []);
     // }
 
@@ -133,10 +143,10 @@ export default function HomeScreen({route, navigation}) {
               <Text style={styles.time}>{title} {period}</Text>
               <Button
                 title="Edit Time"
-                // onPress={() => navigation.navigate("Edit", {
-                //     newDate: date
-                // })}
-                  onPress={() => sendNotification(expoPushToken)}
+                onPress={() => navigation.navigate("Edit", {
+                    newDate: date
+                })}
+                  //onPress={() => sendNotification(expoPushToken)}
                 />
             </View>
           );
@@ -148,13 +158,8 @@ export default function HomeScreen({route, navigation}) {
                 {
                   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
                   title: time,
-                },
-                // {
-                //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-                //   title: 'Second Item',
-                // },
+                }
               ];
-
 
 
     return (

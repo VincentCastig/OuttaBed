@@ -30,7 +30,7 @@ export default function EditScreen({route, navigation}) {
 
   let { newDate } = route.params;
 
-  axios.post(`http://localhost:3000/create-user`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res)).catch(error => console.log(error));
+  axios.put(`http://localhost:3000/add-time`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res)).catch(error => console.log(error));
 
   if(typeof newDate == "number") {
     date = new Date(newDate);
