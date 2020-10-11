@@ -1,5 +1,5 @@
 const { expo } = require('expo-server-sdk');
-const {axios} = require("axios/index");
+const {axios} = require("axios");
 
 // Create a new Expo SDK client
 // optionally providing an access token if you have enabled push security
