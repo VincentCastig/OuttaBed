@@ -19,8 +19,8 @@ const {sendNotifications} = require('./src/api/expoServer');
 //     //sendNotifications()
 // });
 
-const app = express();
-app.use(express.json());
+const app = module.exports = express();
+app.use(json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -45,4 +45,4 @@ app.get('/get-all-tokens', userController.getTokens);
 
 
 
-app.listen(3000, () => { console.log(`Listening on port: ${process.env.PORT}`); });
+app.listen(process.env.PORT, () => { console.log(`Listening on port: ${process.env.PORT}`); });
