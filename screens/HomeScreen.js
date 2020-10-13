@@ -98,8 +98,8 @@ export default function HomeScreen({route, navigation}) {
     let id = 'EFBD766B-FB1B-43AA-8189-679AAE20FC71';
         useEffect(() => {
             localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
-                console.log(res);
-                if (res.data[0].device_id) {
+                console.log(res.data);
+                if (res.data) {
                     const device_time = res.data[0].device_time;
                     setDate(device_time);
                 }

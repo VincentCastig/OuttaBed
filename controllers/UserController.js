@@ -34,11 +34,11 @@ module.exports = {
     },
     getTokens: (req, res) => {
         const db = req.app.get('db');
-        const {device_id} = req.params;
 
-        console.log('device ', device_id);
-        db.getTime(device_id).then((data)=>res.status('200').send(data)).catch((error)=> {
-            console.log(error)
+        console.log('dbm');
+
+        db.getTokens().then((data)=>res.status('200').send(data)).catch((error)=> {
+            console.log('error')
         })
     }
 }
