@@ -28,12 +28,19 @@ module.exports = {
         let currentHour = date.getHours();
         let currentMinute = date.getMinutes();
 
+        console.log(currentHour);
+        console.log(currentMinute);
+
         let messages = [];
         for (let notification of notifications) {
             let hour = notification.device_time.slice(0,2);
             let minute = notification.device_time.slice(3,5);
 
-            if (hour === currentHour  && minute === currentMinute) {
+            console.log(hour);
+            console.log(minute);
+
+            if (hour == currentHour  && minute == currentMinute) {
+                console.log('we are in');
             // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
             // Check that all your push tokens appear to be valid Expo push tokens
