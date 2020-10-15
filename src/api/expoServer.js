@@ -33,10 +33,7 @@ module.exports = {
             let hour = notification.device_time.slice(0,2);
             let minute = notification.device_time.slice(3,5);
 
-            console.log(hour);
-            console.log(minute);
-
-            //if (hour == currentHour  && minute == currentMinute) {
+            if (hour == currentHour  && minute == currentMinute) {
                 console.log('we are in ', notification.token);
             // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
@@ -54,7 +51,7 @@ module.exports = {
                 data: {withSome: 'data'},
             })
             }
-        // }
+        }
 
 
 // The Expo push notification service accepts batches of notifications so
