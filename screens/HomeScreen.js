@@ -57,22 +57,28 @@ export default function HomeScreen({route, navigation}) {
 
 
         // const message = {
-        //     to: token,
+        //     to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
         //     sound: 'default',
         //     title: 'Original Title',
         //     body: 'And here is the body!',
         //     data: {data: 'goes here'},
         // };
-        //
-        // await fetch('https://exp.host/--/api/v2/push/send', {
-        //     method: 'POST',
-        //     headers: {
-        //         accept: 'application/json',
-        //         'accept-encoding': 'gzip, deflate',
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(message)
-        // })
+
+    try {
+        expoAxios.post('/', {
+
+            to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
+            sound: 'default',
+            title: 'Marcus Aurelius',
+            body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
+            // data: {data: 'goes here'},
+
+        }).then((res) => console.log(res));
+    }
+    catch (e) {
+        console.log(e)
+    }
+
 
 
     // };
@@ -95,7 +101,7 @@ export default function HomeScreen({route, navigation}) {
     //     date = new Date(1598051730000);
     //     console.log('default date  ', date);
     //     console.log('device id on home page', Constants.deviceId);
-    let id = 'EFBD766B-FB1B-43AA-8189-679AAE20FC71';
+
         useEffect(() => {
             localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
                 console.log(res.data);
