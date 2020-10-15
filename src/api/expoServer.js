@@ -12,7 +12,7 @@ module.exports = {
 //Create the messages that you want to send to clients
         let notifications = {};
 
-        axios.get('http://localhost:3000/get-all-tokens').then(res => {
+        axios.get('https://get-up-now.herokuapp.com/get-all-tokens').then(res => {
             console.log('res ', res.data);
             notifications = res.data;
             module.exports.sendMessages(notifications);
@@ -28,9 +28,6 @@ module.exports = {
         let currentHour = date.getHours();
         let currentMinute = date.getMinutes();
 
-        console.log(currentHour);
-        console.log(currentMinute);
-
         let messages = [];
         for (let notification of notifications) {
             let hour = notification.device_time.slice(0,2);
@@ -39,15 +36,15 @@ module.exports = {
             console.log(hour);
             console.log(minute);
 
-            if (hour == currentHour  && minute == currentMinute) {
-                console.log('we are in');
+            //if (hour == currentHour  && minute == currentMinute) {
+                console.log('we are in ', notification.token);
             // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
             // Check that all your push tokens appear to be valid Expo push tokens
             if (!Expo.isExpoPushToken(notification.token)) {
                 console.error(`Push token ${notification.token} is not a valid Expo push token`);
                 continue;
-            }
+           }
 
             // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
             messages.push({
@@ -57,7 +54,7 @@ module.exports = {
                 data: {withSome: 'data'},
             })
             }
-        }
+        // }
 
 
 // The Expo push notification service accepts batches of notifications so
@@ -73,6 +70,7 @@ module.exports = {
             // time, which nicely spreads the load out over time:
             for (let chunk of chunks) {
                 try {
+                    console.log('chunk ', chunk);
                     let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
                     console.log(ticketChunk);
                     tickets.push(...ticketChunk);

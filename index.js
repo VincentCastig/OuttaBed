@@ -10,8 +10,9 @@ const cron = require('node-cron');
 const userController = require('./controllers/UserController');
 const { Expo } = require('expo-server-sdk');
 const {sendNotifications} = require('./src/api/expoServer');
-
+//
 cron.schedule('* * * * *', function () {
+    console.log('cron');
     sendNotifications()
 });
 
@@ -19,10 +20,19 @@ const app = express();
 app.use(json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 const connectionString = process.env.DATABASE_URL; //Connects to heroku
 massive(connectionString).then(db => {
     app.set('db', db);
+
+
+    sendNotifications()
 });
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
