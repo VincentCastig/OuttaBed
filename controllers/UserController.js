@@ -16,7 +16,7 @@ module.exports = {
         const db = req.app.get('db');
         const {device_time, device_id} = req.body;
 
-        console.log('adding time now');
+        console.log('adding time now ', device_time);
 
         db.addTime(device_time, device_id).then((data)=>res.status('200').send(data)).catch((error)=> {
             console.log('error ', error)

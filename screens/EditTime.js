@@ -24,23 +24,21 @@ export default function EditScreen({route, navigation}) {
     showMode('date');
   };
 
+
   const showTimepicker = () => {
     showMode('time');
   };
 
   let { newDate } = route.params;
 
-  axios.put(`http://localhost:3000/add-time`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res)).catch(error => console.log(error));
+
+  axios.put(`http://localhost:3000/add-time`, {device_time: newDate, device_id: Constants.deviceId}).then(res => console.log(res)).catch(error => console.log(error));
 
   if(typeof newDate == "number") {
     date = new Date(newDate);
     route.params = "";
     console.log('new date ', date)
   }
-
-  // console.log("newDate ", newDate);
-  // console.log("date ", date);
-
 
   return (
     <View>

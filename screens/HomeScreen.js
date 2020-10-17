@@ -19,6 +19,7 @@ export default function HomeScreen({route, navigation}) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
+
     // useEffect(() => {
     //     registerForPushNotificationsAsync().then(token => {
     //         console.log(token);
@@ -64,20 +65,20 @@ export default function HomeScreen({route, navigation}) {
         //     data: {data: 'goes here'},
         // };
 
-    try {
-        expoAxios.post('/', {
-
-            to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
-            sound: 'default',
-            title: 'Marcus Aurelius',
-            body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
-            // data: {data: 'goes here'},
-
-        }).then((res) => console.log(res));
-    }
-    catch (e) {
-        console.log(e)
-    }
+    // try {
+    //     expoAxios.post('/', {
+    //
+    //         to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
+    //         sound: 'default',
+    //         title: 'Marcus Aurelius',
+    //         body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
+    //         // data: {data: 'goes here'},
+    //
+    //     }).then((res) => console.log(res));
+    // }
+    // catch (e) {
+    //     console.log(e)
+    // }
 
 
 
@@ -97,14 +98,12 @@ export default function HomeScreen({route, navigation}) {
 
 
 
-    // if (!date){
-    //     date = new Date(1598051730000);
-    //     console.log('default date  ', date);
-    //     console.log('device id on home page', Constants.deviceId);
+    if (!date) {
+        date = new Date(1598051730000);
+    }
 
         useEffect(() => {
             localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
-                console.log(res.data);
                 if (res.data) {
                     const device_time = res.data[0].device_time;
                     setDate(device_time);
@@ -127,7 +126,8 @@ export default function HomeScreen({route, navigation}) {
           let period = "";
 
           // if(typeof date == "number"){
-            let hours = new Date(date).getUTCHours();
+            console.log(new Date(date));
+            let hours = new Date(date).getHours();
             if(hours >= 12){
               period = "PM"
             }
@@ -136,12 +136,14 @@ export default function HomeScreen({route, navigation}) {
             }
             time = ((hours + 11) % 12 + 1).toString();
             time += ":";
-            if(new Date(date).getUTCMinutes() < 10){
-              time += "0" + new Date(date).getUTCMinutes();
+            if(new Date(date).getMinutes() < 10){
+              time += "0" + new Date(date).getMinutes();
             }
             else{
-              time += new Date(date).getUTCMinutes();
+              time += new Date(date).getMinutes();
             }
+
+            console.log('time ', time);
           // }
 
           const Item = ({ title }) => (
