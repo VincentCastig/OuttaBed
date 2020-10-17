@@ -12,8 +12,7 @@ module.exports = {
 //Create the messages that you want to send to clients
         let notifications = {};
 
-        axios.get('https://get-up-now.herokuapp.com/get-all-tokens').then(res => {
-            console.log('res ', res.data);
+        axios.get('http://get-up-now.herokuapp.com/get-all-tokens').then(res => {
             notifications = res.data;
             module.exports.sendMessages(notifications);
         }).catch(error => {
@@ -24,14 +23,16 @@ module.exports = {
 
     sendMessages: (notifications) => {
 
+
         let date = new Date();
         let currentHour = date.getHours();
         let currentMinute = date.getMinutes();
 
         let messages = [];
         for (let notification of notifications) {
-            let hour = notification.device_time.slice(0,2);
-            let minute = notification.device_time.slice(3,5);
+            console.log(notification);
+            let hour = new Date(notification.device_time).getUTCHours();
+            let minute = new Date(notification.device_time).getUTCMinutes();
 
             if (hour == currentHour  && minute == currentMinute) {
                 console.log('we are in ', notification.token);
@@ -67,7 +68,6 @@ module.exports = {
             // time, which nicely spreads the load out over time:
             for (let chunk of chunks) {
                 try {
-                    console.log('chunk ', chunk);
                     let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
                     console.log(ticketChunk);
                     tickets.push(...ticketChunk);

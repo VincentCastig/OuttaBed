@@ -12,7 +12,6 @@ const { Expo } = require('expo-server-sdk');
 const {sendNotifications} = require('./src/api/expoServer');
 //
 cron.schedule('* * * * *', function () {
-    console.log('cron');
     sendNotifications()
 });
 
