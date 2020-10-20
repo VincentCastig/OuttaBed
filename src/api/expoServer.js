@@ -11,6 +11,13 @@ module.exports = {
 
 //Create the messages that you want to send to clients
         let notifications = {};
+        let quote = {};
+
+        axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
+            quote = res.data;
+        }).catch(error => {
+            console.log('error ', error)
+        });
 
         axios.get('http://get-up-now.herokuapp.com/get-all-tokens').then(res => {
             notifications = res.data;
@@ -49,6 +56,7 @@ module.exports = {
                 to: notification.token,
                 sound: 'default',
                 body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
+                title: 'Marcus Aurelius',
                 data: {withSome: 'data'},
             })
             }

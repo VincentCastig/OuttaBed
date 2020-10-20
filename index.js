@@ -45,6 +45,8 @@ app.get('/get-time/:device_id', userController.getTime);
 
 app.get('/get-all-tokens', userController.getTokens);
 
+app.get('/get-quote', userController.getQuote);
+
 // app.delete('/deleteMatch', userCtrl.delete_match);
 // app.get('/deleteUserAccount/:id', userCtrl.delete_user_account);
 
