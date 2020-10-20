@@ -31,14 +31,21 @@ export default function EditScreen({route, navigation}) {
 
   let { newDate } = route.params;
 
+    if(typeof newDate == "number") {
+        date = new Date(newDate);
+        route.params = "";
+        console.log('new date ', date)
+    }
+    console.log('newDate ', date);
+    let offset = date.getTimezoneOffset() * -1;
+    // else{
+    //     date = newDate;
+    //     console.log('date outside statement ', date);
+    // }
 
-  axios.put(`http://localhost:3000/add-time`, {device_time: newDate, device_id: Constants.deviceId}).then(res => console.log(res)).catch(error => console.log(error));
 
-  if(typeof newDate == "number") {
-    date = new Date(newDate);
-    route.params = "";
-    console.log('new date ', date)
-  }
+
+  axios.put(`https://get-up-now.herokuapp.com/add-time`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
 
   return (
     <View>
@@ -53,7 +60,7 @@ export default function EditScreen({route, navigation}) {
       {/* {show && ( */}
         <DateTimePicker
           testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
+          timeZoneOffsetInMinutes={offset}
           value={date}
           mode={mode}
           is24Hour={true}

@@ -11,9 +11,9 @@ const userController = require('./controllers/UserController');
 const { Expo } = require('expo-server-sdk');
 const {sendNotifications} = require('./src/api/expoServer');
 //
-cron.schedule('* * * * *', function () {
-    sendNotifications()
-});
+// cron.schedule('* * * * *', function () {
+//     sendNotifications()
+// });
 
 const app = express();
 app.use(json());
