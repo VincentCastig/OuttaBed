@@ -13,54 +13,61 @@ module.exports = {
         let notifications = {};
         let quote = {};
 
-        axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
-            quote = res.data;
-        }).catch(error => {
-            console.log('error ', error)
-        });
+        const getData = async () => {
+            await
+            axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
+                quote = res.data;
+            }).catch(error => {
+                console.log('error ', error)
+            });
 
-        axios.get('http://get-up-now.herokuapp.com/get-all-tokens').then(res => {
-            notifications = res.data;
-            module.exports.sendMessages(notifications);
-        }).catch(error => {
-            console.log('error ', error)
-        });
+            await
+            axios.get('http://get-up-now.herokuapp.com/get-all-tokens').then(res => {
+                notifications = res.data;
+            }).catch(error => {
+                console.log('error ', error)
+            });
+        };
 
+        getData().then(() => {
+            module.exports.sendMessages(notifications, quote);
+        });
     },
 
-    sendMessages: (notifications) => {
+    sendMessages: (notifications, quote) => {
+            console.log('quote sendMessages', quote);
 
 
-        let date = new Date();
-        let currentHour = date.getHours();
-        let currentMinute = date.getMinutes();
+            let date = new Date();
+            let currentHour = date.getHours();
+            let currentMinute = date.getMinutes();
 
-        let messages = [];
-        for (let notification of notifications) {
-            console.log(notification);
-            let hour = new Date(notification.device_time).getUTCHours();
-            let minute = new Date(notification.device_time).getUTCMinutes();
+            let messages = [];
+            for (let notification of notifications) {
+                console.log(notification);
+                let hour = new Date(notification.device_time).getUTCHours();
+                let minute = new Date(notification.device_time).getUTCMinutes();
 
-            if (hour == currentHour  && minute == currentMinute) {
-                console.log('we are in ', notification.token);
-            // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
+                if (hour == currentHour && minute == currentMinute) {
+                    console.log('we are in ', notification.token);
+                    // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
-            // Check that all your push tokens appear to be valid Expo push tokens
-            if (!Expo.isExpoPushToken(notification.token)) {
-                console.error(`Push token ${notification.token} is not a valid Expo push token`);
-                continue;
-           }
+                    // Check that all your push tokens appear to be valid Expo push tokens
+                    if (!Expo.isExpoPushToken(notification.token)) {
+                        console.error(`Push token ${notification.token} is not a valid Expo push token`);
+                        continue;
+                    }
 
-            // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
-            messages.push({
-                to: notification.token,
-                sound: 'default',
-                body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
-                title: 'Marcus Aurelius',
-                data: {withSome: 'data'},
-            })
+                    // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
+                    messages.push({
+                        to: notification.token,
+                        sound: 'default',
+                        body: quote[0].quote,
+                        title: quote[0].author,
+                        data: {withSome: 'data'},
+                    })
+                }
             }
-        }
 
 
 // The Expo push notification service accepts batches of notifications so
@@ -68,26 +75,27 @@ module.exports = {
 // recommend you batch your notifications to reduce the number of requests
 // and to compress them (notifications with similar content will get
 // compressed).
-        let chunks = expo.chunkPushNotifications(messages);
-        let tickets = [];
-        (async () => {
-            // Send the chunks to the Expo push notification service. There are
-            // different strategies you could use. A simple one is to send one chunk at a
-            // time, which nicely spreads the load out over time:
-            for (let chunk of chunks) {
-                try {
-                    let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-                    console.log(ticketChunk);
-                    tickets.push(...ticketChunk);
-                    // NOTE: If a ticket contains an error code in ticket.details.error, you
-                    // must handle it appropriately. The error codes are listed in the Expo
-                    // documentation:
-                    // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
-                } catch (error) {
-                    console.error(error);
+            let chunks = expo.chunkPushNotifications(messages);
+            let tickets = [];
+            (async () => {
+                // Send the chunks to the Expo push notification service. There are
+                // different strategies you could use. A simple one is to send one chunk at a
+                // time, which nicely spreads the load out over time:
+                for (let chunk of chunks) {
+                    try {
+                        let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+                        console.log(ticketChunk);
+                        tickets.push(...ticketChunk);
+                        // NOTE: If a ticket contains an error code in ticket.details.error, you
+                        // must handle it appropriately. The error codes are listed in the Expo
+                        // documentation:
+                        // https://docs.expo.io/push-notifications/sending-notifications/#individual-errors
+                    } catch (error) {
+                        console.error(error);
+                    }
                 }
-            }
-        })();
+            })();
+
 
 
 // Later, after the Expo push notification service has delivered the
