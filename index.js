@@ -11,9 +11,9 @@ const userController = require('./controllers/UserController');
 const { Expo } = require('expo-server-sdk');
 const {sendNotifications} = require('./src/api/expoServer');
 //
-cron.schedule('* * * * *', function () {
-    sendNotifications()
-});
+// cron.schedule('* * * * *', function () {
+//     sendNotifications()
+// });
 
 const app = express();
 app.use(json());
@@ -44,6 +44,8 @@ app.put('/add-time', userController.addTime);
 app.get('/get-time/:device_id', userController.getTime);
 
 app.get('/get-all-tokens', userController.getTokens);
+
+app.get('/get-quote', userController.getQuote);
 
 // app.delete('/deleteMatch', userCtrl.delete_match);
 // app.get('/deleteUserAccount/:id', userCtrl.delete_user_account);

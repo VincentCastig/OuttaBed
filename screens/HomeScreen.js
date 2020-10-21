@@ -20,30 +20,35 @@ export default function HomeScreen({route, navigation}) {
     const responseListener = useRef();
 
 
-    // useEffect(() => {
-    //     registerForPushNotificationsAsync().then(token => {
-    //         console.log(token);
-    //         //setExpoPushToken(token);
-    //         sendToken(token);
-    //     });
-    //
-    //     // This listener is fired whenever a notification is received while the app is foregrounded
-    //     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-    //         setNotification(notification);
-    //     });
-    //
-    //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    //     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-    //         console.log(response);
-    //
-    //     });
-    //
-    //
-    //     return () => {
-    //         Notifications.removeNotificationSubscription(notificationListener);
-    //         Notifications.removeNotificationSubscription(responseListener);
-    //     };
-    // }, []);
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => {
+            console.log(token);
+            //setExpoPushToken(token);
+            sendToken(token);
+        });
+
+
+
+        // This listener is fired whenever a notification is received while the app is foregrounded
+        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+            setNotification(notification);
+        });
+
+        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log('listener ', response.notification);
+            navigation.navigate("Motivation", {
+                notification: response.notification
+            });
+            console.log('listen');
+        });
+
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+            Notifications.removeNotificationSubscription(responseListener);
+        };
+    }, []);
 
 
     // const sendToken = async() => {
@@ -53,7 +58,8 @@ export default function HomeScreen({route, navigation}) {
         // localHost.post('/createUser', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
 
 
-            axios.post('http://localhost:3000/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj2]', device_id: Constants.deviceId}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
+            axios.post('https://get-up-now.herokuapp.com/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
+
 
 
 
@@ -102,15 +108,20 @@ export default function HomeScreen({route, navigation}) {
         date = new Date(1598051730000);
     }
 
+
         useEffect(() => {
+            console.log('Constants.deviceId ', Constants.deviceId);
             localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
                 if (res.data) {
+                    console.log('datas ', res.data);
                     const device_time = res.data[0].device_time;
                     setDate(device_time);
+                    console.log('device_time ', device_time)
                 }
 
             }).catch(error => {
                 console.log('the get-device-id error ', error)
+
             });
         }, []);
     // }
@@ -118,8 +129,14 @@ export default function HomeScreen({route, navigation}) {
 
         if (route.params) {
             date = route.params.date;
-            console.log(route.params.data)
+            console.log('route.params.data ', route.params.date)
         }
+        else{
+            date = Date.parse(date);
+            console.log('parse ', date)
+        }
+
+
 
 
           let time = "";
@@ -143,7 +160,8 @@ export default function HomeScreen({route, navigation}) {
               time += new Date(date).getMinutes();
             }
 
-            console.log('time ', time);
+            console.log('date ', date);
+            console.log('type of date ', date);
           // }
 
           const Item = ({ title }) => (
