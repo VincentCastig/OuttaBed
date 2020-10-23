@@ -34,9 +34,8 @@ module.exports = {
         });
     },
 
-    sendMessages: (notifications, quote) => {
-            console.log('quote sendMessages', quote);
 
+    sendMessages: (notifications, quote) => {
 
             let date = new Date();
             let currentHour = date.getHours();
@@ -44,9 +43,9 @@ module.exports = {
 
             let messages = [];
             for (let notification of notifications) {
-                console.log(notification);
                 let hour = new Date(notification.device_time).getUTCHours();
                 let minute = new Date(notification.device_time).getUTCMinutes();
+
 
                 if (hour == currentHour && minute == currentMinute) {
                     console.log('we are in ', notification.token);
