@@ -1,5 +1,5 @@
 import React, {Component, useState, useEffect, useRef} from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import TimePicker from '../components/TimePicker';
 import Constants from 'expo-constants';
@@ -16,6 +16,7 @@ import registerForPushNotificationsAsync from '../notifications';
 export default function HomeScreen({route, navigation}) {
     let [date, setDate] = useState(0);
     const [expoPushToken, setExpoPushToken] = useState(null);
+    const [isEnabled, setIsEnabled] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -24,7 +25,7 @@ export default function HomeScreen({route, navigation}) {
         registerForPushNotificationsAsync().then(token => {
             console.log(token);
             //setExpoPushToken(token);
-            sendToken(token);
+            // sendToken(token);
         });
 
 
@@ -187,22 +188,45 @@ export default function HomeScreen({route, navigation}) {
                 }
               ];
 
+              const toggleSwitch = () => {
+                  setIsEnabled(!isEnabled);
+                  console.log('toggle')
+              };
+
 
     return (
+
         <View style={styles.container }>
             <View>
                 <Text style={styles.header}>Motivation Time </Text>
             </View>
 
-            <SafeAreaView style={styles.safeArea}>
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                onPress={() => navigation.navigate("Edit")}
-            />
+            <View style={styles.bodyArea}>
+                <View style={styles.contentBox}>
+                    <View style={styles.timeBox}>
+                        <Text style={styles.time}>{time} {period}</Text>
+                        <Switch
+                            trackColor={{ false: "#000000", true: "#25ff24" }}
+                            thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={isEnabled}
+                        />
+                    </View>
 
-            </SafeAreaView>
+                    <View style={styles.editBox}>
+                        <Button
+                            style={styles.editButton}
+                            color="#fff"
+                            title="Edit Time"
+                            onPress={() => navigation.navigate("Edit", {
+                                newDate: date
+                            })}
+                            //onPress={() => sendNotification(expoPushToken)}
+                        />
+                    </View>
+                </View>
+            </View>
         </View>
     );
 
@@ -212,32 +236,53 @@ export default function HomeScreen({route, navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        borderColor: 'red',
-        borderWidth: 2,
+        backgroundColor: '#000',
+        // borderColor: 'red',
+        // borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     header: {
+        color: '#fff',
         fontSize: 30,
         marginBottom: 20,
         marginTop: 10
     },
-    itemBox: {
-      flex: 1,
+    bodyArea: {
+        flex: 1
+    },
+    contentBox: {
+        marginTop: 60,
       alignItems: "center",
       justifyContent: "space-between",
-      flexDirection: "row",
+      flexDirection: "column",
       borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
-      width: "100%",
-      height: 63
+      width: "80%",
+      height: 200,
     },
-    safeArea: {
-      flex: 1
+    timeBox:{
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        borderColor: '#fff',
+        borderTopWidth: 2,
+        borderBottomWidth:2
     },
     time:{
-      fontSize: 34
+      color: '#fff',
+      fontSize: 65
+    },
+    editBox:{
+        //backgroundColor: '#4043ff',
+        borderRadius: 4,
+        color: '#ff6773',
+        borderColor: '#ffd61d',
+        width:120,
+        borderWidth: 1,
+    },
+    editButton:{
+        color: '#ff0006'
     }
 });
