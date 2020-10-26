@@ -16,14 +16,11 @@ Notifications.setNotificationHandler({
 export default function Motivation ({route, navigation}) {
         const {notification} = route.params;
 
-        console.log('notification route.params ', notification);
-
         return (
             <View style={ styles.container }>
-                {/*<Text>Your expo push token: {this.state.expoPushToken}</Text>*/}
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Text>Title: {notification.request.content.title}</Text>
-                    <Text>{notification.request.content.body}</Text>
+                    <Text style={styles.author}>{notification.request.content.title}</Text>
+                    <Text style={styles.quote}>{notification.request.content.body}</Text>
                 </View>
             </View>
         );
@@ -32,7 +29,16 @@ export default function Motivation ({route, navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        padding: 20
+    },
+    author:{
+        fontSize: 22,
+        marginBottom: 15,
+        textDecorationLine: 'underline'
+    },
+    quote:{
+        fontSize: 16
     }
 });

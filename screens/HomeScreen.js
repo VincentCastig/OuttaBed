@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
-      width: "80%",
+      width: "90%",
       height: 200,
     },
     timeBox:{
@@ -279,7 +279,6 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         color: '#ff6773',
         borderColor: '#ffd61d',
-        width:120,
         borderWidth: 1,
     },
     editButton:{
