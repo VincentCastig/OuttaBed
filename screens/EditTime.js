@@ -40,6 +40,7 @@ export default function EditScreen({route, navigation}) {
 
 
 
+
   console.log('params userInfo', userInfo);
     console.log('route.params', route.params);
 
@@ -59,11 +60,8 @@ export default function EditScreen({route, navigation}) {
 
     if (userInfo) {
         console.log('date inside condition before put request', date);
-        localHost.put(`/add-time`, {
-            id: userInfo.id,
-            device_time: date,
-            device_id: Constants.deviceId
-        }).then(res => console.log(res.data)).catch(error => console.log(error));
+
+        axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
     }
 
   return (
