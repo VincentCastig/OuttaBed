@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect, useRef} from 'react';
+import React, {Component, useState, ListView, useEffect, useRef} from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import TimePicker from '../components/TimePicker';
@@ -9,47 +9,50 @@ import localHost from '../src/api/localHost';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
+import Swipeout from 'react-native-swipeout';
 
 
 
 
 export default function HomeScreen({route, navigation}) {
-    let [date, setDate] = useState(0);
+    let [userInfo, setUserInfo] = useState([{'id': 0, 'device_time': new Date(1598051730000)}]);
     const [expoPushToken, setExpoPushToken] = useState(null);
     const [isEnabled, setIsEnabled] = useState(false);
     const notificationListener = useRef();
     const responseListener = useRef();
 
-
-    useEffect(() => {
-        registerForPushNotificationsAsync().then(token => {
-            console.log(token);
-            //setExpoPushToken(token);
-            // sendToken(token);
-        });
+    console.log(userInfo);
 
 
-
-        // This listener is fired whenever a notification is received while the app is foregrounded
-        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-            setNotification(notification);
-        });
-
-        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log('listener ', response.notification);
-            navigation.navigate("Motivation", {
-                notification: response.notification
-            });
-            console.log('listen');
-        });
-
-
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener);
-            Notifications.removeNotificationSubscription(responseListener);
-        };
-    }, []);
+    // useEffect(() => {
+    //     registerForPushNotificationsAsync().then(token => {
+    //         console.log(token);
+    //         //setExpoPushToken(token);
+    //         // sendToken(token);
+    //     });
+    //
+    //
+    //
+    //     // This listener is fired whenever a notification is received while the app is foregrounded
+    //     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+    //         setNotification(notification);
+    //     });
+    //
+    //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    //     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+    //         console.log('listener ', response.notification);
+    //         navigation.navigate("Motivation", {
+    //             notification: response.notification
+    //         });
+    //         console.log('listen');
+    //     });
+    //
+    //
+    //     return () => {
+    //         Notifications.removeNotificationSubscription(notificationListener);
+    //         Notifications.removeNotificationSubscription(responseListener);
+    //     };
+    // }, []);
 
 
     // const sendToken = async() => {
@@ -59,7 +62,7 @@ export default function HomeScreen({route, navigation}) {
         // localHost.post('/createUser', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
 
 
-            axios.post('https://get-up-now.herokuapp.com/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
+            localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
 
 
 
@@ -105,19 +108,24 @@ export default function HomeScreen({route, navigation}) {
 
 
 
-    if (!date) {
-        date = new Date(1598051730000);
-    }
+    // if (!userInfo) {
+    //     userInfo = [new userInfo(1598051730000)];
+    // }
 
 
         useEffect(() => {
-            console.log('Constants.deviceId ', Constants.deviceId);
+            Constants.deviceId = '92C2B1A7-3689-48B5-B53C-42197298D209';
+            //Constants.deviceId = 'EA612344-3AA9-4150-8226-A6C6D1FF0144';
+            //console.log('Constants.deviceId ', Constants.deviceId);
             localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
                 if (res.data) {
                     console.log('datas ', res.data);
-                    const device_time = res.data[0].device_time;
-                    setDate(device_time);
-                    console.log('device_time ', device_time)
+                    const user_info = res.data.map(timeData => {
+                        return timeData
+                    });
+                    //const device_time = res.data[0].device_time;
+                    setUserInfo(user_info);
+                    console.log('device_time ', user_info)
                 }
 
             }).catch(error => {
@@ -129,64 +137,99 @@ export default function HomeScreen({route, navigation}) {
 
 
         if (route.params) {
-            date = route.params.date;
+            userInfo = route.params.date;
             console.log('route.params.data ', route.params.date)
         }
         else{
-            date = Date.parse(date);
-            console.log('parse ', date)
+            console.log('before parse ', userInfo);
+            userInfo.forEach((userInfoItem, index) => {
+                return userInfo[index].device_time = Date.parse(userInfoItem.device_time);
+            });
+            console.log('parse ', userInfo)
         }
 
+    // Buttons
+    var swipeoutBtns = [
+        {
+            text: 'Button'
+        }
+    ];
 
 
 
-          let time = "";
+
+
+
+          let time = [];
           let period = "";
 
-          // if(typeof date == "number"){
-            console.log(new Date(date));
-            let hours = new Date(date).getHours();
-            if(hours >= 12){
-              period = "PM"
-            }
-            else{
-              period = "AM"
-            }
-            time = ((hours + 11) % 12 + 1).toString();
-            time += ":";
-            if(new Date(date).getMinutes() < 10){
-              time += "0" + new Date(date).getMinutes();
-            }
-            else{
-              time += new Date(date).getMinutes();
-            }
+          console.log('is it an array ', userInfo);
 
-            console.log('date ', date);
-            console.log('type of date ', date);
+          userInfo.forEach((userInfoItem, index) => {
+             console.log('date in loop', userInfoItem);
+              let tempTime = "";
+
+              let hours = new Date(userInfoItem.device_time).getHours();
+              if(hours >= 12){
+                  period = "PM"
+              }
+              else{
+                  period = "AM"
+              }
+              tempTime = ((hours + 11) % 12 + 1).toString();
+              tempTime += ":";
+              if(new Date(userInfoItem.device_time).getMinutes() < 10){
+                  tempTime += "0" + new Date(userInfoItem.device_time).getMinutes();
+              }
+              else{
+                  tempTime += new Date(userInfoItem.device_time).getMinutes();
+              }
+              console.log('time in loop', time);
+              console.log('tempTime in loop', tempTime);
+              time.push(tempTime);
+              userInfoItem.title = tempTime + ' ' + period;
+              return userInfo[index] = userInfoItem;
+
+              // console.log('date ', userInfoItem);
+              // console.log('type of date ', userInfo);
+          });
+
+          console.log('userInfo final result', userInfo);
+
+          // if(typeof date == "number"){
+
           // }
 
-          const Item = ({ title }) => (
+          const Item = ({ item }) => (
+              <Swipeout right={swipeoutBtns}>
             <View style={styles.itemBox}>
-              <Text style={styles.time}>{title} {period}</Text>
+              <Text style={styles.time}>{item.title}</Text>
               <Button
                 title="Edit Time"
                 onPress={() => navigation.navigate("Edit", {
-                    newDate: date
+                    newDate: item
                 })}
                   //onPress={() => sendNotification(expoPushToken)}
                 />
             </View>
+              </Swipeout>
           );
+
             const renderItem = ({ item }) => (
-                <Item title={item.title} />
+                <Item item={item} />
               );
 
-              const DATA = [
-                {
-                  id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-                  title: time,
-                }
-              ];
+            const DATA = userInfo.map(timeItem => {
+                return {'id': timeItem.id, 'title': timeItem.title, 'deviceTime': timeItem.device_time};
+            });
+
+              // const DATA = [
+              //   {
+              //     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+              //     title: time,
+              //   }
+              // ];
+            console.log('the data', DATA);
 
               const toggleSwitch = () => {
                   setIsEnabled(!isEnabled);
@@ -202,30 +245,37 @@ export default function HomeScreen({route, navigation}) {
             </View>
 
             <View style={styles.bodyArea}>
-                <View style={styles.contentBox}>
-                    <View style={styles.timeBox}>
-                        <Text style={styles.time}>{time} {period}</Text>
-                        <Switch
-                            trackColor={{ false: "#000000", true: "#25ff24" }}
-                            thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
-                            ios_backgroundColor="#3e3e3e"
-                            onValueChange={toggleSwitch}
-                            value={isEnabled}
-                        />
-                    </View>
+                <SafeAreaView style={styles.container}>
+                    <FlatList
+                        data={DATA}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                    />
+                </SafeAreaView>
+                {/*<View style={styles.contentBox}>*/}
+                    {/*<View style={styles.timeBox}>*/}
+                        {/*<Text style={styles.time}>{time} {period}</Text>*/}
+                        {/*<Switch*/}
+                            {/*trackColor={{ false: "#000000", true: "#25ff24" }}*/}
+                            {/*thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}*/}
+                            {/*ios_backgroundColor="#3e3e3e"*/}
+                            {/*onValueChange={toggleSwitch}*/}
+                            {/*value={isEnabled}*/}
+                        {/*/>*/}
+                    {/*</View>*/}
 
-                    <View style={styles.editBox}>
-                        <Button
-                            style={styles.editButton}
-                            color="#fff"
-                            title="Edit Time"
-                            onPress={() => navigation.navigate("Edit", {
-                                newDate: date
-                            })}
-                            //onPress={() => sendNotification(expoPushToken)}
-                        />
-                    </View>
-                </View>
+                    {/*<View style={styles.editBox}>*/}
+                        {/*<Button*/}
+                            {/*style={styles.editButton}*/}
+                            {/*color="#fff"*/}
+                            {/*title="Edit Time"*/}
+                            {/*onPress={() => navigation.navigate("Edit", {*/}
+                                {/*newDate: date*/}
+                            {/*})}*/}
+                            {/*//onPress={() => sendNotification(expoPushToken)}*/}
+                        {/*/>*/}
+                    {/*</View>*/}
+                {/*</View>*/}
             </View>
         </View>
     );
