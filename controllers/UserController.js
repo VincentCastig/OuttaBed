@@ -14,11 +14,13 @@ module.exports = {
     addTime: (req, res) => {
         console.log('device_time');
         const db = req.app.get('db');
-        const {device_time, device_id} = req.body;
+        const {id, device_time, device_id} = req.body;
 
         console.log('adding time now ', device_time);
+        console.log('adding time now id', id);
+        console.log(req.body);
 
-        db.addTime(device_time, device_id).then((data)=>res.status('200').send(data)).catch((error)=> {
+        db.addTime(id, device_time, device_id).then((data)=>res.status('200').send(data)).catch((error)=> {
             console.log('error ', error)
         })
     },
