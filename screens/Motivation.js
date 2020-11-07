@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
 
 // This refers to the function defined earlier in this guide, in Push Notifications Set Up
@@ -16,29 +16,16 @@ Notifications.setNotificationHandler({
 export default function Motivation ({route, navigation}) {
         const {notification} = route.params;
 
+        console.log('notification route.params ', notification);
+
         return (
-            <View style={ styles.container }>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                {/*<Text>Your expo push token: {this.state.expoPushToken}</Text>*/}
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={styles.author}>{notification.request.content.title}</Text>
-                    <Text style={styles.quote}>{notification.request.content.body}</Text>
+                    <Text>Title: {notification.request.content.title}</Text>
+                    <Text>Body: {notification.request.content.body}</Text>
+                    <Text>Data: {JSON.stringify(notification.request.content.data)}</Text>
                 </View>
             </View>
         );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        padding: 20
-    },
-    author:{
-        fontSize: 22,
-        marginBottom: 15,
-        textDecorationLine: 'underline'
-    },
-    quote:{
-        fontSize: 16
-    }
-});

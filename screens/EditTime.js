@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import Constants from 'expo-constants';
-import localHost from '../src/api/localHost';
 
 export default function EditScreen({route, navigation}) {
   let [date, setDate] = useState(new Date(1598051730000));
-  let [userInfo, setUserInfo] = useState([{'id': 0, 'device_time': new Date(1598051730000)}]);
   const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
 
@@ -31,40 +29,23 @@ export default function EditScreen({route, navigation}) {
     showMode('time');
   };
 
-    useEffect(() => {
+  let { newDate } = route.params;
 
-        if (route.params) {
-            setUserInfo(route.params);
-        }
-    });
-
-
-
-  console.log('params userInfo', userInfo);
-    console.log('route.params', route.params);
-
-    if(userInfo && typeof userInfo.deviceTime == "number") {
-      console.log('ok ', userInfo);
-        date = new Date(userInfo.deviceTime);
-        console.log('ok ', userInfo.deviceTime);
+    if(typeof newDate == "number") {
+        date = new Date(newDate);
         route.params = "";
-        console.log('date ', date);
+        console.log('new date ', date)
     }
-    console.log('date ', date);
+    console.log('newDate ', date);
     let offset = date.getTimezoneOffset() * -1;
     // else{
     //     date = newDate;
     //     console.log('date outside statement ', date);
     // }
 
-    if (userInfo) {
-        console.log('date inside condition before put request', date);
-        localHost.put(`/add-time`, {
-            id: userInfo.id,
-            device_time: date,
-            device_id: Constants.deviceId
-        }).then(res => console.log(res.data)).catch(error => console.log(error));
-    }
+
+
+  axios.put(`https://get-up-now.herokuapp.com/add-time`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
 
   return (
     <View>

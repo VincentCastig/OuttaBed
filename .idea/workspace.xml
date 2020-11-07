@@ -4,15 +4,8 @@
     <list default="true" id="ce0cf373-84ca-4906-802f-4a38e9aab13d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/UserController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/addTime.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/addTime.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/createUser.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/createUser.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/EditTime.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/EditTime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/HomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/localHost.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/localHost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/expoServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/expoServer.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,11 +16,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="createUser.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/createUser.sql">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="208">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="expoServer.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/api/expoServer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="466">
+              <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -35,17 +37,17 @@
       <file leaf-file-name="HomeScreen.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/screens/HomeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="115" column="8" selection-start-line="115" selection-start-column="8" selection-end-line="115" selection-end-column="25" />
+            <state relative-caret-position="269">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditTime.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/screens/EditTime.js">
+      <file leaf-file-name="notifications.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/notifications.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="53" column="47" lean-forward="true" selection-start-line="53" selection-start-column="47" selection-end-line="53" selection-end-column="47" />
+            <state relative-caret-position="299">
+              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -53,35 +55,8 @@
       <file leaf-file-name="UserController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/UserController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="localHost.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/api/localHost.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addTime.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/addTime.sql">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="299">
+              <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -99,42 +74,35 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
+      <find>doten</find>
+      <find>ody-parse</find>
+      <find>babe</find>
+      <find>express</find>
+      <find>jest</find>
+      <find>server</find>
+      <find>axios</find>
+      <find>getTokens</find>
+      <find>pushnot</find>
+      <find>cron</find>
+      <find>chunkPushNotification</find>
+      <find>asyn</find>
+      <find>send</find>
       <find>expoAxios</find>
       <find>await</find>
+      <find>date</find>
+      <find>device_time</find>
+      <find>setDate</find>
       <find>time</find>
       <find>expoPushToken</find>
       <find>state</find>
       <find>registerForPushNotificationsAsync</find>
       <find>setNotification</find>
+      <find>useEffect</find>
       <find>navi</find>
       <find>navigation</find>
       <find>_handleNotification</find>
       <find>sendToken</find>
-      <find>StyleSheet</find>
-      <find>container</find>
-      <find>localHost</find>
-      <find>DATA</find>
-      <find>rowdata</find>
-      <find>date</find>
-      <find>userInfo</find>
-      <find>userIn</find>
-      <find>map</find>
-      <find>period</find>
-      <find>renderItem</find>
-      <find>route</find>
-      <find>title</find>
-      <find>newDate</find>
-      <find>format</find>
-      <find>setDate</find>
-      <find>newDa</find>
-      <find>device_time</find>
-      <find>useEffect</find>
     </findStrings>
-    <replaceStrings>
-      <replace>setUserDate</replace>
-      <replace>setUserInfo</replace>
-      <replace>userInfo</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -145,19 +113,17 @@
         <option value="$PROJECT_DIR$/wake-up-now/screens/HomeScreen.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/db/getTokens.sql" />
+        <option value="$PROJECT_DIR$/src/api/localHost.js" />
+        <option value="$PROJECT_DIR$/screens/EditTime.js" />
         <option value="$PROJECT_DIR$/screens/in.js" />
         <option value="$PROJECT_DIR$/notifications.js" />
         <option value="$PROJECT_DIR$/App.js" />
-        <option value="$PROJECT_DIR$/db/getQuote.sql" />
-        <option value="$PROJECT_DIR$/src/api/expoServer.js" />
         <option value="$PROJECT_DIR$/screens/Motivation.js" />
-        <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/db/createUser.sql" />
-        <option value="$PROJECT_DIR$/screens/HomeScreen.js" />
-        <option value="$PROJECT_DIR$/db/addTime.sql" />
-        <option value="$PROJECT_DIR$/screens/EditTime.js" />
         <option value="$PROJECT_DIR$/controllers/UserController.js" />
-        <option value="$PROJECT_DIR$/src/api/localHost.js" />
+        <option value="$PROJECT_DIR$/db/getQuote.sql" />
+        <option value="$PROJECT_DIR$/screens/HomeScreen.js" />
+        <option value="$PROJECT_DIR$/index.js" />
+        <option value="$PROJECT_DIR$/src/api/expoServer.js" />
       </list>
     </option>
   </component>
@@ -176,7 +142,7 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="431" />
+    <option name="x" value="594" />
     <option name="y" value="-1057" />
     <option name="width" value="1560" />
     <option name="height" value="947" />
@@ -283,35 +249,30 @@
       <workItem from="1602878410571" duration="8829000" />
       <workItem from="1603156684219" duration="2382000" />
       <workItem from="1603245683979" duration="3183000" />
-      <workItem from="1603490709805" duration="1812000" />
-      <workItem from="1603642291615" duration="6849000" />
-      <workItem from="1604280210415" duration="3332000" />
-      <workItem from="1604544305619" duration="368000" />
-      <workItem from="1604623018219" duration="6153000" />
-      <workItem from="1604708573587" duration="1792000" />
+      <workItem from="1603490709805" duration="461000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53210000" />
+    <option name="totallyTimeSpent" value="33365000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="431" y="-1057" width="1560" height="947" extended-state="0" />
+    <frame x="594" y="-1057" width="1560" height="947" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="right" id="Remote Host" order="3" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15128206" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -525,12 +486,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/db/createUser.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/axios/dist/axios.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="17" column="8" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/addTime.sql">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/expo-server-sdk/build/ExpoClient.d.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -553,6 +524,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/db/getTime.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/localHost.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -567,24 +552,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/UserController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/screens/Motivation.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        <state relative-caret-position="208">
+          <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screens/EditTime.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="823">
+          <caret line="71" column="4" selection-start-line="71" selection-start-column="4" selection-end-line="71" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db/getTokens.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/expoServer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="34" column="6" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+        <state>
+          <caret selection-end-line="1" />
         </state>
       </provider>
     </entry>
@@ -595,59 +587,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/getTime.sql">
+    <entry file="file://$PROJECT_DIR$/screens/HomeScreen.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="269">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+        <state relative-caret-position="208">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/addTime.sql">
+    <entry file="file://$PROJECT_DIR$/src/api/expoServer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screens/EditTime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="53" column="47" lean-forward="true" selection-start-line="53" selection-start-column="47" selection-end-line="53" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/UserController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screens/HomeScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="115" column="8" selection-start-line="115" selection-start-column="8" selection-end-line="115" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db/createUser.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/localHost.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        <state relative-caret-position="466">
+          <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
         </state>
       </provider>
     </entry>
