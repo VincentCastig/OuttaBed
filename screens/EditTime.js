@@ -7,7 +7,7 @@ import localHost from '../src/api/localHost';
 
 export default function EditScreen({route, navigation}) {
   let [date, setDate] = useState(new Date(1598051730000));
-  let [userInfo, setUserInfo] = useState([{'id': 0, 'device_time': new Date(1598051730000)}]);
+  let [userInfo, setUserInfo] = useState([{id: 1, device_time: new Date(1598051730000)}]);
   const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
 
@@ -34,7 +34,7 @@ export default function EditScreen({route, navigation}) {
     useEffect(() => {
 
         if (route.params) {
-            setUserInfo(route.params);
+            setUserInfo(route.params.newDate);
         }
     });
 
@@ -59,7 +59,7 @@ export default function EditScreen({route, navigation}) {
     // }
 
     if (userInfo) {
-        console.log('date inside condition before put request', date);
+        console.log('date inside condition before put request userInfo', userInfo);
 
         axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
     }
