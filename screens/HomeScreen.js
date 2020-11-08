@@ -10,6 +10,7 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 
 
@@ -202,10 +203,26 @@ export default function HomeScreen({route, navigation}) {
 
             <View style={styles.bodyArea}>
                 <SafeAreaView style={styles.contentBox}>
-                    <FlatList
+                    <SwipeListView
+                        useFlatList={true}
                         data={DATA}
                         renderItem={renderItem}
                         keyExtractor={(item) => item.id}
+                        width={'90%'}
+                        renderHiddenItem={ (rowData, rowMap) => (
+                            <View style={styles.rowBack}>
+                                <TouchableOpacity onPress={ () => rowMap[rowData.item.key].closeRow() }>
+                                    <Text style={styles.text}>Close</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                        leftOpenValue={0}
+                        rightOpenValue={-150}
+                        onRowOpen={(rowKey, rowMap) => {
+                            setTimeout(() => {
+                                rowMap[rowKey].closeRow()
+                            }, 2000)
+                        }}
                     />
                 </SafeAreaView>
             </View>
@@ -227,7 +244,7 @@ const styles = StyleSheet.create({
     header: {
         color: '#fff',
         fontSize: 30,
-        marginBottom: 20,
+        marginBottom: 10,
         marginTop: 10,
         alignItems: 'flex-start'
     },
@@ -235,14 +252,17 @@ const styles = StyleSheet.create({
         flex: 1
     },
     contentBox: {
-      marginTop: 60,
+      marginTop: 20,
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
       borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
-      width: "90%",
+      width: "100%",
       height: 'auto',
+    },
+    text:{
+        color: '#fff'
     }
 });
