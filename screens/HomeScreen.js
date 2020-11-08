@@ -9,7 +9,7 @@ import localHost from '../src/api/localHost';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
-import Swipeout from 'react-native-swipeout';
+import Item from './ListItem';
 
 
 
@@ -17,11 +17,11 @@ import Swipeout from 'react-native-swipeout';
 export default function HomeScreen({route, navigation}) {
     let [userInfo, setUserInfo] = useState([{'id': 0, 'device_time': new Date(1598051730000)}]);
     const [expoPushToken, setExpoPushToken] = useState(null);
-    const [isEnabled, setIsEnabled] = useState(false);
+
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    console.log(userInfo);
+    //console.log(userInfo);
 
 
     // useEffect(() => {
@@ -57,12 +57,12 @@ export default function HomeScreen({route, navigation}) {
 
     // const sendToken = async() => {
         // console.log('sending ', token.data);
-        console.log('sending deviceId', Constants.deviceId);
+        //console.log('sending deviceId', Constants.deviceId);
 
         // localHost.post('/createUser', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
 
 
-            localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
+            // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
 
 
 
@@ -108,6 +108,7 @@ export default function HomeScreen({route, navigation}) {
 
 
 
+
     // if (!userInfo) {
     //     userInfo = [new userInfo(1598051730000)];
     // }
@@ -118,15 +119,12 @@ export default function HomeScreen({route, navigation}) {
             //Constants.deviceId = 'EA612344-3AA9-4150-8226-A6C6D1FF0144';
             //console.log('Constants.deviceId ', Constants.deviceId);
             localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
-                if (res.data) {
-                    console.log('datas ', res.data);
                     const user_info = res.data.map(timeData => {
-                        return timeData
+                        return timeData;
                     });
+
                     //const device_time = res.data[0].device_time;
                     setUserInfo(user_info);
-                    console.log('device_time ', user_info)
-                }
 
             }).catch(error => {
                 console.log('the get-device-id error ', error)
@@ -137,36 +135,30 @@ export default function HomeScreen({route, navigation}) {
 
 
         if (route.params) {
-            userInfo = route.params.date;
-            console.log('route.params.data ', route.params.date)
+            //console.log('userInfo before route.params.data ', userInfo);
+            userInfo.forEach((userInfoItem, index) => {
+                if (userInfoItem.id === route.params.id) {
+                    return userInfo[index].device_time = route.params.date;
+                }
+                return userInfoItem;
+            });
+            //userInfo = route.params.date;
+            //console.log('userInfo after route.params.data ', userInfo)
         }
         else{
-            console.log('before parse ', userInfo);
+            //console.log('before parse ', userInfo);
             userInfo.forEach((userInfoItem, index) => {
                 return userInfo[index].device_time = Date.parse(userInfoItem.device_time);
             });
-            console.log('parse ', userInfo)
+            //console.log('parse ', userInfo)
         }
-
-    // Buttons
-    var swipeoutBtns = [
-        {
-            text: 'Button'
-        }
-    ];
-
-
-
-
 
 
           let time = [];
           let period = "";
 
-          console.log('is it an array ', userInfo);
-
           userInfo.forEach((userInfoItem, index) => {
-             console.log('date in loop', userInfoItem);
+             //console.log('date in loop', userInfoItem);
               let tempTime = "";
 
               let hours = new Date(userInfoItem.device_time).getHours();
@@ -184,98 +176,38 @@ export default function HomeScreen({route, navigation}) {
               else{
                   tempTime += new Date(userInfoItem.device_time).getMinutes();
               }
-              console.log('time in loop', time);
-              console.log('tempTime in loop', tempTime);
+              //console.log('time in loop', time);
+
               time.push(tempTime);
               userInfoItem.title = tempTime + ' ' + period;
+
               return userInfo[index] = userInfoItem;
 
-              // console.log('date ', userInfoItem);
-              // console.log('type of date ', userInfo);
           });
 
-          console.log('userInfo final result', userInfo);
-
-          // if(typeof date == "number"){
-
-          // }
-
-          const Item = ({ item }) => (
-              <Swipeout right={swipeoutBtns}>
-            <View style={styles.itemBox}>
-              <Text style={styles.time}>{item.title}</Text>
-              <Button
-                title="Edit Time"
-                onPress={() => navigation.navigate("Edit", {
-                    newDate: item
-                })}
-                  //onPress={() => sendNotification(expoPushToken)}
-                />
-            </View>
-              </Swipeout>
-          );
-
             const renderItem = ({ item }) => (
-                <Item item={item} />
+                <Item item={item} navigation={navigation}/>
               );
 
             const DATA = userInfo.map(timeItem => {
-                return {'id': timeItem.id, 'title': timeItem.title, 'deviceTime': timeItem.device_time};
+                return {id: timeItem.id, 'title': timeItem.title, 'deviceTime': timeItem.device_time, 'active': timeItem.active};
             });
-
-              // const DATA = [
-              //   {
-              //     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-              //     title: time,
-              //   }
-              // ];
-            console.log('the data', DATA);
-
-              const toggleSwitch = () => {
-                  setIsEnabled(!isEnabled);
-                  console.log('toggle')
-              };
 
 
     return (
-
         <View style={styles.container }>
             <View>
                 <Text style={styles.header}>Motivation Time </Text>
             </View>
 
             <View style={styles.bodyArea}>
-                <SafeAreaView style={styles.container}>
+                <SafeAreaView style={styles.contentBox}>
                     <FlatList
                         data={DATA}
                         renderItem={renderItem}
-                        keyExtractor={item => item.id}
+                        keyExtractor={(item) => item.id}
                     />
                 </SafeAreaView>
-                {/*<View style={styles.contentBox}>*/}
-                    {/*<View style={styles.timeBox}>*/}
-                        {/*<Text style={styles.time}>{time} {period}</Text>*/}
-                        {/*<Switch*/}
-                            {/*trackColor={{ false: "#000000", true: "#25ff24" }}*/}
-                            {/*thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}*/}
-                            {/*ios_backgroundColor="#3e3e3e"*/}
-                            {/*onValueChange={toggleSwitch}*/}
-                            {/*value={isEnabled}*/}
-                        {/*/>*/}
-                    {/*</View>*/}
-
-                    {/*<View style={styles.editBox}>*/}
-                        {/*<Button*/}
-                            {/*style={styles.editButton}*/}
-                            {/*color="#fff"*/}
-                            {/*title="Edit Time"*/}
-                            {/*onPress={() => navigation.navigate("Edit", {*/}
-                                {/*newDate: date*/}
-                            {/*})}*/}
-                            {/*//onPress={() => sendNotification(expoPushToken)}*/}
-                        {/*/>*/}
-                    {/*</View>*/}
-                {/*</View>*/}
             </View>
         </View>
     );
@@ -296,13 +228,14 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 30,
         marginBottom: 20,
-        marginTop: 10
+        marginTop: 10,
+        alignItems: 'flex-start'
     },
     bodyArea: {
         flex: 1
     },
     contentBox: {
-        marginTop: 60,
+      marginTop: 60,
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
@@ -310,28 +243,6 @@ const styles = StyleSheet.create({
       borderLeftWidth: 0,
       borderRightWidth: 0,
       width: "90%",
-      height: 200,
-    },
-    timeBox:{
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexDirection: "row",
-        borderColor: '#fff',
-        borderTopWidth: 2,
-        borderBottomWidth:2
-    },
-    time:{
-      color: '#fff',
-      fontSize: 65
-    },
-    editBox:{
-        //backgroundColor: '#4043ff',
-        borderRadius: 4,
-        color: '#ff6773',
-        borderColor: '#ffd61d',
-        borderWidth: 1,
-    },
-    editButton:{
-        color: '#ff0006'
+      height: 'auto',
     }
 });
