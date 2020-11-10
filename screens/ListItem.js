@@ -11,6 +11,7 @@ const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
 };
 
+
     // Buttons
     let swipeoutBtns = [
         {
@@ -32,7 +33,6 @@ return (
                     onChange={toggleSwitch}
                     value={isEnabled}
                 />
-                <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon}/>
             </View>
         </View>
         {/*<View style={styles.editContainer}>*/}
@@ -89,8 +89,5 @@ const styles = StyleSheet.create({
     switchBox:{
         flexDirection: 'column',
         alignItems: 'flex-end'
-    },
-    deleteIcon:{
-        marginTop: 10
     }
 });

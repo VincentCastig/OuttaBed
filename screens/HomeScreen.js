@@ -11,6 +11,7 @@ import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 
 
 
@@ -207,17 +208,19 @@ export default function HomeScreen({route, navigation}) {
                         useFlatList={true}
                         data={DATA}
                         renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.id.toString()}
                         width={'90%'}
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
-                                <TouchableOpacity onPress={ () => rowMap[rowData.item.key].closeRow() }>
-                                    <Text style={styles.text}>Close</Text>
+                                <TouchableOpacity  style={styles.delete} onPress={ () => rowMap[rowData.item.key].closeRow() }>
+                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon}/>
                                 </TouchableOpacity>
                             </View>
+
                         )}
                         leftOpenValue={0}
                         rightOpenValue={-150}
+
                         onRowOpen={(rowKey, rowMap) => {
                             setTimeout(() => {
                                 rowMap[rowKey].closeRow()
@@ -264,5 +267,20 @@ const styles = StyleSheet.create({
     },
     text:{
         color: '#fff'
+    },
+    rowBack:{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginVertical: 50,
+        flexWrap: 'wrap',
+    },
+    delete:{
+        width: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 30
+    },
+    deleteIcon:{
+        marginRight:5
     }
 });
