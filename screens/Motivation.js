@@ -14,16 +14,25 @@ Notifications.setNotificationHandler({
 });
 
 export default function Motivation ({route, navigation}) {
-        const {notification} = route.params;
+        const {notification} = route.params || '';
 
-        return (
-            <View style={ styles.container }>
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={styles.author}>{notification.request.content.title}</Text>
-                    <Text style={styles.quote}>{notification.request.content.body}</Text>
+        if (notification) {
+            return (
+                <View style={styles.container}>
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={styles.author}>{notification.request.content.title}</Text>
+                        <Text style={styles.quote}>{notification.request.content.body}</Text>
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        }
+        else{
+            return (
+                <View>
+                    <Text>Nothing yet</Text>
+                </View>
+            )
+        }
 }
 
 const styles = StyleSheet.create({
