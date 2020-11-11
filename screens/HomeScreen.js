@@ -11,7 +11,7 @@ import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 
 
 
@@ -19,11 +19,23 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 export default function HomeScreen({route, navigation}) {
     let [userInfo, setUserInfo] = useState([{'id': 0, 'device_time': new Date(1598051730000)}]);
     const [expoPushToken, setExpoPushToken] = useState(null);
-
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    //console.log(userInfo);
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Button onPress={() => console.log('add time')} title="Update count" />
+            ),
+        });
+    }, [navigation]);
+    //
+    // <View>
+    //     <Entypo name="plus" size={24} color="black" />
+    // </View>
+
+
+    console.log(navigation);
 
 
     // useEffect(() => {

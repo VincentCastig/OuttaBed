@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import EditScreen from './screens/EditTime';
 import MotivationScreen from './screens/Motivation';
@@ -14,7 +15,15 @@ const Stack = createStackNavigator();
 
 function Home() {
     return (
-        <Tab.Navigator>
+        <Tab.Navigator
+            barStyle={{
+                backgroundColor: '#1393ff',
+                backgroundColor: '#292929',
+                color: '#fff',
+            }}
+            inactiveColor="white"
+            activeColor="#1393ff"
+        >
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Motivation" component={MotivationScreen} />
         </Tab.Navigator>
@@ -25,9 +34,27 @@ function Home() {
 export default function App() {
 
   return (
-    <NavigationContainer>
+    <NavigationContainer headerStyle={{ backgroundColor: '#a2a8af' }}>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={ Home } />
+        <Stack.Screen
+            name="OutABed"
+            component={ Home }
+            options={{
+                headerTintColor: 'white',
+                headerRight: () => (
+                    <Button
+                        onPress={() => alert('This is a button!')}
+                        title="Info"
+                        color="#fff"
+                    />
+                ),
+                headerStyle: {
+                    backgroundColor: '#1393ff',
+                    backgroundColor: '#292929',
+                    color: '#fff'
+                },
+            }}
+        />
         <Stack.Screen name="Edit" component={ EditScreen } options={{ title: 'Edit' }}/>
         <Stack.Screen name="Motivation" component={ MotivationScreen } options={{ title: 'Why get up?' }}/>
       </Stack.Navigator>

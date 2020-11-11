@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, Switch} from 'react-native';
+import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, TouchableHighlight} from 'react-native';
 import Swipeout from 'react-native-swipeout';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 export default function Item( {item, navigation} ) {
@@ -23,18 +23,22 @@ const toggleSwitch = () => {
 
 return (
     <View style={styles.item}>
-        <View style={styles.timeBox}>
-            <Text style={styles.time}>{item.title} {item.key}</Text>
-            <View style={styles.switchBox}>
-                <Switch
-                    trackColor={{ false: "#000000", true: "#25ff24" }}
-                    thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onChange={toggleSwitch}
-                    value={isEnabled}
-                />
+        <TouchableHighlight onPress={() => navigation.navigate("Edit", {
+            newDate: item
+        })}>
+            <View style={styles.timeBox}>
+                <Text style={styles.time}>{item.title} {item.key}</Text>
+                <View style={styles.switchBox}>
+                    <Switch
+                        trackColor={{ false: "#000000", true: "#25ff24" }}
+                        thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onChange={toggleSwitch}
+                        value={isEnabled}
+                    />
+                </View>
             </View>
-        </View>
+        </TouchableHighlight>
         {/*<View style={styles.editContainer}>*/}
             {/*<View style={styles.editBox}>*/}
                 {/*<Button*/}
@@ -53,11 +57,13 @@ return (
 const styles = StyleSheet.create({
     timeBox:{
         height: 100,
-        width: '95%',
+        width: 295,
+        padding: 5,
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
         borderColor: '#fff',
+        borderColor: '#3e4948',
         borderWidth: 2,
         borderRadius: 20
         //borderTopWidth: 2,
@@ -65,7 +71,7 @@ const styles = StyleSheet.create({
     },
     time:{
         color: '#fff',
-        fontSize: 65
+        fontSize: 45
     },
     // editContainer:{
     //   flexDirection:'row'
@@ -88,6 +94,7 @@ const styles = StyleSheet.create({
     },
     switchBox:{
         flexDirection: 'column',
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        marginRight: 5
     }
 });
