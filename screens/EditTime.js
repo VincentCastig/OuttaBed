@@ -56,8 +56,10 @@ export default function EditScreen({route, navigation}) {
     // }
     let offset = new Date().getTimezoneOffset() * -1;
 
+
     if (userInfo) {
-        axios.put(`http://localhost:3000/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
+        console.log('userInfo ', userInfo);
+        axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
     }
 
   return (
