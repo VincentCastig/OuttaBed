@@ -3,6 +3,7 @@ import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, Toucha
 import Swipeout from 'react-native-swipeout';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import EditTime from '../components/EditModal';
 
 export default function Item( {item, navigation} ) {
 const [isEnabled, setIsEnabled] = useState(item.active);
@@ -10,8 +11,6 @@ const [isEnabled, setIsEnabled] = useState(item.active);
 const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
 };
-
-
     // Buttons
     let swipeoutBtns = [
         {
