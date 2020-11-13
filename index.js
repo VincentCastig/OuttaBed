@@ -32,7 +32,7 @@ massive(connectionString).then(db => {
     app.set('db', db);
 
 
-    sendNotifications();
+    sendNotifications()
 });
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
