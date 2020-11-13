@@ -219,11 +219,12 @@ export default function HomeScreen({route, navigation}) {
             <View style={styles.bodyArea}>
                 <SafeAreaView style={styles.contentBox}>
                     <SwipeListView
+                        style={styles.swipelist}
                         useFlatList={true}
                         data={DATA}
                         renderItem={renderItem}
                         keyExtractor={(item) => item.id.toString()}
-                        width={'90%'}
+                        width={'100%'}
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
                                 <TouchableOpacity  style={styles.delete} onPress={ () => rowMap[rowData.item.key].closeRow() }>
@@ -234,7 +235,6 @@ export default function HomeScreen({route, navigation}) {
                         )}
                         leftOpenValue={0}
                         rightOpenValue={-100}
-
                         onRowOpen={(rowKey, rowMap) => {
                             setTimeout(() => {
                                 rowMap[rowKey].closeRow()
@@ -280,8 +280,15 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
+      borderColor: 'yellow',
       width: "100%",
       height: 'auto',
+    },
+    swipelist:{
+        borderWidth: 2,
+        borderColor: 'green',
+        width: '100%',
+        alignItems: 'center'
     },
     text:{
         color: '#fff'

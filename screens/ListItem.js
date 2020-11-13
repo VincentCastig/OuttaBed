@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     itemBox2:{
         width:'25%',
         height: '100%',
-        paddingTop: 10,
+        paddingTop: 13,
         paddingBottom: 10,
         alignItems: 'center',
         justifyContent: 'space-between',
