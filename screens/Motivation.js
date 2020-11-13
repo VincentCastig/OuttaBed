@@ -14,18 +14,22 @@ Notifications.setNotificationHandler({
 });
 
 export default function Motivation ({route, navigation}) {
-        const {notification} = route.params;
-
-        console.log('notification route.params ', notification);
-
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                {/*<Text>Your expo push token: {this.state.expoPushToken}</Text>*/}
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Text>Title: {notification.request.content.title}</Text>
-                    <Text>Body: {notification.request.content.body}</Text>
-                    <Text>Data: {JSON.stringify(notification.request.content.data)}</Text>
+        const {notification} = route.params || '';
+        if (notification) {
+            return (
+                <View style={styles.container}>
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={styles.author}>{notification.request.content.title}</Text>
+                        <Text style={styles.quote}>{notification.request.content.body}</Text>
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        }
+        else{
+            return (
+                <View>
+                    <Text>Nothing yet</Text>
+                </View>
+            )
+        }
 }

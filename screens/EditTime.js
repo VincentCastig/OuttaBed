@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Button, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import Constants from 'expo-constants';
+import localHost from '../src/api/localHost';
 
 export default function EditScreen({route, navigation}) {
   let [date, setDate] = useState(new Date(1598051730000));
+  let [userInfo, setUserInfo] = useState(route.params.newDate);
   const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
 
@@ -13,6 +15,7 @@ export default function EditScreen({route, navigation}) {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
+    console.log('changing date to ', date)
   };
 
   const showMode = currentMode => {
@@ -29,23 +32,33 @@ export default function EditScreen({route, navigation}) {
     showMode('time');
   };
 
-  let { newDate } = route.params;
-
-    if(typeof newDate == "number") {
-        date = new Date(newDate);
-        route.params = "";
-        console.log('new date ', date)
+    useEffect(() => {
+        if (route.params) {
+            setUserInfo(route.params.newDate);
+            date = new Date(userInfo.deviceTime);
+            route.params = "";
+            console.log('date from params ', date)
+        }
+    });
+    if (route.params) {
+        date = new Date(route.params.newDate.deviceTime);
     }
-    console.log('newDate ', date);
-    let offset = date.getTimezoneOffset() * -1;
-    // else{
-    //     date = newDate;
-    //     console.log('date outside statement ', date);
+
+
+    // if(userInfo && typeof userInfo.deviceTime == "number") {
+    //     console.log('userInfo ', userInfo);
+    //     date = new Date(userInfo.deviceTime);
+    //     console.log('new Date from userInfo.deviceTime ', date);
+    //     route.params = "";
     // }
+    // else{
+    //     console.log('else date with no userInfo', date);
+    // }
+    let offset = new Date().getTimezoneOffset() * -1;
 
-
-
-  axios.put(`https://get-up-now.herokuapp.com/add-time`, {device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
+    if (userInfo) {
+        axios.put(`http://localhost:3000/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
+    }
 
   return (
     <View>
@@ -54,7 +67,7 @@ export default function EditScreen({route, navigation}) {
                 style={{fontSize: 20, color: 'green'}}
                 styleDisabled={{color: 'red'}}
                 title="Save"
-                onPress={() => navigation.navigate("Home", { date: Date.parse(date)})}
+                onPress={() => navigation.navigate("Home", { date: Date.parse(date), id: userInfo.id})}
         />
       </View>
       {/* {show && ( */}
