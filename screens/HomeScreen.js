@@ -233,7 +233,7 @@ export default function HomeScreen({route, navigation}) {
 
                         )}
                         leftOpenValue={0}
-                        rightOpenValue={-150}
+                        rightOpenValue={-100}
 
                         onRowOpen={(rowKey, rowMap) => {
                             setTimeout(() => {
@@ -266,7 +266,11 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     bodyArea: {
-        flex: 1
+        flex: 1,
+        borderWidth: 1,
+        width: '100%',
+        borderColor: 'blue',
+        alignItems: 'center'
     },
     contentBox: {
       marginTop: 20,

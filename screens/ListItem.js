@@ -22,61 +22,83 @@ const toggleSwitch = () => {
 
 
 return (
-    <View style={styles.item}>
-        <TouchableHighlight onPress={() => navigation.navigate("Edit", {
+    <View style={styles.itemContainer}>
+        <TouchableHighlight style={styles.itemBox1} onPress={() => navigation.navigate("Edit", {
             newDate: item
         })}>
             <View style={styles.timeBox}>
                 <Text style={styles.time}>{item.title} {item.key}</Text>
                 <View style={styles.switchBox}>
-                    <Switch
-                        trackColor={{ false: "#000000", true: "#25ff24" }}
-                        thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onChange={toggleSwitch}
-                        value={isEnabled}
-                    />
-                    <TouchableHighlight
-                        onpress={() => console.log('options')}
-                    >
-                        <Entypo name="dots-three-horizontal" size={24} color="white" />
-                    </TouchableHighlight>
                 </View>
             </View>
         </TouchableHighlight>
-        {/*<View style={styles.editContainer}>*/}
-            {/*<View style={styles.editBox}>*/}
-                {/*<Button*/}
-                    {/*title="Edit Time"*/}
-                    {/*onPress={() => navigation.navigate("Edit", {*/}
-                        {/*newDate: item*/}
-                    {/*})}*/}
-                {/*/>*/}
-            {/*</View>*/}
-        {/*</View>*/}
+
+        <View style={styles.itemBox2}>
+            <Switch
+                trackColor={{ false: "#000000", true: "#25ff24" }}
+                thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onChange={toggleSwitch}
+                value={isEnabled}
+            />
+            <TouchableHighlight
+                onpress={() => console.log('options')}
+            >
+                <Entypo name="dots-three-horizontal" size={24} color="white" />
+            </TouchableHighlight>
+        </View>
     </View>
 );
 
 };
 
 const styles = StyleSheet.create({
-    timeBox:{
+    itemContainer:{
+        marginBottom: 20,
+        backgroundColor: '#000',
+        borderColor: '#ffa04c',
+        borderWidth: 2,
+        marginLeft: 30,
         height: 100,
-        width: 295,
+        width: 300,
+        borderRadius: 20,
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    itemBox1:{
+        width:'75%'
+    },
+    itemBox2:{
+        width:'25%',
+        height: '100%',
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20
+    },
+    timeBox:{
+        height: '100%',
+        width: '100%',
         padding: 5,
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
         borderColor: '#fff',
-        borderColor: '#3e4948',
-        borderWidth: 2,
-        borderRadius: 20
+        // borderColor: '#3e4948',
+        borderWidth: 4,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20
         //borderTopWidth: 2,
         //borderBottomWidth:2
     },
     time:{
         color: '#fff',
-        fontSize: 45
+        fontSize: 45,
+        borderColor: 'red',
+        borderWidth: 1,
+
     },
     // editContainer:{
     //   flexDirection:'row'
@@ -86,16 +108,12 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         color: '#ff6773',
         borderColor: '#ffd61d',
-        borderWidth: 1,
+        borderWidth: 3,
         marginTop: 10,
         width: 100
     },
     editButton:{
         color: '#ff0006'
-    },
-    item:{
-        marginBottom: 20,
-        backgroundColor: '#000'
     },
     switchBox:{
         flexDirection: 'column',
