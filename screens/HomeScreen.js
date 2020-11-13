@@ -170,17 +170,19 @@ export default function HomeScreen({route, navigation}) {
 
           let time = [];
           let period = "";
+            let offset = new Date().getTimezoneOffset() * -1;
 
           userInfo.forEach((userInfoItem, index) => {
              //console.log('date in loop', userInfoItem);
               let tempTime = "";
 
-              let hours = new Date(userInfoItem.device_time).getHours();
+              let hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
+              console.log('offset ', offset);
               if(hours >= 12){
-                  period = "PM"
+                  period = "AM"
               }
               else{
-                  period = "AM"
+                  period = "PM"
               }
               tempTime = ((hours + 11) % 12 + 1).toString();
               tempTime += ":";

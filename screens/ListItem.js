@@ -36,6 +36,11 @@ return (
                         onChange={toggleSwitch}
                         value={isEnabled}
                     />
+                    <TouchableHighlight
+                        onpress={() => console.log('options')}
+                    >
+                        <Entypo name="dots-three-horizontal" size={24} color="white" />
+                    </TouchableHighlight>
                 </View>
             </View>
         </TouchableHighlight>

@@ -17,7 +17,7 @@ function Home() {
     return (
         <Tab.Navigator
             barStyle={{
-                backgroundColor: '#1393ff',
+                // backgroundColor: '#1393ff',
                 backgroundColor: '#292929',
                 color: '#fff',
             }}
@@ -29,6 +29,7 @@ function Home() {
         </Tab.Navigator>
     );
 }
+
 
 
 export default function App() {
@@ -44,12 +45,12 @@ export default function App() {
                 headerRight: () => (
                     <Button
                         onPress={() => alert('This is a button!')}
-                        title="Info"
+                        title="Add"
                         color="#fff"
                     />
                 ),
                 headerStyle: {
-                    backgroundColor: '#1393ff',
+                    // backgroundColor: '#1393ff',
                     backgroundColor: '#292929',
                     color: '#fff'
                 },

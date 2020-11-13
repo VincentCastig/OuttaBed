@@ -54,14 +54,10 @@ export default function EditScreen({route, navigation}) {
     // else{
     //     console.log('else date with no userInfo', date);
     // }
-    let offset = date.getTimezoneOffset() * -1;
-
+    let offset = new Date().getTimezoneOffset() * -1;
 
     if (userInfo) {
-        console.log('userInfo inside condition before put request userInfo', userInfo);
-        console.log('date inside condition before put request userInfo', date);
-
-        //axios.put(`http://localhost:3000/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
+        axios.put(`http://localhost:3000/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
     }
 
   return (
