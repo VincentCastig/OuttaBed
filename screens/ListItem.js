@@ -54,7 +54,7 @@ return (
             </TouchableHighlight>
         </View>
 
-        <EditTime visible={modalVisible} onClick={increment}></EditTime>
+        <EditTime visible={modalVisible} onClick={increment} newDate={item}></EditTime>
     </View>
 );
 
