@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Alert,
     Modal,
@@ -8,14 +8,16 @@ import {
     View
 } from "react-native";
 
-const EditTime = () => {
+export default function EditTime({visible, onClick}) {
     const [modalVisible, setModalVisible] = useState(false);
+
+
     return (
         <View style={styles.centeredView}>
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible}
+                visible={visible}
                 onRequestClose={() => {
                     Alert.alert("Modal has been closed.");
                 }}
@@ -26,9 +28,7 @@ const EditTime = () => {
 
                         <TouchableHighlight
                             style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                            onPress={() => {
-                                setModalVisible(!modalVisible);
-                            }}
+                            onPress={onClick}
                         >
                             <Text style={styles.textStyle}>Hide Modal</Text>
                         </TouchableHighlight>
@@ -36,14 +36,14 @@ const EditTime = () => {
                 </View>
             </Modal>
 
-            <TouchableHighlight
-                style={styles.openButton}
-                onPress={() => {
-                    setModalVisible(true);
-                }}
-            >
-                <Text style={styles.textStyle}>Show Modal</Text>
-            </TouchableHighlight>
+            {/*<TouchableHighlight*/}
+                {/*style={styles.openButton}*/}
+                {/*onPress={() => {*/}
+                    {/*setModalVisible(true);*/}
+                {/*}}*/}
+            {/*>*/}
+                {/*<Text style={styles.textStyle}>Show Modal</Text>*/}
+            {/*</TouchableHighlight>*/}
         </View>
     );
 };
@@ -86,5 +86,3 @@ const styles = StyleSheet.create({
         textAlign: "center"
     }
 });
-
-export default App;

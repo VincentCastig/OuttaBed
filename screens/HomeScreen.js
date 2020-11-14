@@ -219,7 +219,7 @@ export default function HomeScreen({route, navigation}) {
             <View style={styles.bodyArea}>
                 <SafeAreaView style={styles.contentBox}>
                     <SwipeListView
-                        style={styles.swipelist}
+                        // style={styles.swipelist}
                         useFlatList={true}
                         data={DATA}
                         renderItem={renderItem}
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'green',
         width: '100%',
-        alignItems: 'center'
+        // alignItems: 'center'
     },
     text:{
         color: '#fff'

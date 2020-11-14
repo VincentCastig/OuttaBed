@@ -2,11 +2,17 @@ import React, {useState} from 'react';
 import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, TouchableHighlight} from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
-import { SwipeListView } from 'react-native-swipe-list-view';
+// import { SwipeListView } from 'react-native-swipe-list-view';
 import EditTime from '../components/EditModal';
 
 export default function Item( {item, navigation} ) {
 const [isEnabled, setIsEnabled] = useState(item.active);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const increment = () => {
+        setModalVisible(!modalVisible);
+        console.log(modalVisible);
+    };
 
 const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
@@ -22,9 +28,10 @@ const toggleSwitch = () => {
 
 return (
     <View style={styles.itemContainer}>
-        <TouchableHighlight style={styles.itemBox1} onPress={() => navigation.navigate("Edit", {
-            newDate: item
-        })}>
+        <TouchableHighlight style={styles.itemBox1} onPress={() => {
+            setModalVisible(true);
+            console.log(modalVisible);
+        }}>
             <View style={styles.timeBox}>
                 <Text style={styles.time}>{item.title} {item.key}</Text>
                 <View style={styles.switchBox}>
@@ -46,6 +53,8 @@ return (
                 <Entypo name="dots-three-horizontal" size={24} color="white" />
             </TouchableHighlight>
         </View>
+
+        <EditTime visible={modalVisible} onClick={increment}></EditTime>
     </View>
 );
 
