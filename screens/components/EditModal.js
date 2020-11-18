@@ -13,9 +13,9 @@ import {
     Button
 } from "react-native";
 
-export default function EditTime({visible, onClick, newDate}) {
-    let [date, setDate] = useState(new Date(1598051730000));
+export default function EditTime({visible, showEdit, newDate, updateTimes}) {
     let [userInfo, setUserInfo] = useState(newDate);
+    let [date, setDate] = useState(new Date (newDate.device_time));
     const [mode, setMode] = useState('time');
     const [show, setShow] = useState(false);
     const [routeParams, setRouteParams] = useState(true);
@@ -24,7 +24,6 @@ export default function EditTime({visible, onClick, newDate}) {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        console.log('changing date to ', date)
     };
 
     const showMode = currentMode => {
@@ -36,29 +35,41 @@ export default function EditTime({visible, onClick, newDate}) {
         showMode('date');
     };
 
-
     const showTimepicker = () => {
         showMode('time');
     };
 
-    useEffect(() => {
-            setUserInfo(newDate);
-            date = new Date(userInfo.deviceTime);
-            setRouteParams(false);
-            console.log('date from params ', date)
-    });
+    const saveTime = ({date, id}) => {
+        showEdit();
+        console.log('save date ', date);
+        updateTimes(date, id);
+        // axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: id, device_time: date, device_id: Constants.deviceId}).then(res => console.log('res.data ', res.data)).catch(error => console.log(error));
+    };
 
-    if (routeParams) {
-        date = new Date(newDate.deviceTime);
-    }
+    console.log('date in edit modal', newDate.device_ime);
+
+    // useEffect(() => {
+    //         setUserInfo(newDate);
+    //         date = new Date(userInfo.deviceTime);
+    //         setRouteParams(false);
+    //         console.log('date in useEffect ', date)
+    // });
+    //
+    // if (routeParams) {
+    //     date = new Date(newDate.deviceTime);
+    // }
 
     let offset = new Date().getTimezoneOffset() * -1;
 
+    console.log('the new date ', date);
 
-    if (userInfo) {
-        console.log('userInfo ', userInfo);
-        axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log(res.data)).catch(error => console.log(error));
-    }
+
+    // if (userInfo) {
+    //     console.log('userInfo deviceTime before request', userInfo.deviceTime);
+    //     console.log('visible ', visible);
+    //     console.log('newDate ', newDate);
+    //     axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log('res.data ', res.data)).catch(error => console.log(error));
+    // }
 
 
     return (
@@ -80,7 +91,7 @@ export default function EditTime({visible, onClick, newDate}) {
                                 styleDisabled={{color: 'red'}}
                                 title="Save"
                                 //fix this
-                                onPress={() => navigation.navigate("Home", { date: Date.parse(date), id: userInfo.id})}
+                                onPress={() => saveTime({ date: Date.parse(date), id: userInfo.id})}
                             />
                         </View>
                         {/* {show && ( */}
@@ -99,7 +110,7 @@ export default function EditTime({visible, onClick, newDate}) {
 
                         <TouchableHighlight
                             style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                            onPress={onClick}
+                            onPress={showEdit}
                         >
                             <Text style={styles.textStyle}>Cancel</Text>
                         </TouchableHighlight>

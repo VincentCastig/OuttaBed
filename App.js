@@ -52,7 +52,7 @@ export default function App() {
                 headerStyle: {
                     // backgroundColor: '#1393ff',
                     backgroundColor: '#292929',
-                    color: '#fff'
+                    // color: '#fff'
                 },
             }}
         />

@@ -46,13 +46,11 @@ export default function EditScreen({route, navigation}) {
 
 
     // if(userInfo && typeof userInfo.deviceTime == "number") {
-    //     console.log('userInfo ', userInfo);
+    //
     //     date = new Date(userInfo.deviceTime);
-    //     console.log('new Date from userInfo.deviceTime ', date);
     //     route.params = "";
     // }
     // else{
-    //     console.log('else date with no userInfo', date);
     // }
     let offset = new Date().getTimezoneOffset() * -1;
 

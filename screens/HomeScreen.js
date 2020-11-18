@@ -1,7 +1,7 @@
+
 import React, {Component, useState, ListView, useEffect, useRef} from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import TimePicker from '../components/TimePicker';
 import Constants from 'expo-constants';
 import axios from 'axios';
 import expoAxios from '../src/api/expoAxios';
@@ -17,7 +17,7 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 
 
 export default function HomeScreen({route, navigation}) {
-    let [userInfo, setUserInfo] = useState([{'id': 0, 'device_time': new Date(1598051730000)}]);
+    const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
     const notificationListener = useRef();
     const responseListener = useRef();
@@ -29,13 +29,14 @@ export default function HomeScreen({route, navigation}) {
             ),
         });
     }, [navigation]);
+
+
     //
     // <View>
     //     <Entypo name="plus" size={24} color="black" />
     // </View>
 
 
-    console.log(navigation);
 
 
     // useEffect(() => {
@@ -147,6 +148,22 @@ export default function HomeScreen({route, navigation}) {
         }, []);
     // }
 
+        const updateTimes = (date, id) => {
+            console.log('updating the times ', date, id);
+
+            userInfo.forEach((userInfoItem, index) => {
+                if (userInfoItem.id === id) {
+                    console.log('userInfoItem id', userInfoItem.id);
+                    return userInfo[index].device_time = date;
+                }
+                return userInfoItem;
+            });
+
+            setUserInfo([]);
+            setUserInfo(userInfo);
+            //updateTitle(user_info);
+
+        };
 
         if (route.params) {
             //console.log('userInfo before route.params.data ', userInfo);
@@ -160,29 +177,35 @@ export default function HomeScreen({route, navigation}) {
             //console.log('userInfo after route.params.data ', userInfo)
         }
         else{
-            //console.log('before parse ', userInfo);
+            console.log('before parse ', userInfo.id);
             userInfo.forEach((userInfoItem, index) => {
+                if (typeof userInfoItem.device_time == 'number') {
+                    return;
+                }
                 return userInfo[index].device_time = Date.parse(userInfoItem.device_time);
             });
             //console.log('parse ', userInfo)
         }
 
+        console.log('here we go');
+
 
           let time = [];
           let period = "";
-            let offset = new Date().getTimezoneOffset() * -1;
+          let offset = new Date().getTimezoneOffset() * -1;
+
 
           userInfo.forEach((userInfoItem, index) => {
-             //console.log('date in loop', userInfoItem);
+             console.log('index in loop', index);
               let tempTime = "";
 
               let hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
-              console.log('offset ', offset);
+
               if(hours >= 12){
-                  period = "AM"
+                  period = "PM"
               }
               else{
-                  period = "PM"
+                  period = "AM"
               }
               tempTime = ((hours + 11) % 12 + 1).toString();
               tempTime += ":";
@@ -192,23 +215,26 @@ export default function HomeScreen({route, navigation}) {
               else{
                   tempTime += new Date(userInfoItem.device_time).getMinutes();
               }
-              //console.log('time in loop', time);
 
               time.push(tempTime);
               userInfoItem.title = tempTime + ' ' + period;
 
               return userInfo[index] = userInfoItem;
-
           });
+            //updateTitle('time');
 
             const renderItem = ({ item }) => (
-                <Item item={item} navigation={navigation}/>
+                <Item item={item} updateTimes={updateTimes}/>
               );
 
-            const DATA = userInfo.map(timeItem => {
-                return {id: timeItem.id, 'title': timeItem.title, 'deviceTime': timeItem.device_time, 'active': timeItem.active};
-            });
 
+    if(userInfo.length === 0){
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        )
+    }
 
     return (
         <View style={styles.container }>
@@ -221,7 +247,7 @@ export default function HomeScreen({route, navigation}) {
                     <SwipeListView
                         // style={styles.swipelist}
                         useFlatList={true}
-                        data={DATA}
+                        data={userInfo}
                         renderItem={renderItem}
                         keyExtractor={(item) => item.id.toString()}
                         width={'100%'}
