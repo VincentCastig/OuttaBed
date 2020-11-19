@@ -194,12 +194,23 @@ export default function HomeScreen({route, navigation}) {
           let period = "";
           let offset = new Date().getTimezoneOffset() * -1;
 
+          console.log('offset ', offset)
+
 
           userInfo.forEach((userInfoItem, index) => {
              console.log('index in loop', index);
               let tempTime = "";
+              let hours = '';
 
-              let hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
+              if (offset < 0) {
+                  hours = new Date(userInfoItem.device_time).getUTCHours() + (offset/60);
+              }
+              else{
+                  hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
+              }
+              //let hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
+
+              console.log('hours ', hours);
 
               if(hours >= 12){
                   period = "PM"
@@ -207,6 +218,7 @@ export default function HomeScreen({route, navigation}) {
               else{
                   period = "AM"
               }
+
               tempTime = ((hours + 11) % 12 + 1).toString();
               tempTime += ":";
               if(new Date(userInfoItem.device_time).getMinutes() < 10){

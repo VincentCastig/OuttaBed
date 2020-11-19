@@ -43,10 +43,9 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
         showEdit();
         console.log('save date ', date);
         updateTimes(date, id);
-        // axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: id, device_time: date, device_id: Constants.deviceId}).then(res => console.log('res.data ', res.data)).catch(error => console.log(error));
+        let myDate = new Date(date);
+        axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: id, device_time: myDate, device_id: Constants.deviceId}).then(res => console.log('res.data ', res.data)).catch(error => console.log(error));
     };
-
-    console.log('date in edit modal', newDate.device_ime);
 
     // useEffect(() => {
     //         setUserInfo(newDate);
@@ -61,7 +60,6 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
 
     let offset = new Date().getTimezoneOffset() * -1;
 
-    console.log('the new date ', date);
 
 
     // if (userInfo) {
