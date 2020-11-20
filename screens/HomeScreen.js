@@ -1,6 +1,6 @@
 
 import React, {Component, useState, ListView, useEffect, useRef} from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch, TouchableHighlight } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch, TouchableWithoutFeedback } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import axios from 'axios';
@@ -22,9 +22,19 @@ export default function HomeScreen({route, navigation}) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
+    const addIt = (data) => {
+        setUserInfo(userInfo => [...userInfo, data]);
+    };
+
     const addTime = () => {
         console.log('adding time ', Constants.deviceId);
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: Constants.deviceId}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: Constants.deviceId})
+            .then((res) => {
+                console.log('res ', res.data[0]);
+                addIt(res.data[0]);
+                console.log(userInfo);
+            })
+            .catch((error) => console.log('createUser error ', error));
     };
 
 
@@ -255,11 +265,11 @@ export default function HomeScreen({route, navigation}) {
                     {/*title="Update"*/}
                     {/**/}
                 {/*/>*/}
-                <TouchableHighlight
+                <TouchableWithoutFeedback
                     onPress={() => addTime()}
                 >
                 <Entypo name="plus" size={24} color="black" />
-                </TouchableHighlight>
+                </TouchableWithoutFeedback>
             </View>
             <View>
                 <Text style={styles.header}>Motivation Time </Text>

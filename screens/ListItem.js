@@ -31,7 +31,6 @@ return (
             </View>
         </TouchableHighlight>
 
-
         <View style={styles.itemBox2}>
             <Switch
                 trackColor={{ false: "#000000", true: "#25ff24" }}
