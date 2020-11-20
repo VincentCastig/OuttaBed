@@ -1,6 +1,6 @@
 
 import React, {Component, useState, ListView, useEffect, useRef} from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch, TouchableHighlight } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import axios from 'axios';
@@ -22,13 +22,10 @@ export default function HomeScreen({route, navigation}) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    React.useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Button onPress={() => console.log('add time')} title="Update count" />
-            ),
-        });
-    }, [navigation]);
+    const addTime = () => {
+        console.log('adding time ', Constants.deviceId);
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: Constants.deviceId}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
+    };
 
 
     //
@@ -74,7 +71,7 @@ export default function HomeScreen({route, navigation}) {
         // console.log('sending ', token.data);
         //console.log('sending deviceId', Constants.deviceId);
 
-        // localHost.post('/createUser', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
+        // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
 
 
             // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
@@ -194,7 +191,7 @@ export default function HomeScreen({route, navigation}) {
           let period = "";
           let offset = new Date().getTimezoneOffset() * -1;
 
-          console.log('offset ', offset)
+          console.log('offset ', offset);
 
 
           userInfo.forEach((userInfoItem, index) => {
@@ -250,6 +247,20 @@ export default function HomeScreen({route, navigation}) {
 
     return (
         <View style={styles.container }>
+            <View style={styles.titleBox}>
+                <Text>OutABed</Text>
+                <Text style={styles.title}>OutABed</Text>
+                {/*<Button*/}
+                    {/*onPress={() => addTime()}*/}
+                    {/*title="Update"*/}
+                    {/**/}
+                {/*/>*/}
+                <TouchableHighlight
+                    onPress={() => addTime()}
+                >
+                <Entypo name="plus" size={24} color="black" />
+                </TouchableHighlight>
+            </View>
             <View>
                 <Text style={styles.header}>Motivation Time </Text>
             </View>
@@ -295,6 +306,17 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    titleBox:{
+        height: 120,
+        width: '100%',
+        backgroundColor: '#a2a8af',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    title:{
+        color: '#fff'
     },
     header: {
         color: '#fff',

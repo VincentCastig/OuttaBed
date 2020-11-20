@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, TouchableHighlight} from 'react-native';
-import Swipeout from 'react-native-swipeout';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 // import { SwipeListView } from 'react-native-swipe-list-view';
 import EditTime from './components/EditModal';
@@ -17,13 +16,6 @@ const [isEnabled, setIsEnabled] = useState(item.active);
 const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
 };
-    // Buttons
-    let swipeoutBtns = [
-        {
-            text: 'Button'
-        }
-    ];
-    //right={swipeoutBtns}
     console.log('item title ', item);
 
 
