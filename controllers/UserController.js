@@ -32,6 +32,16 @@ module.exports = {
             console.log('error ', error)
         })
     },
+    deleteTime: (req, res) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+
+        console.log('device ', id);
+
+        db.deleteTime(id).then((data)=>res.status('200').send(data)).catch((error)=> {
+            console.log('error ', error)
+        })
+    },
     getTokens: (req, res) => {
         const db = req.app.get('db');
 

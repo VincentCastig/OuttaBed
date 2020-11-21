@@ -37,6 +37,17 @@ export default function HomeScreen({route, navigation}) {
             .catch((error) => console.log('createUser error ', error));
     };
 
+    const deleteTime = (time) => {
+        console.log('deleting ', time.id);
+        axios.delete(`https://get-up-now.herokuapp.com/delete-time`, {id: time.id})
+            .then(res => {
+                console.log('deleteTime res ', res)
+            })
+            .catch(error => {
+                console.log('deleteTime error', error)
+            })
+    };
+
 
     //
     // <View>
@@ -257,18 +268,17 @@ export default function HomeScreen({route, navigation}) {
 
     return (
         <View style={styles.container }>
-            <View style={styles.titleBox}>
-                <Text>OutABed</Text>
+            <View style={styles.titleContainer}>
+
                 <Text style={styles.title}>OutABed</Text>
-                {/*<Button*/}
-                    {/*onPress={() => addTime()}*/}
-                    {/*title="Update"*/}
-                    {/**/}
-                {/*/>*/}
+
+
                 <TouchableWithoutFeedback
                     onPress={() => addTime()}
                 >
-                <Entypo name="plus" size={24} color="black" />
+                    <View style={styles.addTimeBox}>
+                        <Entypo name="plus" size={24} color="#FFE702" />
+                    </View>
                 </TouchableWithoutFeedback>
             </View>
             <View>
@@ -287,7 +297,7 @@ export default function HomeScreen({route, navigation}) {
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
                                 <TouchableOpacity  style={styles.delete} onPress={ () => rowMap[rowData.item.key].closeRow() }>
-                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon}/>
+                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon} onPress={() => deleteTime(rowData.item)}/>
                                 </TouchableOpacity>
                             </View>
 
@@ -317,16 +327,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    titleBox:{
-        height: 120,
+    titleContainer:{
+        height: 100,
         width: '100%',
-        backgroundColor: '#a2a8af',
-        justifyContent: 'space-between',
+        paddingTop: 20,
+        backgroundColor: '#292929',
+        // justifyContent: 'space-between',
         alignItems: 'center',
-        flexDirection: 'row'
+        justifyContent: 'center',
+        flexDirection: 'row',
     },
     title:{
-        color: '#fff'
+        color: '#fff',
+        // position: 'absolute',
+        // right: '40%',
+    },
+    addTimeBox:{
+        position: 'absolute',
+        right: 10
     },
     header: {
         color: '#fff',

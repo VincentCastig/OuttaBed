@@ -44,6 +44,8 @@ app.post('/create-user', userController.createUser);
 
 app.put('/add-time', userController.addTime);
 
+app.delete('/delete-time', userController.deleteTime());
+
 app.get('/get-time/:device_id', userController.getTime);
 
 app.get('/get-all-tokens', userController.getTokens);
