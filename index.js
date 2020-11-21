@@ -31,7 +31,6 @@ const connectionString = process.env.DATABASE_URL; //Connects to heroku
 massive(connectionString).then(db => {
     app.set('db', db);
 
-
     sendNotifications()
 });
 
@@ -42,7 +41,7 @@ app.post('/create-user', userController.createUser);
 
 app.put('/add-time', userController.addTime);
 
-app.delete('/delete-time', userController.deleteTime);
+app.delete('/delete-time/:id', userController.deleteTime);
 
 app.get('/get-time/:device_id', userController.getTime);
 

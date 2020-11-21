@@ -39,7 +39,7 @@ export default function HomeScreen({route, navigation}) {
 
     const deleteTime = (time) => {
         console.log('deleting ', time.id);
-        axios.delete(`https://get-up-now.herokuapp.com/delete-time`, {id: time.id})
+        axios.delete(`https://get-up-now.herokuapp.com/delete-time/${time.id}`)
             .then(res => {
                 console.log('deleteTime res ', res)
             })
