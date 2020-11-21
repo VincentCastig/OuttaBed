@@ -40,7 +40,11 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 app.post('/create-user', userController.createUser);
 
+// app.post('/create-time', userController.createTime);
+
 app.put('/add-time', userController.addTime);
+
+app.delete('/delete-time', userController.deleteTime());
 
 app.get('/get-time/:device_id', userController.getTime);
 

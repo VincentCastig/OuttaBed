@@ -1,6 +1,6 @@
 
 import React, {Component, useState, ListView, useEffect, useRef} from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch, TouchableWithoutFeedback } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import axios from 'axios';
@@ -22,13 +22,31 @@ export default function HomeScreen({route, navigation}) {
     const notificationListener = useRef();
     const responseListener = useRef();
 
-    React.useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <Button onPress={() => console.log('add time')} title="Update count" />
-            ),
-        });
-    }, [navigation]);
+    const addIt = (data) => {
+        setUserInfo(userInfo => [...userInfo, data]);
+    };
+
+    const addTime = () => {
+        console.log('adding time ', Constants.deviceId);
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: Constants.deviceId})
+            .then((res) => {
+                console.log('res ', res.data[0]);
+                addIt(res.data[0]);
+                console.log(userInfo);
+            })
+            .catch((error) => console.log('createUser error ', error));
+    };
+
+    const deleteTime = (time) => {
+        console.log('deleting ', time.id);
+        axios.delete(`https://get-up-now.herokuapp.com/delete-time`, {id: time.id})
+            .then(res => {
+                console.log('deleteTime res ', res)
+            })
+            .catch(error => {
+                console.log('deleteTime error', error)
+            })
+    };
 
 
     //
@@ -74,7 +92,7 @@ export default function HomeScreen({route, navigation}) {
         // console.log('sending ', token.data);
         //console.log('sending deviceId', Constants.deviceId);
 
-        // localHost.post('/createUser', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
+        // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
 
 
             // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
@@ -194,7 +212,7 @@ export default function HomeScreen({route, navigation}) {
           let period = "";
           let offset = new Date().getTimezoneOffset() * -1;
 
-          console.log('offset ', offset)
+          console.log('offset ', offset);
 
 
           userInfo.forEach((userInfoItem, index) => {
@@ -250,6 +268,19 @@ export default function HomeScreen({route, navigation}) {
 
     return (
         <View style={styles.container }>
+            <View style={styles.titleContainer}>
+
+                <Text style={styles.title}>OutABed</Text>
+
+
+                <TouchableWithoutFeedback
+                    onPress={() => addTime()}
+                >
+                    <View style={styles.addTimeBox}>
+                        <Entypo name="plus" size={24} color="#FFE702" />
+                    </View>
+                </TouchableWithoutFeedback>
+            </View>
             <View>
                 <Text style={styles.header}>Motivation Time </Text>
             </View>
@@ -266,7 +297,7 @@ export default function HomeScreen({route, navigation}) {
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
                                 <TouchableOpacity  style={styles.delete} onPress={ () => rowMap[rowData.item.key].closeRow() }>
-                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon}/>
+                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon} onPress={() => deleteTime(rowData.item)}/>
                                 </TouchableOpacity>
                             </View>
 
@@ -295,6 +326,25 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    titleContainer:{
+        height: 100,
+        width: '100%',
+        paddingTop: 20,
+        backgroundColor: '#292929',
+        // justifyContent: 'space-between',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    title:{
+        color: '#fff',
+        // position: 'absolute',
+        // right: '40%',
+    },
+    addTimeBox:{
+        position: 'absolute',
+        right: 10
     },
     header: {
         color: '#fff',
