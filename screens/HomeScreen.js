@@ -49,11 +49,6 @@ export default function HomeScreen({route, navigation}) {
     };
 
 
-    //
-    // <View>
-    //     <Entypo name="plus" size={24} color="black" />
-    // </View>
-
 
 
 

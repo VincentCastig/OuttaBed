@@ -5,7 +5,7 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import EditTime from './components/EditModal';
 
 export default function Item( {item, navigation, updateTimes} ) {
-const [isEnabled, setIsEnabled] = useState(item.active);
+    const [isEnabled, setIsEnabled] = useState(item.active);
     const [modalVisible, setModalVisible] = useState(false);
 
     const setVisible = () => {
@@ -13,16 +13,20 @@ const [isEnabled, setIsEnabled] = useState(item.active);
         console.log('modalVisible ', modalVisible);
     };
 
-const toggleSwitch = () => {
-    setIsEnabled(!isEnabled);
-};
-    console.log('item title ', item);
+    const toggleSwitch = () => {
+        setIsEnabled(!isEnabled);
+    };
+
+    const showEditBox = () => {
+        console.log('showing')
+    };
+
 
 
 return (
     <View style={styles.itemContainer}>
         <TouchableHighlight style={styles.itemBox1} onPress={() => {
-            setModalVisible(true);
+            showEditBox();
         }}>
             <View style={styles.timeBox}>
                 <Text style={styles.time}>{item.title} {item.key}</Text>
@@ -39,14 +43,17 @@ return (
                 onChange={toggleSwitch}
                 value={isEnabled}
             />
-            <TouchableHighlight
-                onpress={() => console.log('options')}
-            >
+        <TouchableHighlight  onPress={() => {
+            showEditBox();
+        }}>
+            <View >
                 <Entypo name="dots-three-horizontal" size={24} color="white" />
-            </TouchableHighlight>
+            </View>
+        </TouchableHighlight>
         </View>
 
-        <EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>
+
+        {/*<EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>*/}
     </View>
 );
 
