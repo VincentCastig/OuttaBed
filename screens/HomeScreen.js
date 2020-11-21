@@ -123,13 +123,9 @@ export default function HomeScreen({route, navigation}) {
     //     console.log(e)
     // }
 
-
-
     // };
     //
     // sendToken();
-
-
 
     // constructor(props) {
     //     super(props);
@@ -137,10 +133,6 @@ export default function HomeScreen({route, navigation}) {
     //         device_time: props.route.params,
     //     }
     //   }
-
-
-
-
 
     // if (!userInfo) {
     //     userInfo = [new userInfo(1598051730000)];
@@ -151,7 +143,7 @@ export default function HomeScreen({route, navigation}) {
             Constants.deviceId = '92C2B1A7-3689-48B5-B53C-42197298D209';
             //Constants.deviceId = 'EA612344-3AA9-4150-8226-A6C6D1FF0144';
             //console.log('Constants.deviceId ', Constants.deviceId);
-            localHost.get(`/get-time/${Constants.deviceId}`).then(res => {
+            axios.get(`https://get-up-now.herokuapp.com/get-time/${Constants.deviceId}`).then(res => {
                     const user_info = res.data.map(timeData => {
                         return timeData;
                     });
