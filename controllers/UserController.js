@@ -26,7 +26,7 @@ module.exports = {
         const {id, active} = req.body;
         console.log('updating active now ', active);
 
-        db.addTime(id, active.toString()).then((data)=>res.status('200').send(data)).catch((error)=> {
+        db.updateActive(id, active).then((data)=>res.status('200').send(data)).catch((error)=> {
             console.log('error ', error)
         })
     },
