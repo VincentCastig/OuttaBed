@@ -30,7 +30,6 @@ export default function Item( {item, navigation, updateTimes} ) {
     };
 
     const showEditBox = () => {
-        console.log('showing');
         setDotsModalVisible(!dotsModalVisible);
         console.log('modalVisible ', modalVisible);
     };
@@ -44,7 +43,7 @@ return (
     <View style={styles.itemContainer}>
 
         <TouchableHighlight style={styles.itemBox1} onPress={() => {
-            showEditBox();
+            setVisible();
         }}>
             <View style={styles.timeBox}>
                 <Text style={styles.time}>{item.title} {item.key}</Text>
