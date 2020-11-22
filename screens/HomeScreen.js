@@ -19,6 +19,7 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
+    const [dotsModalVisible, setDotsModalVisible] = useState(true);
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -38,10 +39,10 @@ export default function HomeScreen({route, navigation}) {
     };
 
     const deleteTime = (time) => {
-        console.log('deleting ', time.id);
         axios.delete(`https://get-up-now.herokuapp.com/delete-time/${time.id}`)
             .then(res => {
-                console.log('deleteTime res ', res)
+                setUserInfo(userInfo.filter((item) => item.id !== time.id));
+                console.log('deleteTime res ', res);
             })
             .catch(error => {
                 console.log('deleteTime error', error)
@@ -296,13 +297,17 @@ export default function HomeScreen({route, navigation}) {
                         )}
                         leftOpenValue={0}
                         rightOpenValue={-100}
-                        onRowOpen={(rowKey, rowMap) => {
-                            setTimeout(() => {
-                                rowMap[rowKey].closeRow()
-                            }, 2000)
-                        }}
+                        // onRowOpen={(rowKey, rowMap) => {
+                        //     setTimeout(() => {
+                        //         rowMap[rowKey].closeRow()
+                        //     }, 4000)
+                        // }}
                     />
                 </SafeAreaView>
+                {/*{dotsModalVisible ? (*/}
+                    {/*<View style={styles.dotsModalBackground}>*/}
+                    {/*</View>*/}
+                {/*): null}*/}
             </View>
         </View>
     );
@@ -331,8 +336,6 @@ const styles = StyleSheet.create({
     },
     title:{
         color: '#fff',
-        // position: 'absolute',
-        // right: '40%',
     },
     addTimeBox:{
         position: 'absolute',
@@ -350,7 +353,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         width: '100%',
         borderColor: 'blue',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     contentBox: {
       marginTop: 20,
@@ -363,6 +366,7 @@ const styles = StyleSheet.create({
       borderColor: 'yellow',
       width: "100%",
       height: 'auto',
+        zIndex: 2
     },
     swipelist:{
         borderWidth: 2,
@@ -378,6 +382,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginVertical: 50,
         flexWrap: 'wrap',
+        zIndex: -1
     },
     delete:{
         width: 50,
@@ -387,5 +392,14 @@ const styles = StyleSheet.create({
     },
     deleteIcon:{
         marginRight:5
-    }
+    },
+    // dotsModalBackground:{
+    //     width: 50,
+    //     height: 550,
+    //     borderWidth: 2,
+    //     borderColor: 'green',
+    //     position:'absolute',
+    //     top: 0,
+    //     zIndex: 2
+    // }
 });
