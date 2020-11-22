@@ -30,7 +30,6 @@ export default function Item( {item, navigation, updateTimes} ) {
     };
 
     const showEditBox = () => {
-        console.log('showing');
         setDotsModalVisible(!dotsModalVisible);
         console.log('modalVisible ', modalVisible);
     };
@@ -44,7 +43,7 @@ return (
     <View style={styles.itemContainer}>
 
         <TouchableHighlight style={styles.itemBox1} onPress={() => {
-            showEditBox();
+            setVisible();
         }}>
             <View style={styles.timeBox}>
                 <Text style={styles.time}>{item.title} {item.key}</Text>
@@ -62,34 +61,34 @@ return (
                 value={isEnabled}
             />
 
-            <View style={{zIndex: 3}}>
-                <TouchableHighlight  onPress={() => {
-                    showEditBox();
-                }}>
-                    <View style={styles.horizontalDots}>
-                        <Entypo name="dots-three-horizontal" size={24} color="white" />
-                    </View>
-                </TouchableHighlight>
+            {/*<View style={{zIndex: 3}}>*/}
+                {/*<TouchableHighlight  onPress={() => {*/}
+                    {/*showEditBox();*/}
+                {/*}}>*/}
+                    {/*<View style={styles.horizontalDots}>*/}
+                        {/*<Entypo name="dots-three-horizontal" size={24} color="white" />*/}
+                    {/*</View>*/}
+                {/*</TouchableHighlight>*/}
 
-                {dotsModalVisible ? (
-                    <TouchableHighlight  onPress={() => {
-                        testButton();
-                    }}>
-                        <View style={styles.dotsModal}>
-                            <View style={styles.dotsModalText}>
-                                <Text>Edit</Text>
-                            </View>
-                            <View style={styles.dotsModalText}>
-                                <Text>Delete</Text>
-                            </View>
-                            <View style={styles.dotsModalCancel}>
-                                <Text>Cancel</Text>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                ): null
-                }
-            </View>
+                {/*{dotsModalVisible ? (*/}
+                    {/*<TouchableHighlight  onPress={() => {*/}
+                        {/*testButton();*/}
+                    {/*}}>*/}
+                        {/*<View style={styles.dotsModal}>*/}
+                            {/*<View style={styles.dotsModalText}>*/}
+                                {/*<Text>Edit</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.dotsModalText}>*/}
+                                {/*<Text>Delete</Text>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.dotsModalCancel}>*/}
+                                {/*<Text>Cancel</Text>*/}
+                            {/*</View>*/}
+                        {/*</View>*/}
+                    {/*</TouchableHighlight>*/}
+                {/*): null*/}
+                {/*}*/}
+            {/*</View>*/}
 
         </View>
 
@@ -124,7 +123,8 @@ const styles = StyleSheet.create({
         paddingTop: 13,
         paddingBottom: 10,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
+        justifyContent: 'center',
         borderTopRightRadius: 20,
         borderBottomRightRadius: 20,
         position: 'relative'

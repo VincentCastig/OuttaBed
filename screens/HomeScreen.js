@@ -253,8 +253,30 @@ export default function HomeScreen({route, navigation}) {
 
     if(userInfo.length === 0){
         return (
-            <View>
-                <Text>Loading...</Text>
+            <View style={styles.loadingWrapper}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>OutABed</Text>
+                    <TouchableWithoutFeedback
+                        onPress={() => addTime()}
+                    >
+                        <View style={styles.addTimeBox}>
+                            <Entypo name="plus" size={24} color="#fff" />
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
+
+                <View style={styles.loadingBody}>
+                    <View style={styles.noDataBox}>
+                        <TouchableOpacity
+                            onPress={() => addTime()}
+                        >
+                            <View style={styles.addButton}>
+                                <Entypo name="plus" size={36} color="#000" />
+                            </View>
+                        </TouchableOpacity>
+                        <Text style={styles.noDataText}>Add notifications</Text>
+                    </View>
+                </View>
             </View>
         )
     }
@@ -270,7 +292,7 @@ export default function HomeScreen({route, navigation}) {
                     onPress={() => addTime()}
                 >
                     <View style={styles.addTimeBox}>
-                        <Entypo name="plus" size={24} color="#FFE702" />
+                        <Entypo name="plus" size={24} color="#fff" />
                     </View>
                 </TouchableWithoutFeedback>
             </View>
@@ -316,6 +338,35 @@ export default function HomeScreen({route, navigation}) {
 
 
 const styles = StyleSheet.create({
+    loadingWrapper:{
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start'
+    },
+    loadingBody: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000'
+    },
+    noDataBox:{
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    addButton:{
+        width:40,
+        height: 40,
+        marginBottom: 5,
+        backgroundColor: '#ffad1c',
+        borderRadius:20,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    noDataText:{
+        color: '#fff'
+    },
     container: {
         flex: 1,
         backgroundColor: '#000',
