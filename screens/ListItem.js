@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, TouchableHighlight} from 'react-native';
+import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, Dimensions, TouchableHighlight} from 'react-native';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 // import { SwipeListView } from 'react-native-swipe-list-view';
 import EditTime from './components/EditModal';
+import axios from "axios/index";
 
 export default function Item( {item, navigation, updateTimes} ) {
     const [isEnabled, setIsEnabled] = useState(item.active);
     const [modalVisible, setModalVisible] = useState(false);
+    const [dotsModalVisible, setDotsModalVisible] = useState(false);
+
+    const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
 
     const setVisible = () => {
         setModalVisible(!modalVisible);
@@ -15,16 +20,29 @@ export default function Item( {item, navigation, updateTimes} ) {
 
     const toggleSwitch = () => {
         setIsEnabled(!isEnabled);
+        axios.put(`https://get-up-now.herokuapp.com/update-active`, {id: item.id, active: !isEnabled})
+            .then(res => {
+                console.log('res ', res);
+            })
+            .catch(error => {
+                console.log('error ', error);
+            });
     };
 
     const showEditBox = () => {
-        console.log('showing')
+        console.log('showing');
+        setDotsModalVisible(!dotsModalVisible);
+        console.log('modalVisible ', modalVisible);
+    };
+    const testButton = () => {
+        console.log('test button');
     };
 
 
 
 return (
     <View style={styles.itemContainer}>
+
         <TouchableHighlight style={styles.itemBox1} onPress={() => {
             showEditBox();
         }}>
@@ -43,14 +61,38 @@ return (
                 onChange={toggleSwitch}
                 value={isEnabled}
             />
-        <TouchableHighlight  onPress={() => {
-            showEditBox();
-        }}>
-            <View >
-                <Entypo name="dots-three-horizontal" size={24} color="white" />
+
+            <View style={{zIndex: 3}}>
+                <TouchableHighlight  onPress={() => {
+                    showEditBox();
+                }}>
+                    <View style={styles.horizontalDots}>
+                        <Entypo name="dots-three-horizontal" size={24} color="white" />
+                    </View>
+                </TouchableHighlight>
+
+                {dotsModalVisible ? (
+                    <TouchableHighlight  onPress={() => {
+                        testButton();
+                    }}>
+                        <View style={styles.dotsModal}>
+                            <View style={styles.dotsModalText}>
+                                <Text>Edit</Text>
+                            </View>
+                            <View style={styles.dotsModalText}>
+                                <Text>Delete</Text>
+                            </View>
+                            <View style={styles.dotsModalCancel}>
+                                <Text>Cancel</Text>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                ): null
+                }
             </View>
-        </TouchableHighlight>
+
         </View>
+
 
 
         {/*<EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>*/}
@@ -70,7 +112,8 @@ const styles = StyleSheet.create({
         width: 300,
         borderRadius: 20,
         alignItems: 'center',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        zIndex: 1
     },
     itemBox1:{
         width:'75%'
@@ -83,7 +126,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         borderTopRightRadius: 20,
-        borderBottomRightRadius: 20
+        borderBottomRightRadius: 20,
+        position: 'relative'
     },
     timeBox:{
         height: '100%',
@@ -94,7 +138,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderColor: '#fff',
         // borderColor: '#3e4948',
-        borderWidth: 4,
+        borderWidth: 2,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20
         //borderTopWidth: 2,
@@ -115,12 +159,48 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         color: '#ff6773',
         borderColor: '#ffd61d',
-        borderWidth: 3,
+        borderWidth: 1,
         marginTop: 10,
         width: 100
     },
-    editButton:{
-        color: '#ff0006'
+    horizontalDots:{
+        color: '#ff0006',
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 10,
+        width: 50,
+        alignItems: 'center'
+    },
+    dotsModalBackground:{
+        position: 'absolute',
+        left:0,
+        height: 400,
+        width: 350,
+        borderWidth: 1,
+        borderColor: 'green',
+        backgroundColor: '#fff',
+        zIndex: 3333
+    },
+    dotsModal:{
+        width: 100,
+        borderRadius: 10,
+        position: 'absolute',
+        bottom: -45,
+        right: 25,
+        borderColor: '#fff',
+        borderWidth: 1,
+        backgroundColor:'#fff',
+        zIndex: 3
+    },
+    dotsModalText:{
+        color: '#616161',
+        padding: 10,
+        borderBottomColor: '#9b9b9b',
+        borderBottomWidth: 1
+    },
+    dotsModalCancel:{
+        color: '#616161',
+        padding: 10,
     },
     switchBox:{
         flexDirection: 'column',

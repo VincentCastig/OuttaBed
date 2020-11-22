@@ -12,7 +12,6 @@ module.exports = {
         })
     },
     addTime: (req, res) => {
-        console.log('device_time');
         const db = req.app.get('db');
         const {device_time, device_id} = req.body;
 
@@ -22,10 +21,18 @@ module.exports = {
             console.log('error ', error)
         })
     },
+    updateActive: (req, res) => {
+        const db = req.app.get('db');
+        const {id, active} = req.body;
+        console.log('adding time now ', active);
+
+        db.addTime(id, active).then((data)=>res.status('200').send(data)).catch((error)=> {
+            console.log('error ', error)
+        })
+    },
     getTime: (req, res) => {
         const db = req.app.get('db');
         const {device_id} = req.params;
-
         console.log('device ', device_id);
 
         db.getTime(device_id).then((data)=>res.status('200').send(data)).catch((error)=> {
