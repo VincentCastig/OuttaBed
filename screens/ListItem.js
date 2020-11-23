@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     itemContainer:{
         marginBottom: 20,
         backgroundColor: '#000',
-        borderColor: '#ffa04c',
+        // borderColor: '#ffa04c',
         borderWidth: 2,
         marginLeft: 30,
         height: 100,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
-        borderColor: '#fff',
+        // borderColor: '#fff',
         // borderColor: '#3e4948',
         borderWidth: 2,
         borderTopLeftRadius: 20,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     time:{
         color: '#fff',
         fontSize: 45,
-        borderColor: 'red',
+        // borderColor: 'red',
         borderWidth: 1,
 
     },
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         //backgroundColor: '#4043ff',
         borderRadius: 4,
         color: '#ff6773',
-        borderColor: '#ffd61d',
+        // borderColor: '#ffd61d',
         borderWidth: 1,
         marginTop: 10,
         width: 100
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
         height: 400,
         width: 350,
         borderWidth: 1,
-        borderColor: 'green',
+        // borderColor: 'green',
         backgroundColor: '#fff',
         zIndex: 3333
     },
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: -45,
         right: 25,
-        borderColor: '#fff',
+        // borderColor: '#fff',
         borderWidth: 1,
         backgroundColor:'#fff',
         zIndex: 3

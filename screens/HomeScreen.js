@@ -271,7 +271,7 @@ export default function HomeScreen({route, navigation}) {
                             onPress={() => addTime()}
                         >
                             <View style={styles.addButton}>
-                                <Entypo name="plus" size={36} color="#000" />
+                                <Entypo name="plus" size={36} color="#fff" />
                             </View>
                         </TouchableOpacity>
                         <Text style={styles.noDataText}>Add notifications</Text>
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000'
+        backgroundColor: '#fff'
     },
     noDataBox:{
         justifyContent: 'center',
@@ -358,18 +358,18 @@ const styles = StyleSheet.create({
         width:40,
         height: 40,
         marginBottom: 5,
-        backgroundColor: '#ffad1c',
+        backgroundColor: '#000000',
         borderRadius:20,
         borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
     noDataText:{
-        color: '#fff'
+        color: '#000'
     },
     container: {
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
         // borderColor: 'red',
         // borderWidth: 2,
         alignItems: 'center',
@@ -414,7 +414,7 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
-      borderColor: 'yellow',
+      // borderColor: 'yellow',
       width: "100%",
       height: 'auto',
         zIndex: 2
