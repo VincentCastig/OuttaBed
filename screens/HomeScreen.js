@@ -29,7 +29,7 @@ export default function HomeScreen({route, navigation}) {
 
     const addTime = () => {
         console.log('adding time ', Constants.deviceId);
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: Constants.deviceId})
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken, device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -50,114 +50,55 @@ export default function HomeScreen({route, navigation}) {
     };
 
 
-    //
-    // <View>
-    //     <Entypo name="plus" size={24} color="black" />
-    // </View>
+
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => {
+            console.log('registerForPushNotificationsAsync token ', token);
+            setExpoPushToken(token);
+            //sendToken(token);
+            console.log('sent')
+        });
 
 
 
+        // This listener is fired whenever a notification is received while the app is foregrounded
+        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+            setNotification(notification);
+        });
 
-    // useEffect(() => {
-    //     registerForPushNotificationsAsync().then(token => {
-    //         console.log(token);
-    //         //setExpoPushToken(token);
-    //         // sendToken(token);
-    //     });
-    //
-    //
-    //
-    //     // This listener is fired whenever a notification is received while the app is foregrounded
-    //     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-    //         setNotification(notification);
-    //     });
-    //
-    //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    //     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-    //         console.log('listener ', response.notification);
-    //         navigation.navigate("Motivation", {
-    //             notification: response.notification
-    //         });
-    //         console.log('listen');
-    //     });
-    //
-    //
-    //     return () => {
-    //         Notifications.removeNotificationSubscription(notificationListener);
-    //         Notifications.removeNotificationSubscription(responseListener);
-    //     };
-    // }, []);
+        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log('listener ', response.notification);
+            navigation.navigate("Motivation", {
+                notification: response.notification
+            });
+            console.log('listen');
+        });
 
 
-    // const sendToken = async() => {
-        // console.log('sending ', token.data);
-        //console.log('sending deviceId', Constants.deviceId);
-
-        // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
-
-
-            // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+            Notifications.removeNotificationSubscription(responseListener);
+        };
+    }, []);
 
 
-
-
-        // const message = {
-        //     to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
-        //     sound: 'default',
-        //     title: 'Original Title',
-        //     body: 'And here is the body!',
-        //     data: {data: 'goes here'},
-        // };
-
-    // try {
-    //     expoAxios.post('/', {
-    //
-    //         to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
-    //         sound: 'default',
-    //         title: 'Marcus Aurelius',
-    //         body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
-    //         // data: {data: 'goes here'},
-    //
-    //     }).then((res) => console.log(res));
-    // }
-    // catch (e) {
-    //     console.log(e)
-    // }
-
-    // };
-    //
-    // sendToken();
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         device_time: props.route.params,
-    //     }
-    //   }
-
-    // if (!userInfo) {
-    //     userInfo = [new userInfo(1598051730000)];
-    // }
 
 
         useEffect(() => {
-            Constants.deviceId = '92C2B1A7-3689-48B5-B53C-42197298D209';
-            //Constants.deviceId = 'EA612344-3AA9-4150-8226-A6C6D1FF0144';
-            //console.log('Constants.deviceId ', Constants.deviceId);
             axios.get(`https://get-up-now.herokuapp.com/get-time/${Constants.deviceId}`).then(res => {
                     const user_info = res.data.map(timeData => {
                         return timeData;
                     });
 
-                    //const device_time = res.data[0].device_time;
                     setUserInfo(user_info);
 
             }).catch(error => {
                 console.log('the get-device-id error ', error)
-
             });
         }, []);
-    // }
+
 
         const updateTimes = (date, id) => {
             console.log('updating the times ', date, id);
@@ -173,7 +114,6 @@ export default function HomeScreen({route, navigation}) {
             setUserInfo([]);
             setUserInfo(userInfo);
             //updateTitle(user_info);
-
         };
 
         if (route.params) {
@@ -185,7 +125,6 @@ export default function HomeScreen({route, navigation}) {
                 return userInfoItem;
             });
             //userInfo = route.params.date;
-            //console.log('userInfo after route.params.data ', userInfo)
         }
         else{
             console.log('before parse ', userInfo.id);
@@ -274,7 +213,7 @@ export default function HomeScreen({route, navigation}) {
                                 <Entypo name="plus" size={36} color="#000" />
                             </View>
                         </TouchableOpacity>
-                        <Text style={styles.noDataText}>Add notifications</Text>
+                        <Text style={styles.noDataText}>Add notification</Text>
                     </View>
                 </View>
             </View>
@@ -380,7 +319,6 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingTop: 20,
         backgroundColor: '#292929',
-        // justifyContent: 'space-between',
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -403,7 +341,7 @@ const styles = StyleSheet.create({
         flex: 1,
         borderWidth: 1,
         width: '100%',
-        borderColor: 'blue',
+        //borderColor: 'blue',
         alignItems: 'center',
     },
     contentBox: {
@@ -414,7 +352,7 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
-      borderColor: 'yellow',
+      //borderColor: 'yellow',
       width: "100%",
       height: 'auto',
         zIndex: 2

@@ -104,7 +104,6 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
                             onChange={onChange}
                         />
                         </View>
-                        <Text style={styles.modalText}>Hello World!</Text>
 
                         <TouchableHighlight
                             style={{ ...styles.openButton, backgroundColor: "#2196F3" }}

@@ -94,7 +94,7 @@ return (
 
 
 
-        {/*<EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>*/}
+        <EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>
     </View>
 );
 
@@ -103,8 +103,8 @@ return (
 const styles = StyleSheet.create({
     itemContainer:{
         marginBottom: 20,
-        backgroundColor: '#000',
-        borderColor: '#ffa04c',
+        backgroundColor: '#292929',
+        //borderColor: '#ffa04c',
         borderWidth: 2,
         marginLeft: 30,
         height: 100,
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
-        borderColor: '#fff',
+        // borderColor: '#fff',
         // borderColor: '#3e4948',
         borderWidth: 2,
         borderTopLeftRadius: 20,
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
     time:{
         color: '#fff',
         fontSize: 45,
-        borderColor: 'red',
-        borderWidth: 1,
+        // borderColor: 'red',
+        //borderWidth: 1,
 
     },
     // editContainer:{
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         //backgroundColor: '#4043ff',
         borderRadius: 4,
         color: '#ff6773',
-        borderColor: '#ffd61d',
+        //borderColor: '#ffd61d',
         borderWidth: 1,
         marginTop: 10,
         width: 100
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     horizontalDots:{
         color: '#ff0006',
         borderWidth: 1,
-        borderColor: 'white',
+       // borderColor: 'white',
         borderRadius: 10,
         width: 50,
         alignItems: 'center'
