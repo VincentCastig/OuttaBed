@@ -1,6 +1,20 @@
 
 import React, {Component, useState, ListView, useEffect, useRef} from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch, TouchableWithoutFeedback } from 'react-native';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    ImageBackground,
+    SafeAreaView,
+    View,
+    Image,
+    FlatList,
+    Button,
+    Switch,
+    TouchableWithoutFeedback,
+    Dimensions
+} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import axios from 'axios';
@@ -13,13 +27,17 @@ import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 
 
 
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
-    const [dotsModalVisible, setDotsModalVisible] = useState(true);
+    // const [dotsModalVisible, setDotsModalVisible] = useState(true);
+    //const [dimensions, setDimensions] = useState({ window, screen });
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -29,7 +47,7 @@ export default function HomeScreen({route, navigation}) {
 
     const addTime = () => {
         console.log('adding time ', Constants.deviceId);
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken, device_id: Constants.deviceId})
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken.data, device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -52,6 +70,7 @@ export default function HomeScreen({route, navigation}) {
 
 
 
+
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => {
             console.log('registerForPushNotificationsAsync token ', token);
@@ -63,9 +82,9 @@ export default function HomeScreen({route, navigation}) {
 
 
         // This listener is fired whenever a notification is received while the app is foregrounded
-        notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-            setNotification(notification);
-        });
+        // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+        //     setNotification(notification);
+        // });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
@@ -201,6 +220,7 @@ export default function HomeScreen({route, navigation}) {
                         <View style={styles.addTimeBox}>
                             <Entypo name="plus" size={24} color="#fff" />
                         </View>
+
                     </TouchableWithoutFeedback>
                 </View>
 
@@ -209,9 +229,13 @@ export default function HomeScreen({route, navigation}) {
                         <TouchableOpacity
                             onPress={() => addTime()}
                         >
-                            <View style={styles.addButton}>
-                                <Entypo name="plus" size={36} color="#000" />
-                            </View>
+                            {/*<View style={styles.addButton}>*/}
+                                {/*<Entypo name="plus" size={36} color="#000" />*/}
+                            {/*</View>*/}
+                            <Image
+                                // style={styles.tinyLogo}
+                                source={require('../assets/OutABedBTN.png')}
+                            />
                         </TouchableOpacity>
                         <Text style={styles.noDataText}>Add notification</Text>
                     </View>
@@ -222,9 +246,16 @@ export default function HomeScreen({route, navigation}) {
 
     return (
         <View style={styles.container }>
+            <ImageBackground source={require('../assets/background.jpg')} style={styles.image}>
+
             <View style={styles.titleContainer}>
 
-                <Text style={styles.title}>OutABed</Text>
+                {/*<Text style={styles.title}>OutABed</Text>*/}
+                {/*<Image*/}
+                    {/*style={styles.tinyLogo}*/}
+                    {/*source={require('../assets/OutABedIcon.png')}*/}
+                {/*/>*/}
+                <Text style={styles.header}>Motivation Time </Text>
 
 
                 <TouchableWithoutFeedback
@@ -235,9 +266,9 @@ export default function HomeScreen({route, navigation}) {
                     </View>
                 </TouchableWithoutFeedback>
             </View>
-            <View>
-                <Text style={styles.header}>Motivation Time </Text>
-            </View>
+            {/*<View>*/}
+                {/*<Text style={styles.header}>Motivation Time </Text>*/}
+            {/*</View>*/}
 
             <View style={styles.bodyArea}>
                 <SafeAreaView style={styles.contentBox}>
@@ -270,6 +301,8 @@ export default function HomeScreen({route, navigation}) {
                     {/*</View>*/}
                 {/*): null}*/}
             </View>
+            </ImageBackground>
+
         </View>
     );
 
@@ -299,7 +332,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         backgroundColor: '#ffad1c',
         borderRadius:20,
-        borderWidth: 1,
+        //borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -308,15 +341,21 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: '#000000',
         // borderColor: 'red',
         // borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
+    image:{
+        // flex: 1,
+        // resizeMode: "cover",
+        alignItems: 'center',
+        // justifyContent: "center"
+    },
     titleContainer:{
         height: 100,
-        width: '100%',
+        width: windowWidth,
         paddingTop: 20,
         backgroundColor: '#292929',
         alignItems: 'center',
@@ -325,6 +364,11 @@ const styles = StyleSheet.create({
     },
     title:{
         color: '#fff',
+    },
+    tinyLogo:{
+        width: 50,
+        height: 50,
+        borderRadius: 30
     },
     addTimeBox:{
         position: 'absolute',
@@ -339,7 +383,7 @@ const styles = StyleSheet.create({
     },
     bodyArea: {
         flex: 1,
-        borderWidth: 1,
+        //borderWidth: 1,
         width: '100%',
         //borderColor: 'blue',
         alignItems: 'center',
@@ -349,17 +393,17 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
-      borderWidth: 2,
+      //borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
       //borderColor: 'yellow',
-      width: "100%",
-      height: 'auto',
+      width: windowWidth,
+      height: '100%',
         zIndex: 2
     },
     swipelist:{
-        borderWidth: 2,
-        borderColor: 'green',
+        // borderWidth: 2,
+        // borderColor: 'green',
         width: '100%',
         // alignItems: 'center'
     },

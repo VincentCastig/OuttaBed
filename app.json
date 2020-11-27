@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "wake-up-now",
+    "name": "OutABed",
+    "slug": "out-a-bed",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -24,6 +24,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Motivation App to Get Out of Bed and Start the Day"
   }
 }

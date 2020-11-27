@@ -49,50 +49,16 @@ return (
                 <Text style={styles.time}>{item.title} {item.key}</Text>
                 <View style={styles.switchBox}>
                 </View>
+
+                <Switch
+                    trackColor={{ false: "#000000", true: "#25ff24" }}
+                    thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onChange={toggleSwitch}
+                    value={isEnabled}
+                />
             </View>
         </TouchableHighlight>
-
-        <View style={styles.itemBox2}>
-            <Switch
-                trackColor={{ false: "#000000", true: "#25ff24" }}
-                thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onChange={toggleSwitch}
-                value={isEnabled}
-            />
-
-            {/*<View style={{zIndex: 3}}>*/}
-                {/*<TouchableHighlight  onPress={() => {*/}
-                    {/*showEditBox();*/}
-                {/*}}>*/}
-                    {/*<View style={styles.horizontalDots}>*/}
-                        {/*<Entypo name="dots-three-horizontal" size={24} color="white" />*/}
-                    {/*</View>*/}
-                {/*</TouchableHighlight>*/}
-
-                {/*{dotsModalVisible ? (*/}
-                    {/*<TouchableHighlight  onPress={() => {*/}
-                        {/*testButton();*/}
-                    {/*}}>*/}
-                        {/*<View style={styles.dotsModal}>*/}
-                            {/*<View style={styles.dotsModalText}>*/}
-                                {/*<Text>Edit</Text>*/}
-                            {/*</View>*/}
-                            {/*<View style={styles.dotsModalText}>*/}
-                                {/*<Text>Delete</Text>*/}
-                            {/*</View>*/}
-                            {/*<View style={styles.dotsModalCancel}>*/}
-                                {/*<Text>Cancel</Text>*/}
-                            {/*</View>*/}
-                        {/*</View>*/}
-                    {/*</TouchableHighlight>*/}
-                {/*): null*/}
-                {/*}*/}
-            {/*</View>*/}
-
-        </View>
-
-
 
         <EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>
     </View>
@@ -115,32 +81,22 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     itemBox1:{
-        width:'75%'
-    },
-    itemBox2:{
-        width:'25%',
-        height: '100%',
-        paddingTop: 13,
-        paddingBottom: 10,
-        alignItems: 'center',
-        // justifyContent: 'space-between',
-        justifyContent: 'center',
-        borderTopRightRadius: 20,
-        borderBottomRightRadius: 20,
-        position: 'relative'
+        // width:'75%'
+        width: '100%'
     },
     timeBox:{
         height: '100%',
         width: '100%',
-        padding: 5,
+        padding: 10,
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
         // borderColor: '#fff',
         // borderColor: '#3e4948',
         borderWidth: 2,
-        borderTopLeftRadius: 20,
-        borderBottomLeftRadius: 20
+        // borderTopLeftRadius: 20,
+        // borderBottomLeftRadius: 20,
+        borderRadius: 20
         //borderTopWidth: 2,
         //borderBottomWidth:2
     },
@@ -171,27 +127,27 @@ const styles = StyleSheet.create({
         width: 50,
         alignItems: 'center'
     },
-    dotsModalBackground:{
-        position: 'absolute',
-        left:0,
-        height: 400,
-        width: 350,
-        borderWidth: 1,
-        borderColor: 'green',
-        backgroundColor: '#fff',
-        zIndex: 3333
-    },
-    dotsModal:{
-        width: 100,
-        borderRadius: 10,
-        position: 'absolute',
-        bottom: -45,
-        right: 25,
-        borderColor: '#fff',
-        borderWidth: 1,
-        backgroundColor:'#fff',
-        zIndex: 3
-    },
+    // dotsModalBackground:{
+    //     position: 'absolute',
+    //     left:0,
+    //     height: 400,
+    //     width: 350,
+    //     borderWidth: 1,
+    //     borderColor: 'green',
+    //     backgroundColor: '#fff',
+    //     zIndex: 3333
+    // },
+    // dotsModal:{
+    //     width: 100,
+    //     borderRadius: 10,
+    //     position: 'absolute',
+    //     bottom: -45,
+    //     right: 25,
+    //     borderColor: '#fff',
+    //     borderWidth: 1,
+    //     backgroundColor:'#fff',
+    //     zIndex: 3
+    // },
     dotsModalText:{
         color: '#616161',
         padding: 10,
