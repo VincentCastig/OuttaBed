@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#292929',
         //borderColor: '#ffa04c',
         borderWidth: 2,
-        marginLeft: 30,
         height: 100,
         width: 300,
         borderRadius: 20,

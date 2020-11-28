@@ -262,7 +262,7 @@ export default function HomeScreen({route, navigation}) {
                     onPress={() => addTime()}
                 >
                     <View style={styles.addTimeBox}>
-                        <Entypo name="plus" size={24} color="#fff" />
+                        <Entypo name="plus" size={30} color="#fff" />
                     </View>
                 </TouchableWithoutFeedback>
             </View>
@@ -273,7 +273,7 @@ export default function HomeScreen({route, navigation}) {
             <View style={styles.bodyArea}>
                 <SafeAreaView style={styles.contentBox}>
                     <SwipeListView
-                        // style={styles.swipelist}
+                        contentContainerStyle={styles.swipelist}
                         useFlatList={true}
                         data={userInfo}
                         renderItem={renderItem}
@@ -372,7 +372,10 @@ const styles = StyleSheet.create({
     },
     addTimeBox:{
         position: 'absolute',
-        right: 10
+        // backgroundColor: '#ff503a',
+        right: 15,
+        top: 45,
+        alignItems: 'center'
     },
     header: {
         color: '#fff',
@@ -393,38 +396,48 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
-      //borderWidth: 2,
+      borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
-      //borderColor: 'yellow',
+      // borderColor: 'yellow',
       width: windowWidth,
+        // width: 333,
       height: '100%',
         zIndex: 2
     },
     swipelist:{
-        // borderWidth: 2,
+        borderWidth: 3,
         // borderColor: 'green',
-        width: '100%',
-        // alignItems: 'center'
+        alignItems: 'center'
     },
+
     text:{
         color: '#fff'
     },
     rowBack:{
+        height: '80%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
+        alignItems: 'flex-start',
         marginVertical: 50,
         flexWrap: 'wrap',
-        zIndex: -1
+        zIndex: -1,
+        // backgroundColor:'#ffa186',
+        marginBottom: 'auto',
+        marginTop: 'auto',
+        paddingTop: 15
     },
     delete:{
         width: 50,
+        height: 50,
+        borderRadius: 10,
+        backgroundColor:'#ff0010',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 30
+        marginRight: 30,
     },
     deleteIcon:{
-        marginRight:5
+        // marginRight:5
     },
     // dotsModalBackground:{
     //     width: 50,
