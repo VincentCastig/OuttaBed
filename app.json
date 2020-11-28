@@ -10,11 +10,15 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/OABIcon.png",
+    "loading": {
+      "icon": "./assets/LoadingIcon.png",
+      "hideExponentText": false
+    },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/LoadingIcon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#e7ebf1"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
