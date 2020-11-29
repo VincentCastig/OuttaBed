@@ -281,9 +281,11 @@ export default function HomeScreen({route, navigation}) {
                         width={'100%'}
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
-                                <TouchableOpacity  style={styles.delete} onPress={() => deleteTime(rowData.item)} >
-                                    <AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />
-                                </TouchableOpacity>
+                                <View style={styles.deleteBox}>
+                                    <TouchableOpacity  style={styles.delete} onPress={() => deleteTime(rowData.item)} >
+                                        <AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
 
                         )}
@@ -416,7 +418,6 @@ const styles = StyleSheet.create({
     },
     swipelist:{
         //borderWidth: 3,
-        // borderColor: 'green',
         alignItems: 'center'
     },
 
@@ -424,29 +425,30 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     rowBack:{
-        height: '80%',
         height: responsive(75),
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
-        // marginVertical: 50,
         flexWrap: 'wrap',
         zIndex: -1,
         backgroundColor:'#ffa186',
-        // marginBottom: 'auto',
-        // marginTop: 'auto',
-        paddingTop: heightResponsive(5)
+    },
+    deleteBox:{
+        backgroundColor: '#fff',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        //flex: 2,
+        width: responsive(50)
     },
     delete:{
         width: responsive(39),
-        height: 50,
         height: responsive(39),
-        borderRadius: 10,
+        borderRadius: responsive(8),
         backgroundColor:'#ff0010',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 30,
-        marginTop: 10
+        marginRight: 30
     },
     deleteIcon:{
         // backgroundColor: '#000',
