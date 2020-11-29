@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
     },
     itemBox1:{
         // width:'75%'
-        width: '100%'
+        width: '100%',
+        borderRadius: 20,
     },
     timeBox:{
         height: '100%',

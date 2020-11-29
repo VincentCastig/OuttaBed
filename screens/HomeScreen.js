@@ -26,6 +26,7 @@ import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
+import {responsive} from './components/Responsive';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -47,7 +48,8 @@ export default function HomeScreen({route, navigation}) {
 
     const addTime = () => {
         console.log('adding time ', Constants.deviceId);
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken.data, device_id: Constants.deviceId})
+        //expoPushToken.data ||
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[Rd-iGMMu_P-ME7ueeFmPWE]', device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -70,37 +72,37 @@ export default function HomeScreen({route, navigation}) {
 
 
 
-
-    useEffect(() => {
-        registerForPushNotificationsAsync().then(token => {
-            console.log('registerForPushNotificationsAsync token ', token);
-            setExpoPushToken(token);
-            //sendToken(token);
-            console.log('sent')
-        });
-
-
-
-        // This listener is fired whenever a notification is received while the app is foregrounded
-        // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-        //     setNotification(notification);
-        // });
-
-        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log('listener ', response.notification);
-            navigation.navigate("Motivation", {
-                notification: response.notification
-            });
-            console.log('listen');
-        });
-
-
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener);
-            Notifications.removeNotificationSubscription(responseListener);
-        };
-    }, []);
+    //
+    // useEffect(() => {
+    //     registerForPushNotificationsAsync().then(token => {
+    //         console.log('registerForPushNotificationsAsync token ', token);
+    //         setExpoPushToken(token);
+    //         //sendToken(token);
+    //         console.log('sent')
+    //     });
+    //
+    //
+    //
+    //     // This listener is fired whenever a notification is received while the app is foregrounded
+    //     // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+    //     //     setNotification(notification);
+    //     // });
+    //
+    //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    //     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+    //         console.log('listener ', response.notification);
+    //         navigation.navigate("Motivation", {
+    //             notification: response.notification
+    //         });
+    //         console.log('listen');
+    //     });
+    //
+    //
+    //     return () => {
+    //         Notifications.removeNotificationSubscription(notificationListener);
+    //         Notifications.removeNotificationSubscription(responseListener);
+    //     };
+    // }, []);
 
 
 
@@ -213,12 +215,13 @@ export default function HomeScreen({route, navigation}) {
         return (
             <View style={styles.loadingWrapper}>
                 <View style={styles.titleContainer}>
+                    <View style={styles.addTimeBox}></View>
                     <Text style={styles.title}>OutABed</Text>
                     <TouchableWithoutFeedback
                         onPress={() => addTime()}
                     >
                         <View style={styles.addTimeBox}>
-                            <Entypo name="plus" size={24} color="#fff" />
+                            <Entypo name="plus" size={responsive(24)} color="#fff" />
                         </View>
 
                     </TouchableWithoutFeedback>
@@ -234,7 +237,7 @@ export default function HomeScreen({route, navigation}) {
                             {/*</View>*/}
                             <Image
                                 // style={styles.tinyLogo}
-                                source={require('../assets/OutABedBTN.png')}
+                                source={require('../assets/LoadingIcon.png')}
                             />
                         </TouchableOpacity>
                         <Text style={styles.noDataText}>Add notification</Text>
@@ -246,7 +249,8 @@ export default function HomeScreen({route, navigation}) {
 
     return (
         <View style={styles.container }>
-            <ImageBackground source={require('../assets/background.jpg')} style={styles.image}>
+            {/*<ImageBackground source={require('../assets/background.jpg')} style={styles.image}>*/}
+            <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
 
             <View style={styles.titleContainer}>
 
@@ -255,16 +259,18 @@ export default function HomeScreen({route, navigation}) {
                     {/*style={styles.tinyLogo}*/}
                     {/*source={require('../assets/OutABedIcon.png')}*/}
                 {/*/>*/}
+                <View style={styles.addTimeBox}></View>
+
                 <Text style={styles.header}>Motivation Time </Text>
 
 
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={() => addTime()}
                 >
                     <View style={styles.addTimeBox}>
                         <Entypo name="plus" size={30} color="#fff" />
                     </View>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             </View>
             {/*<View>*/}
                 {/*<Text style={styles.header}>Motivation Time </Text>*/}
@@ -281,8 +287,8 @@ export default function HomeScreen({route, navigation}) {
                         width={'100%'}
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
-                                <TouchableOpacity  style={styles.delete} onPress={ () => rowMap[rowData.item.key].closeRow() }>
-                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon} onPress={() => deleteTime(rowData.item)}/>
+                                <TouchableOpacity  style={styles.delete} onPress={() => deleteTime(rowData.item)} >
+                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon} />
                                 </TouchableOpacity>
                             </View>
 
@@ -320,7 +326,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000'
+        backgroundColor: '#ffffff'
     },
     noDataBox:{
         justifyContent: 'center',
@@ -354,16 +360,21 @@ const styles = StyleSheet.create({
         // justifyContent: "center"
     },
     titleContainer:{
-        height: 100,
+        //height: 100,
+        height: responsive(77),
         width: windowWidth,
         paddingTop: 20,
         backgroundColor: '#292929',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         flexDirection: 'row',
+    },
+    titleBoxWidth:{
+        width: responsive(30)
     },
     title:{
         color: '#fff',
+        fontSize: responsive(12),
     },
     tinyLogo:{
         width: 50,
@@ -371,10 +382,13 @@ const styles = StyleSheet.create({
         borderRadius: 30
     },
     addTimeBox:{
-        position: 'absolute',
-        // backgroundColor: '#ff503a',
-        right: 15,
-        top: 45,
+        // position: 'absolute',
+        // // backgroundColor: '#ff503a',
+        // right: 15,
+        // top: 45,
+        // top: responsive(35),
+        //borderWidth:3,
+        width: responsive(35),
         alignItems: 'center'
     },
     header: {
@@ -396,7 +410,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
-      borderWidth: 2,
+      //borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
       // borderColor: 'yellow',
@@ -406,7 +420,7 @@ const styles = StyleSheet.create({
         zIndex: 2
     },
     swipelist:{
-        borderWidth: 3,
+        //borderWidth: 3,
         // borderColor: 'green',
         alignItems: 'center'
     },
@@ -437,6 +451,7 @@ const styles = StyleSheet.create({
         marginRight: 30,
     },
     deleteIcon:{
+        // backgroundColor: '#000',
         // marginRight:5
     },
     // dotsModalBackground:{

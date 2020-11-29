@@ -1,16 +1,20 @@
 import React from 'react';
-import { Button } from 'react-native';
+import { Button, Image } from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import EditScreen from './screens/EditTime';
 import MotivationScreen from './screens/Motivation';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import registerForPushNotificationsAsync from './notifications';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+//import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator, useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import {responsive, heightResponsive} from './screens/components/Responsive';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+// const tabBarHeight = useBottomTabBarHeight();
 
 
 export default function App() {
@@ -20,14 +24,43 @@ export default function App() {
             <Tab.Navigator
                 barStyle={{
                     // backgroundColor: '#1393ff',
+                    //height: responsive(66),
                     backgroundColor: '#292929',
-                    color: '#fff',
                 }}
-                inactiveColor="white"
-                activeColor="#1393ff"
+
+                tabBarOptions={{
+                    activeTintColor: '#1393ff',
+                    inactiveTintColor: "white",
+                    style: {
+                        backgroundColor: '#292929',
+                        height: heightResponsive(36),
+                        alignItems: 'center'
+                        //backgroundColor: '#fff'
+                    },
+                    labelStyle: {
+                        fontSize: responsive(12),
+                    }
+                }}
             >
-                <Tab.Screen name="Home" component={HomeScreen}/>
-                <Tab.Screen name="Motivation" component={MotivationScreen}/>
+                <Tab.Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialCommunityIcons name="home" color={color} size={size} />
+                        ),
+                    }}
+                />
+
+                <Tab.Screen
+                    name="Motivation"
+                    component={MotivationScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Image name="home" color={color} size={12} style={{height: 30, width: 30, backgroundColor: color}} source={require('./assets/LoadingIcon.png')}/>
+                        ),
+                    }}
+                />
             </Tab.Navigator>
         </NavigationContainer>
     );
