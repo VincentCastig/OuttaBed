@@ -3,6 +3,7 @@ import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, Dimens
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 // import { SwipeListView } from 'react-native-swipe-list-view';
 import EditTime from './components/EditModal';
+import {responsive, heightResponsive} from './components/Responsive';
 import axios from "axios/index";
 
 export default function Item( {item, navigation, updateTimes} ) {
@@ -48,15 +49,15 @@ return (
             <View style={styles.timeBox}>
                 <Text style={styles.time}>{item.title} {item.key}</Text>
                 <View style={styles.switchBox}>
-                </View>
-
                 <Switch
                     trackColor={{ false: "#000000", true: "#25ff24" }}
                     thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
                     onChange={toggleSwitch}
                     value={isEnabled}
+                    style={{ transform: [{ scaleX: responsive(.8) }, { scaleY: responsive(.8) }] }}
                 />
+                </View>
             </View>
         </TouchableHighlight>
 
@@ -72,9 +73,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#292929',
         //borderColor: '#ffa04c',
         borderWidth: 2,
-        height: 100,
-        width: 300,
-        borderRadius: 20,
+        // height: 100,
+        height: responsive(76),
+        // width: 300,
+        width: responsive(232),
+        borderRadius: responsive(15),
         alignItems: 'center',
         flexDirection: 'row',
         zIndex: 1
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
     itemBox1:{
         // width:'75%'
         width: '100%',
-        borderRadius: 20,
+        borderRadius: responsive(15),
     },
     timeBox:{
         height: '100%',
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         // borderColor: '#fff',
         // borderColor: '#3e4948',
-        borderWidth: 2,
+        // borderWidth: 2,
         // borderTopLeftRadius: 20,
         // borderBottomLeftRadius: 20,
         borderRadius: 20
@@ -102,31 +105,31 @@ const styles = StyleSheet.create({
     },
     time:{
         color: '#fff',
-        fontSize: 45,
-        // borderColor: 'red',
+        //fontSize: 45,
+        fontSize: responsive(35),
+        //borderColor: 'red',
         //borderWidth: 1,
-
     },
     // editContainer:{
     //   flexDirection:'row'
     // },
-    editBox:{
-        //backgroundColor: '#4043ff',
-        borderRadius: 4,
-        color: '#ff6773',
-        //borderColor: '#ffd61d',
-        borderWidth: 1,
-        marginTop: 10,
-        width: 100
-    },
-    horizontalDots:{
-        color: '#ff0006',
-        borderWidth: 1,
-       // borderColor: 'white',
-        borderRadius: 10,
-        width: 50,
-        alignItems: 'center'
-    },
+    // editBox:{
+    //     //backgroundColor: '#4043ff',
+    //     borderRadius: 4,
+    //     color: '#ff6773',
+    //     //borderColor: '#ffd61d',
+    //     borderWidth: 1,
+    //     marginTop: 10,
+    //     width: 100
+    // },
+    // horizontalDots:{
+    //     color: '#ff0006',
+    //     borderWidth: 1,
+    //    // borderColor: 'white',
+    //     borderRadius: 10,
+    //     width: 50,
+    //     alignItems: 'center'
+    // },
     // dotsModalBackground:{
     //     position: 'absolute',
     //     left:0,
@@ -156,11 +159,13 @@ const styles = StyleSheet.create({
     },
     dotsModalCancel:{
         color: '#616161',
-        padding: 10,
+        padding: responsive(10),
     },
     switchBox:{
-        flexDirection: 'column',
-        alignItems: 'flex-end',
-        marginRight: 5
+        // flexDirection: 'column',
+        // alignItems: 'flex-end',
+        // marginRight: 5
+        width: responsive(40),
+        // backgroundColor: '#fff'
     }
 });

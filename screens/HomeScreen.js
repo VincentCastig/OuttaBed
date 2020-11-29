@@ -26,7 +26,7 @@ import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
-import {responsive} from './components/Responsive';
+import {responsive, heightResponsive} from './components/Responsive';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -254,21 +254,15 @@ export default function HomeScreen({route, navigation}) {
 
             <View style={styles.titleContainer}>
 
-                {/*<Text style={styles.title}>OutABed</Text>*/}
-                {/*<Image*/}
-                    {/*style={styles.tinyLogo}*/}
-                    {/*source={require('../assets/OutABedIcon.png')}*/}
-                {/*/>*/}
                 <View style={styles.addTimeBox}></View>
 
                 <Text style={styles.header}>Motivation Time </Text>
-
 
                 <TouchableOpacity
                     onPress={() => addTime()}
                 >
                     <View style={styles.addTimeBox}>
-                        <Entypo name="plus" size={30} color="#fff" />
+                        <Entypo name="plus" size={responsive(23)} color="#fff" />
                     </View>
                 </TouchableOpacity>
             </View>
@@ -288,13 +282,13 @@ export default function HomeScreen({route, navigation}) {
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
                                 <TouchableOpacity  style={styles.delete} onPress={() => deleteTime(rowData.item)} >
-                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon} />
+                                    <AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />
                                 </TouchableOpacity>
                             </View>
 
                         )}
                         leftOpenValue={0}
-                        rightOpenValue={-100}
+                        rightOpenValue={responsive(-90)}
                         // onRowOpen={(rowKey, rowMap) => {
                         //     setTimeout(() => {
                         //         rowMap[rowKey].closeRow()
@@ -376,11 +370,11 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: responsive(12),
     },
-    tinyLogo:{
-        width: 50,
-        height: 50,
-        borderRadius: 30
-    },
+    // tinyLogo:{
+    //     width: 50,
+    //     height: 50,
+    //     borderRadius: 30
+    // },
     addTimeBox:{
         // position: 'absolute',
         // // backgroundColor: '#ff503a',
@@ -393,7 +387,8 @@ const styles = StyleSheet.create({
     },
     header: {
         color: '#fff',
-        fontSize: 30,
+        // fontSize: 30,
+        fontSize: responsive(23),
         marginBottom: 10,
         marginTop: 10,
         alignItems: 'flex-start'
@@ -430,25 +425,28 @@ const styles = StyleSheet.create({
     },
     rowBack:{
         height: '80%',
+        height: responsive(75),
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
-        marginVertical: 50,
+        // marginVertical: 50,
         flexWrap: 'wrap',
         zIndex: -1,
-        // backgroundColor:'#ffa186',
-        marginBottom: 'auto',
-        marginTop: 'auto',
-        paddingTop: 15
+        backgroundColor:'#ffa186',
+        // marginBottom: 'auto',
+        // marginTop: 'auto',
+        paddingTop: heightResponsive(5)
     },
     delete:{
-        width: 50,
+        width: responsive(39),
         height: 50,
+        height: responsive(39),
         borderRadius: 10,
         backgroundColor:'#ff0010',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 30,
+        marginTop: 10
     },
     deleteIcon:{
         // backgroundColor: '#000',
