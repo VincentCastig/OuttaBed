@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
     },
     bodyArea: {
         flex: 1,
-        borderWidth: 1,
+        //borderWidth: 1,
         width: '100%',
         borderColor: 'blue',
         alignItems: 'center',
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
-      borderWidth: 2,
+      //borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
       // borderColor: 'yellow',
