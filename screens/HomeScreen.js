@@ -282,7 +282,7 @@ export default function HomeScreen({route, navigation}) {
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
                                 <View style={styles.deleteBox}>
-                                    <TouchableOpacity  style={styles.delete} onPress={() => deleteTime(rowData.item)} >
+                                    <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
                                         <AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />
                                     </TouchableOpacity>
                                 </View>
@@ -397,17 +397,18 @@ const styles = StyleSheet.create({
     },
     bodyArea: {
         flex: 1,
-        //borderWidth: 1,
+        borderWidth: 1,
         width: '100%',
-        //borderColor: 'blue',
+        borderColor: 'blue',
         alignItems: 'center',
     },
     contentBox: {
-      marginTop: 20,
+      //marginTop: 20,
+        //paddingTop: 20,
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
-      //borderWidth: 2,
+      borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
       // borderColor: 'yellow',
@@ -418,7 +419,8 @@ const styles = StyleSheet.create({
     },
     swipelist:{
         //borderWidth: 3,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 20,
     },
 
     text:{
@@ -431,17 +433,16 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         flexWrap: 'wrap',
         zIndex: -1,
-        backgroundColor:'#ffa186',
+        // backgroundColor:'#ffa186',
     },
     deleteBox:{
-        backgroundColor: '#fff',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         //flex: 2,
         width: responsive(50)
     },
-    delete:{
+    deleteRedButton:{
         width: responsive(39),
         height: responsive(39),
         borderRadius: responsive(8),

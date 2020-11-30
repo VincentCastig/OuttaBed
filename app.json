@@ -20,6 +20,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#e7ebf1"
     },
+    "notification": {
+      "icon": "./assets/OABIcon.png"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },

@@ -57,8 +57,14 @@ export default function App() {
                     component={MotivationScreen}
                     options={{
                         tabBarIcon: ({ color, size }) => (
-                            <Image name="home" color={color} size={12} style={{height: 30, width: 30, backgroundColor: color}} source={require('./assets/LoadingIcon.png')}/>
-                        ),
+
+                                    <Image name="home" color={color} size={12} style={{
+                                        height: 30,
+                                        width: 30,
+                                        // backgroundColor: color
+                                    }} source={color === 'White' ? require('./assets/LoadingIconBlue.png') : require('./assets/LoadingIconWhite.png')}/>
+
+                        )
                     }}
                 />
             </Tab.Navigator>
