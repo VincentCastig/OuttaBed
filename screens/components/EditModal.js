@@ -62,14 +62,12 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
     let offset = new Date().getTimezoneOffset() * -1;
 
 
-
     // if (userInfo) {
     //     console.log('userInfo deviceTime before request', userInfo.deviceTime);
     //     console.log('visible ', visible);
     //     console.log('newDate ', newDate);
     //     axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log('res.data ', res.data)).catch(error => console.log(error));
     // }
-
 
     return (
         <View style={styles.centeredView}>
@@ -181,14 +179,14 @@ const styles = StyleSheet.create({
         //backgroundColor: "#c2cdf3",
         // borderRadius: 20,
         backgroundColor: "#fff",
-        width: '49.5%',
+        width: '50%',
         padding: responsive(8),
         borderBottomLeftRadius: responsive(16)
         //elevation: 2
     },
     saveButton:{
         backgroundColor: "#fff",
-        width: '49.5%',
+        width: '50%',
         borderColor: "#2196F3",
         // borderRadius: 20,
         padding: responsive(8),

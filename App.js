@@ -52,6 +52,7 @@ export default function App() {
                     }}
                 />
 
+
                 <Tab.Screen
                     name="Motivation"
                     component={MotivationScreen}
@@ -62,7 +63,7 @@ export default function App() {
                                         height: 30,
                                         width: 30,
                                         // backgroundColor: color
-                                    }} source={color === 'White' ? require('./assets/LoadingIconBlue.png') : require('./assets/LoadingIconWhite.png')}/>
+                                    }} source={color === '#1393ff' ? require('./assets/LoadingIconBlue.png') : require('./assets/LoadingIconWhite.png')}/>
 
                         )
                     }}

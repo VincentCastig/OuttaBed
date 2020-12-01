@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import * as Notifications from 'expo-notifications';
+import {responsive, heightResponsive} from './components/Responsive';
 
 // This refers to the function defined earlier in this guide, in Push Notifications Set Up
 import registerForPushNotificationsAsync from '../notifications';
@@ -47,7 +48,7 @@ export default function Motivation ({route, navigation}) {
 
 const styles = StyleSheet.create({
     titleContainer:{
-        height: 100,
+        height: responsive(77),
         width: '100%',
         paddingTop: 20,
         backgroundColor: '#292929',
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
     },
     title:{
         color: '#fff',
+        fontSize: responsive(14),
     },
     container:{
         flex: 1,
@@ -73,12 +75,12 @@ const styles = StyleSheet.create({
         color: '#fff',
         marginTop: 20,
         marginBottom: 20,
-        fontSize: 20,
+        fontSize: responsive(18),
         marginLeft: 'auto'
     },
     quote:{
         color: '#fff',
-        fontSize: 18
+        fontSize: responsive(15)
     },
     loadingWrapper:{
         flex: 1,
@@ -94,6 +96,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000'
     },
     noDataText:{
-        color: '#fff'
+        color: '#fff',
+        fontSize: responsive(15)
     },
 });

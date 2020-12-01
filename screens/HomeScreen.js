@@ -31,9 +31,6 @@ import {responsive, heightResponsive} from './components/Responsive';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
-
-
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
@@ -70,41 +67,34 @@ export default function HomeScreen({route, navigation}) {
     };
 
 
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => {
+            console.log('registerForPushNotificationsAsync token ', token);
+            setExpoPushToken(token);
+            //sendToken(token);
+            console.log('sent')
+        });
+
+        // This listener is fired whenever a notification is received while the app is foregrounded
+        // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+        //     setNotification(notification);
+        // });
+
+        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log('listener ', response.notification);
+            navigation.navigate("Motivation", {
+                notification: response.notification
+            });
+            console.log('listen');
+        });
 
 
-    //
-    // useEffect(() => {
-    //     registerForPushNotificationsAsync().then(token => {
-    //         console.log('registerForPushNotificationsAsync token ', token);
-    //         setExpoPushToken(token);
-    //         //sendToken(token);
-    //         console.log('sent')
-    //     });
-    //
-    //
-    //
-    //     // This listener is fired whenever a notification is received while the app is foregrounded
-    //     // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-    //     //     setNotification(notification);
-    //     // });
-    //
-    //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    //     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-    //         console.log('listener ', response.notification);
-    //         navigation.navigate("Motivation", {
-    //             notification: response.notification
-    //         });
-    //         console.log('listen');
-    //     });
-    //
-    //
-    //     return () => {
-    //         Notifications.removeNotificationSubscription(notificationListener);
-    //         Notifications.removeNotificationSubscription(responseListener);
-    //     };
-    // }, []);
-
-
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+            Notifications.removeNotificationSubscription(responseListener);
+        };
+    }, []);
 
 
         useEffect(() => {
@@ -134,7 +124,6 @@ export default function HomeScreen({route, navigation}) {
 
             setUserInfo([]);
             setUserInfo(userInfo);
-            //updateTitle(user_info);
         };
 
         if (route.params) {
@@ -145,7 +134,6 @@ export default function HomeScreen({route, navigation}) {
                 }
                 return userInfoItem;
             });
-            //userInfo = route.params.date;
         }
         else{
             console.log('before parse ', userInfo.id);
@@ -155,18 +143,11 @@ export default function HomeScreen({route, navigation}) {
                 }
                 return userInfo[index].device_time = Date.parse(userInfoItem.device_time);
             });
-            //console.log('parse ', userInfo)
         }
-
-        console.log('here we go');
-
 
           let time = [];
           let period = "";
           let offset = new Date().getTimezoneOffset() * -1;
-
-          console.log('offset ', offset);
-
 
           userInfo.forEach((userInfoItem, index) => {
              console.log('index in loop', index);
@@ -179,9 +160,6 @@ export default function HomeScreen({route, navigation}) {
               else{
                   hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
               }
-              //let hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
-
-              console.log('hours ', hours);
 
               if(hours >= 12){
                   period = "PM"
@@ -204,7 +182,6 @@ export default function HomeScreen({route, navigation}) {
 
               return userInfo[index] = userInfoItem;
           });
-            //updateTitle('time');
 
             const renderItem = ({ item }) => (
                 <Item item={item} updateTimes={updateTimes}/>
@@ -214,6 +191,7 @@ export default function HomeScreen({route, navigation}) {
     if(userInfo.length === 0){
         return (
             <View style={styles.loadingWrapper}>
+                <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
                 <View style={styles.titleContainer}>
                     <View style={styles.addTimeBox}></View>
                     <Text style={styles.title}>OutABed</Text>
@@ -223,7 +201,6 @@ export default function HomeScreen({route, navigation}) {
                         <View style={styles.addTimeBox}>
                             <Entypo name="plus" size={responsive(24)} color="#fff" />
                         </View>
-
                     </TouchableWithoutFeedback>
                 </View>
 
@@ -232,17 +209,15 @@ export default function HomeScreen({route, navigation}) {
                         <TouchableOpacity
                             onPress={() => addTime()}
                         >
-                            {/*<View style={styles.addButton}>*/}
-                                {/*<Entypo name="plus" size={36} color="#000" />*/}
-                            {/*</View>*/}
                             <Image
-                                // style={styles.tinyLogo}
+                                style={styles.noDataButton}
                                 source={require('../assets/LoadingIcon.png')}
                             />
                         </TouchableOpacity>
                         <Text style={styles.noDataText}>Add notification</Text>
                     </View>
                 </View>
+                </ImageBackground>
             </View>
         )
     }
@@ -266,9 +241,6 @@ export default function HomeScreen({route, navigation}) {
                     </View>
                 </TouchableOpacity>
             </View>
-            {/*<View>*/}
-                {/*<Text style={styles.header}>Motivation Time </Text>*/}
-            {/*</View>*/}
 
             <View style={styles.bodyArea}>
                 <SafeAreaView style={styles.contentBox}>
@@ -321,12 +293,26 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#ffffff'
+        justifyContent: 'center'
     },
     noDataBox:{
+        //backgroundColor: '#ff725c',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 4,
+            height: 4
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    noDataButton:{
+        height: responsive(125),
+        width: responsive(125),
+        borderRadius: responsive(10),
+        backgroundColor: '#e9f8ff',
     },
     addButton:{
         width:40,
@@ -339,7 +325,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     noDataText:{
-        color: '#fff'
+        marginTop: responsive(5),
+        color: '#fff',
+        fontSize: responsive(16)
     },
     container: {
         flex: 1,
@@ -356,7 +344,6 @@ const styles = StyleSheet.create({
         // justifyContent: "center"
     },
     titleContainer:{
-        //height: 100,
         height: responsive(77),
         width: windowWidth,
         paddingTop: 20,
@@ -370,20 +357,9 @@ const styles = StyleSheet.create({
     },
     title:{
         color: '#fff',
-        fontSize: responsive(12),
+        fontSize: responsive(14),
     },
-    // tinyLogo:{
-    //     width: 50,
-    //     height: 50,
-    //     borderRadius: 30
-    // },
     addTimeBox:{
-        // position: 'absolute',
-        // // backgroundColor: '#ff503a',
-        // right: 15,
-        // top: 45,
-        // top: responsive(35),
-        //borderWidth:3,
         width: responsive(35),
         alignItems: 'center'
     },
