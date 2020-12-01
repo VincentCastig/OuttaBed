@@ -1,6 +1,20 @@
 
 import React, {Component, useState, ListView, useEffect, useRef} from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, SafeAreaView, View, FlatList, Button, Switch, TouchableWithoutFeedback } from 'react-native';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    ImageBackground,
+    SafeAreaView,
+    View,
+    Image,
+    FlatList,
+    Button,
+    Switch,
+    TouchableWithoutFeedback,
+    Dimensions
+} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import axios from 'axios';
@@ -12,14 +26,16 @@ import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
+import {responsive, heightResponsive} from './components/Responsive';
 
-
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
-    const [dotsModalVisible, setDotsModalVisible] = useState(true);
+    // const [dotsModalVisible, setDotsModalVisible] = useState(true);
+    //const [dimensions, setDimensions] = useState({ window, screen });
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -29,7 +45,8 @@ export default function HomeScreen({route, navigation}) {
 
     const addTime = () => {
         console.log('adding time ', Constants.deviceId);
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: Constants.deviceId})
+        //expoPushToken.data ||
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[Rd-iGMMu_P-ME7ueeFmPWE]', device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -50,114 +67,49 @@ export default function HomeScreen({route, navigation}) {
     };
 
 
-    //
-    // <View>
-    //     <Entypo name="plus" size={24} color="black" />
-    // </View>
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => {
+            console.log('registerForPushNotificationsAsync token ', token);
+            setExpoPushToken(token);
+            //sendToken(token);
+            console.log('sent')
+        });
+
+        // This listener is fired whenever a notification is received while the app is foregrounded
+        // notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+        //     setNotification(notification);
+        // });
+
+        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log('listener ', response.notification);
+            navigation.navigate("Motivation", {
+                notification: response.notification
+            });
+            console.log('listen');
+        });
 
 
-
-
-    // useEffect(() => {
-    //     registerForPushNotificationsAsync().then(token => {
-    //         console.log(token);
-    //         //setExpoPushToken(token);
-    //         // sendToken(token);
-    //     });
-    //
-    //
-    //
-    //     // This listener is fired whenever a notification is received while the app is foregrounded
-    //     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
-    //         setNotification(notification);
-    //     });
-    //
-    //     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    //     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-    //         console.log('listener ', response.notification);
-    //         navigation.navigate("Motivation", {
-    //             notification: response.notification
-    //         });
-    //         console.log('listen');
-    //     });
-    //
-    //
-    //     return () => {
-    //         Notifications.removeNotificationSubscription(notificationListener);
-    //         Notifications.removeNotificationSubscription(responseListener);
-    //     };
-    // }, []);
-
-
-    // const sendToken = async() => {
-        // console.log('sending ', token.data);
-        //console.log('sending deviceId', Constants.deviceId);
-
-        // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj1]', device_id: 'Constants.deviceId'}).then((res) => console.log(res)).catch((error) => console.log('createUser error ', error));
-
-
-            // localHost.post('/create-user', {token: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]', device_id: Constants.deviceId}).then((res) => console.log(res.data)).catch((error) => console.log('createUser error ', error));
-
-
-
-
-        // const message = {
-        //     to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
-        //     sound: 'default',
-        //     title: 'Original Title',
-        //     body: 'And here is the body!',
-        //     data: {data: 'goes here'},
-        // };
-
-    // try {
-    //     expoAxios.post('/', {
-    //
-    //         to: 'ExponentPushToken[qHhmjtM21eqgpgMASDMnpj]',
-    //         sound: 'default',
-    //         title: 'Marcus Aurelius',
-    //         body: 'At dawn, when you have trouble getting out of bed, tell yourself: “I have to go to work — as a human being. What do I have to complain of, if I’m going to do what I was born for — the things I was brought into the world to do? Or is this what I was created for? To huddle under the blankets and stay warm?',
-    //         // data: {data: 'goes here'},
-    //
-    //     }).then((res) => console.log(res));
-    // }
-    // catch (e) {
-    //     console.log(e)
-    // }
-
-    // };
-    //
-    // sendToken();
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         device_time: props.route.params,
-    //     }
-    //   }
-
-    // if (!userInfo) {
-    //     userInfo = [new userInfo(1598051730000)];
-    // }
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+            Notifications.removeNotificationSubscription(responseListener);
+        };
+    }, []);
 
 
         useEffect(() => {
-            Constants.deviceId = '92C2B1A7-3689-48B5-B53C-42197298D209';
-            //Constants.deviceId = 'EA612344-3AA9-4150-8226-A6C6D1FF0144';
-            //console.log('Constants.deviceId ', Constants.deviceId);
             axios.get(`https://get-up-now.herokuapp.com/get-time/${Constants.deviceId}`).then(res => {
                     const user_info = res.data.map(timeData => {
                         return timeData;
                     });
 
-                    //const device_time = res.data[0].device_time;
                     setUserInfo(user_info);
 
             }).catch(error => {
                 console.log('the get-device-id error ', error)
-
             });
         }, []);
-    // }
+
 
         const updateTimes = (date, id) => {
             console.log('updating the times ', date, id);
@@ -172,8 +124,6 @@ export default function HomeScreen({route, navigation}) {
 
             setUserInfo([]);
             setUserInfo(userInfo);
-            //updateTitle(user_info);
-
         };
 
         if (route.params) {
@@ -184,8 +134,6 @@ export default function HomeScreen({route, navigation}) {
                 }
                 return userInfoItem;
             });
-            //userInfo = route.params.date;
-            //console.log('userInfo after route.params.data ', userInfo)
         }
         else{
             console.log('before parse ', userInfo.id);
@@ -195,18 +143,11 @@ export default function HomeScreen({route, navigation}) {
                 }
                 return userInfo[index].device_time = Date.parse(userInfoItem.device_time);
             });
-            //console.log('parse ', userInfo)
         }
-
-        console.log('here we go');
-
 
           let time = [];
           let period = "";
           let offset = new Date().getTimezoneOffset() * -1;
-
-          console.log('offset ', offset);
-
 
           userInfo.forEach((userInfoItem, index) => {
              console.log('index in loop', index);
@@ -219,9 +160,6 @@ export default function HomeScreen({route, navigation}) {
               else{
                   hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
               }
-              //let hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
-
-              console.log('hours ', hours);
 
               if(hours >= 12){
                   period = "PM"
@@ -244,7 +182,6 @@ export default function HomeScreen({route, navigation}) {
 
               return userInfo[index] = userInfoItem;
           });
-            //updateTitle('time');
 
             const renderItem = ({ item }) => (
                 <Item item={item} updateTimes={updateTimes}/>
@@ -254,13 +191,15 @@ export default function HomeScreen({route, navigation}) {
     if(userInfo.length === 0){
         return (
             <View style={styles.loadingWrapper}>
+                <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
                 <View style={styles.titleContainer}>
+                    <View style={styles.addTimeBox}></View>
                     <Text style={styles.title}>OutABed</Text>
                     <TouchableWithoutFeedback
                         onPress={() => addTime()}
                     >
                         <View style={styles.addTimeBox}>
-                            <Entypo name="plus" size={24} color="#fff" />
+                            <Entypo name="plus" size={responsive(24)} color="#fff" />
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
@@ -270,40 +209,43 @@ export default function HomeScreen({route, navigation}) {
                         <TouchableOpacity
                             onPress={() => addTime()}
                         >
-                            <View style={styles.addButton}>
-                                <Entypo name="plus" size={36} color="#000" />
-                            </View>
+                            <Image
+                                style={styles.noDataButton}
+                                source={require('../assets/LoadingIcon.png')}
+                            />
                         </TouchableOpacity>
-                        <Text style={styles.noDataText}>Add notifications</Text>
+                        <Text style={styles.noDataText}>Add notification</Text>
                     </View>
                 </View>
+                </ImageBackground>
             </View>
         )
     }
 
     return (
         <View style={styles.container }>
+            {/*<ImageBackground source={require('../assets/background.jpg')} style={styles.image}>*/}
+            <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
+
             <View style={styles.titleContainer}>
 
-                <Text style={styles.title}>OutABed</Text>
+                <View style={styles.addTimeBox}></View>
 
+                <Text style={styles.header}>Motivation Time </Text>
 
-                <TouchableWithoutFeedback
+                <TouchableOpacity
                     onPress={() => addTime()}
                 >
                     <View style={styles.addTimeBox}>
-                        <Entypo name="plus" size={24} color="#fff" />
+                        <Entypo name="plus" size={responsive(23)} color="#fff" />
                     </View>
-                </TouchableWithoutFeedback>
-            </View>
-            <View>
-                <Text style={styles.header}>Motivation Time </Text>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.bodyArea}>
                 <SafeAreaView style={styles.contentBox}>
                     <SwipeListView
-                        // style={styles.swipelist}
+                        contentContainerStyle={styles.swipelist}
                         useFlatList={true}
                         data={userInfo}
                         renderItem={renderItem}
@@ -311,14 +253,16 @@ export default function HomeScreen({route, navigation}) {
                         width={'100%'}
                         renderHiddenItem={ (rowData, rowMap) => (
                             <View style={styles.rowBack}>
-                                <TouchableOpacity  style={styles.delete} onPress={ () => rowMap[rowData.item.key].closeRow() }>
-                                    <AntDesign name="delete" size={24} color="white" style={styles.deleteIcon} onPress={() => deleteTime(rowData.item)}/>
-                                </TouchableOpacity>
+                                <View style={styles.deleteBox}>
+                                    <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
+                                        <AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
 
                         )}
                         leftOpenValue={0}
-                        rightOpenValue={-100}
+                        rightOpenValue={responsive(-90)}
                         // onRowOpen={(rowKey, rowMap) => {
                         //     setTimeout(() => {
                         //         rowMap[rowKey].closeRow()
@@ -331,6 +275,8 @@ export default function HomeScreen({route, navigation}) {
                     {/*</View>*/}
                 {/*): null}*/}
             </View>
+            </ImageBackground>
+
         </View>
     );
 
@@ -347,12 +293,26 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#000'
+        justifyContent: 'center'
     },
     noDataBox:{
+        //backgroundColor: '#ff725c',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 4,
+            height: 4
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },
+    noDataButton:{
+        height: responsive(125),
+        width: responsive(125),
+        borderRadius: responsive(10),
+        backgroundColor: '#e9f8ff',
     },
     addButton:{
         width:40,
@@ -360,89 +320,116 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         backgroundColor: '#ffad1c',
         borderRadius:20,
-        borderWidth: 1,
+        //borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
     noDataText:{
-        color: '#fff'
+        marginTop: responsive(5),
+        color: '#fff',
+        fontSize: responsive(16)
     },
     container: {
         flex: 1,
-        backgroundColor: '#000',
+        backgroundColor: '#000000',
         // borderColor: 'red',
         // borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
+    image:{
+        // flex: 1,
+        // resizeMode: "cover",
+        alignItems: 'center',
+        // justifyContent: "center"
+    },
     titleContainer:{
-        height: 100,
-        width: '100%',
+        height: responsive(77),
+        width: windowWidth,
         paddingTop: 20,
         backgroundColor: '#292929',
-        // justifyContent: 'space-between',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         flexDirection: 'row',
+    },
+    titleBoxWidth:{
+        width: responsive(30)
     },
     title:{
         color: '#fff',
+        fontSize: responsive(14),
     },
     addTimeBox:{
-        position: 'absolute',
-        right: 10
+        width: responsive(35),
+        alignItems: 'center'
     },
     header: {
         color: '#fff',
-        fontSize: 30,
+        // fontSize: 30,
+        fontSize: responsive(23),
         marginBottom: 10,
         marginTop: 10,
         alignItems: 'flex-start'
     },
     bodyArea: {
         flex: 1,
-        borderWidth: 1,
+        //borderWidth: 1,
         width: '100%',
         borderColor: 'blue',
         alignItems: 'center',
     },
     contentBox: {
-      marginTop: 20,
+      //marginTop: 20,
+        //paddingTop: 20,
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection: "column",
-      borderWidth: 2,
+      //borderWidth: 2,
       borderLeftWidth: 0,
       borderRightWidth: 0,
-      borderColor: 'yellow',
-      width: "100%",
-      height: 'auto',
+      // borderColor: 'yellow',
+      width: windowWidth,
+        // width: 333,
+      height: '100%',
         zIndex: 2
     },
     swipelist:{
-        borderWidth: 2,
-        borderColor: 'green',
-        width: '100%',
-        // alignItems: 'center'
+        //borderWidth: 3,
+        alignItems: 'center',
+        marginTop: 20,
     },
+
     text:{
         color: '#fff'
     },
     rowBack:{
+        height: responsive(75),
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginVertical: 50,
+        alignItems: 'flex-start',
         flexWrap: 'wrap',
-        zIndex: -1
+        zIndex: -1,
+        // backgroundColor:'#ffa186',
     },
-    delete:{
-        width: 50,
+    deleteBox:{
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        //flex: 2,
+        width: responsive(50)
+    },
+    deleteRedButton:{
+        width: responsive(39),
+        height: responsive(39),
+        borderRadius: responsive(8),
+        backgroundColor:'#ff0010',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 30
     },
     deleteIcon:{
-        marginRight:5
+        // backgroundColor: '#000',
+        // marginRight:5
     },
     // dotsModalBackground:{
     //     width: 50,

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "wake-up-now",
+    "name": "OutABed",
+    "slug": "out-a-bed",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -10,11 +10,18 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/OABIcon.png",
+    "loading": {
+      "icon": "./assets/LoadingIcon.png",
+      "hideExponentText": false
+    },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/LoadingIcon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#e7ebf1"
+    },
+    "notification": {
+      "icon": "./assets/OABIcon.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,6 +31,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Motivation App to Get Out of Bed and Start the Day"
   }
 }

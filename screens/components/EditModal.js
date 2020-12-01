@@ -12,6 +12,7 @@ import {
     View,
     Button
 } from "react-native";
+import {responsive, heightResponsive} from "./Responsive";
 
 export default function EditTime({visible, showEdit, newDate, updateTimes}) {
     let [userInfo, setUserInfo] = useState(newDate);
@@ -61,14 +62,12 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
     let offset = new Date().getTimezoneOffset() * -1;
 
 
-
     // if (userInfo) {
     //     console.log('userInfo deviceTime before request', userInfo.deviceTime);
     //     console.log('visible ', visible);
     //     console.log('newDate ', newDate);
     //     axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: userInfo.id, device_time: date, device_id: Constants.deviceId}).then(res => console.log('res.data ', res.data)).catch(error => console.log(error));
     // }
-
 
     return (
         <View style={styles.centeredView}>
@@ -83,35 +82,38 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
 
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <View style={{borderColor: "#2196F3"}}>
-                            <Button
-                                style={{fontSize: 20, color: 'green'}}
-                                styleDisabled={{color: 'red'}}
-                                title="Save"
-                                //fix this
-                                onPress={() => saveTime({ date: Date.parse(date), id: userInfo.id})}
+                        {/* {show && ( */}
+                        <View style={styles.pickerBox}>
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                timeZoneOffsetInMinutes={offset}
+                                value={date}
+                                mode={mode}
+                                is24Hour={true}
+                                display="default"
+                                onChange={onChange}
+                                style={styles.datePicker}
                             />
                         </View>
-                        {/* {show && ( */}
-                        <View style={{ height: 200, width: 200}}>
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            timeZoneOffsetInMinutes={offset}
-                            value={date}
-                            mode={mode}
-                            is24Hour={true}
-                            display="default"
-                            onChange={onChange}
-                        />
-                        </View>
-                        <Text style={styles.modalText}>Hello World!</Text>
 
-                        <TouchableHighlight
-                            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                            onPress={showEdit}
-                        >
-                            <Text style={styles.textStyle}>Cancel</Text>
-                        </TouchableHighlight>
+                        <View style={styles.buttonBox}>
+                            <TouchableHighlight
+                                style={{ ...styles.cancelButton }}
+                                onPress={showEdit}
+                                underlayColor="#fff"
+                            >
+                                <Text style={styles.textCancel}>Cancel</Text>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight
+                                style={{ ...styles.saveButton}}
+                                underlayColor="#fff"
+                                onPress={() => saveTime({ date: Date.parse(date), id: userInfo.id})}
+                            >
+                                <Text style={styles.textSave}>Save</Text>
+                            </TouchableHighlight>
+                        </View>
+
                     </View>
                 </View>
             </Modal>
@@ -124,15 +126,19 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: responsive(18)
     },
     modalView: {
-        width: 250,
-        height: 400,
-        margin: 20,
+        //width: 250,
+        // height: responsive(250),
+        //backgroundColor: '#000',
+        width: responsive(193),
+        height: heightResponsive(105),
+        //margin: responsive(16),
         backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: responsive(16),
+        //padding: 35,
+        // padding: responsive(27),
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -143,14 +149,57 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5
     },
-    openButton: {
-        backgroundColor: "#F194FF",
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
+    pickerBox:{
+        margin: responsive(16),
+        //\padding: responsive(27),
+        // height: 200,
+        height: heightResponsive(70),
+        // width: 200,
+        width: responsive(152)
     },
-    textStyle: {
-        color: "white",
+    datePicker:{
+        //fontSize: 33
+        height: heightResponsive(74),
+        width: responsive(152)
+    },
+    buttonBox:{
+        backgroundColor: '#9b9b9b',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        borderBottomLeftRadius: responsive(16),
+        borderBottomRightRadius: responsive(16),
+        position: 'absolute',
+        bottom: 2
+        //marginTop: responsive(9),
+        //height: heightResponsive(12),
+    },
+    cancelButton: {
+        //backgroundColor: "#c2cdf3",
+        // borderRadius: 20,
+        backgroundColor: "#fff",
+        width: '50%',
+        padding: responsive(8),
+        borderBottomLeftRadius: responsive(16)
+        //elevation: 2
+    },
+    saveButton:{
+        backgroundColor: "#fff",
+        width: '50%',
+        borderColor: "#2196F3",
+        // borderRadius: 20,
+        padding: responsive(8),
+        borderBottomRightRadius: responsive(16)
+        //elevation: 2
+    },
+    textCancel: {
+        color: "#c2cdf3",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    textSave: {
+        color: "#1393ff",
         fontWeight: "bold",
         textAlign: "center"
     },
