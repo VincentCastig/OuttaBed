@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
+import { AppLoading } from 'expo';
 import axios from 'axios';
 import expoAxios from '../src/api/expoAxios';
 import localHost from '../src/api/localHost';
@@ -27,6 +28,7 @@ import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import {responsive, heightResponsive} from './components/Responsive';
+import { useFonts } from 'expo-font';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -36,6 +38,7 @@ export default function HomeScreen({route, navigation}) {
     const [expoPushToken, setExpoPushToken] = useState(null);
     // const [dotsModalVisible, setDotsModalVisible] = useState(true);
     //const [dimensions, setDimensions] = useState({ window, screen });
+    let [fontsLoaded] = useFonts({ Inter_Bold: require('../assets/fonts/Inter-Bold.ttf') });
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -187,8 +190,12 @@ export default function HomeScreen({route, navigation}) {
                 <Item item={item} updateTimes={updateTimes}/>
               );
 
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    }
 
-    if(userInfo.length === 0){
+
+    else if(userInfo.length === 0){
         return (
             <View style={styles.loadingWrapper}>
                 <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
@@ -358,6 +365,7 @@ const styles = StyleSheet.create({
     title:{
         color: '#fff',
         fontSize: responsive(14),
+        fontFamily: 'Inter_900Black'
     },
     addTimeBox:{
         width: responsive(35),
@@ -369,7 +377,8 @@ const styles = StyleSheet.create({
         fontSize: responsive(23),
         marginBottom: 10,
         marginTop: 10,
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        fontFamily: 'Inter_900Black'
     },
     bodyArea: {
         flex: 1,

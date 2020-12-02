@@ -5,11 +5,28 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import EditTime from './components/EditModal';
 import {responsive, heightResponsive} from './components/Responsive';
 import axios from "axios/index";
+import {
+    useFonts,
+    Oswald_200ExtraLight,
+    Oswald_300Light,
+    Oswald_400Regular,
+    Oswald_500Medium,
+    Oswald_600SemiBold,
+    Oswald_700Bold,
+} from '@expo-google-fonts/oswald';
 
 export default function Item( {item, navigation, updateTimes} ) {
     const [isEnabled, setIsEnabled] = useState(item.active);
     const [modalVisible, setModalVisible] = useState(false);
     const [dotsModalVisible, setDotsModalVisible] = useState(false);
+    let [fontsLoaded] = useFonts({
+        Oswald_200ExtraLight,
+        Oswald_300Light,
+        Oswald_400Regular,
+        Oswald_500Medium,
+        Oswald_600SemiBold,
+        Oswald_700Bold,
+    });
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -76,7 +93,7 @@ const styles = StyleSheet.create({
         // height: 100,
         height: responsive(76),
         // width: 300,
-        width: responsive(232),
+        width: responsive(202),
         borderRadius: responsive(15),
         alignItems: 'center',
         flexDirection: 'row',
@@ -105,8 +122,9 @@ const styles = StyleSheet.create({
     },
     time:{
         color: '#fff',
+        fontFamily: 'Oswald_300Light',
         //fontSize: 45,
-        fontSize: responsive(35),
+        fontSize: responsive(32),
         //borderColor: 'red',
         //borderWidth: 1,
     },

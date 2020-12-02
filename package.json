@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "@expo-google-fonts/inter": "^0.1.0",
+    "@expo-google-fonts/oswald": "^0.1.0",
     "@expo/samples": "~36.0.0",
     "@expo/vector-icons": "^10.2.1",
     "@react-native-community/datetimepicker": "2.4.0",
@@ -28,7 +30,7 @@
     "expo-asset": "~8.1.7",
     "expo-calendar": "~8.2.2",
     "expo-constants": "~9.1.1",
-    "expo-font": "~8.2.1",
+    "expo-font": "^8.3.0",
     "expo-notifications": "~0.3.3",
     "expo-permissions": "~9.0.1",
     "expo-server-sdk": "^3.6.0",
