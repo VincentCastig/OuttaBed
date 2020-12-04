@@ -38,7 +38,12 @@ export default function HomeScreen({route, navigation}) {
     const [expoPushToken, setExpoPushToken] = useState(null);
     // const [dotsModalVisible, setDotsModalVisible] = useState(true);
     //const [dimensions, setDimensions] = useState({ window, screen });
-    let [fontsLoaded] = useFonts({ Inter_Bold: require('../assets/fonts/Inter-Bold.ttf') });
+    let [fontsLoaded] = useFonts({
+        Inter_Bold: require('../assets/fonts/Inter-Bold.ttf'),
+        // AntDesign,
+        // Entypo
+    });
+
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -206,7 +211,8 @@ export default function HomeScreen({route, navigation}) {
                         onPress={() => addTime()}
                     >
                         <View style={styles.addTimeBox}>
-                            <Entypo name="plus" size={responsive(24)} color="#fff" />
+                            {/*<Entypo name="plus" size={responsive(24)} color="#fff" />*/}
+                            <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
@@ -244,7 +250,8 @@ export default function HomeScreen({route, navigation}) {
                     onPress={() => addTime()}
                 >
                     <View style={styles.addTimeBox}>
-                        <Entypo name="plus" size={responsive(23)} color="#fff" />
+                        {/*<Entypo name="plus" size={responsive(23)} color="#fff" />*/}
+                        <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -262,7 +269,7 @@ export default function HomeScreen({route, navigation}) {
                             <View style={styles.rowBack}>
                                 <View style={styles.deleteBox}>
                                     <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
-                                        <AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />
+                                        {/*<AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />*/}
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -349,6 +356,10 @@ const styles = StyleSheet.create({
         // resizeMode: "cover",
         alignItems: 'center',
         // justifyContent: "center"
+    },
+    addImage:{
+        height: responsive(15),
+        width: responsive(15)
     },
     titleContainer:{
         height: responsive(77),
