@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     },
     time:{
         color: '#fff',
-        fontFamily: 'Oswald_300Light',
+        // fontFamily: 'Oswald_300Light',
         //fontSize: 45,
         fontSize: responsive(32),
         //borderColor: 'red',

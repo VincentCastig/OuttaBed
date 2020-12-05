@@ -269,7 +269,7 @@ export default function HomeScreen({route, navigation}) {
                             <View style={styles.rowBack}>
                                 <View style={styles.deleteBox}>
                                     <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
-                                        {/*<AntDesign name="delete" size={responsive(18)} color="white" style={styles.deleteIcon} />*/}
+                                        <Image source={require('../assets/DeleteIcon.png')} style={styles.addImage}/>
                                     </TouchableOpacity>
                                 </View>
                             </View>
