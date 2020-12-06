@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "OutABed",
-    "slug": "out-a-bed",
+    "name": "OuttaBed",
+    "slug": "outtabed",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -28,8 +28,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.outtabed.outtabed",
+      "buildNumber": "1.0.0"
     },
-    "description": "Motivation App to Get Out of Bed and Start the Day"
+    "android": {
+      "package": "com.outtabed.outtabed",
+      "versionCode": 1
+    }
   }
 }
