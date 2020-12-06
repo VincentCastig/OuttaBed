@@ -10,7 +10,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/OABIcon.png",
+    "icon": "./assets/OuttaBedIcon.png",
     "loading": {
       "icon": "./assets/LoadingIcon.png",
       "hideExponentText": false
