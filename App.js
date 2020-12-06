@@ -38,6 +38,7 @@ export default class App extends React.Component{
                         inactiveTintColor: "white",
                         style: {
                             backgroundColor: '#292929',
+                            borderColor: '#292929',
                             height: heightResponsive(36),
                             alignItems: 'center'
                             //backgroundColor: '#fff'

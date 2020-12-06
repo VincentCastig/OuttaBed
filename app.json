@@ -16,9 +16,7 @@
       "hideExponentText": false
     },
     "splash": {
-      "image": "./assets/LoadingIcon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#e7ebf1"
+      "image": "./assets/OutABedSplash.png"
     },
     "notification": {
       "icon": "./assets/OABIcon.png"
