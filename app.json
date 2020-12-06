@@ -16,7 +16,8 @@
       "hideExponentText": false
     },
     "splash": {
-      "image": "./assets/OutABedSplash.png"
+      "image": "./assets/OutABedSplash.png",
+      "resizeMode": "cover"
     },
     "notification": {
       "icon": "./assets/OABIcon.png"
