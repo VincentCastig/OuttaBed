@@ -20,7 +20,7 @@
       "resizeMode": "cover"
     },
     "notification": {
-      "icon": "./assets/OABIcon.png"
+      "icon": "./assets/OuttaBedIcon.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
