@@ -5,11 +5,28 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import EditTime from './components/EditModal';
 import {responsive, heightResponsive} from './components/Responsive';
 import axios from "axios/index";
+import {
+    useFonts,
+    Oswald_200ExtraLight,
+    Oswald_300Light,
+    Oswald_400Regular,
+    Oswald_500Medium,
+    Oswald_600SemiBold,
+    Oswald_700Bold,
+} from '@expo-google-fonts/oswald';
 
 export default function Item( {item, navigation, updateTimes} ) {
     const [isEnabled, setIsEnabled] = useState(item.active);
     const [modalVisible, setModalVisible] = useState(false);
     const [dotsModalVisible, setDotsModalVisible] = useState(false);
+    let [fontsLoaded] = useFonts({
+        Oswald_200ExtraLight,
+        Oswald_300Light,
+        Oswald_400Regular,
+        Oswald_500Medium,
+        Oswald_600SemiBold,
+        Oswald_700Bold,
+    });
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
@@ -72,11 +89,9 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         backgroundColor: '#292929',
         //borderColor: '#ffa04c',
-        borderWidth: 2,
-        // height: 100,
-        height: responsive(76),
-        // width: 300,
-        width: responsive(232),
+        borderWidth: responsive(2),
+        height: responsive(70),
+        width: responsive(202),
         borderRadius: responsive(15),
         alignItems: 'center',
         flexDirection: 'row',
@@ -94,19 +109,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: "row",
-        // borderColor: '#fff',
-        // borderColor: '#3e4948',
-        // borderWidth: 2,
-        // borderTopLeftRadius: 20,
-        // borderBottomLeftRadius: 20,
         borderRadius: 20
-        //borderTopWidth: 2,
-        //borderBottomWidth:2
     },
     time:{
         color: '#fff',
+        // fontFamily: 'Oswald_300Light',
         //fontSize: 45,
-        fontSize: responsive(35),
+        fontSize: responsive(32),
         //borderColor: 'red',
         //borderWidth: 1,
     },

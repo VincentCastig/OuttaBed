@@ -3,9 +3,6 @@ import {StyleSheet, Text, View} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {responsive, heightResponsive} from './components/Responsive';
 
-// This refers to the function defined earlier in this guide, in Push Notifications Set Up
-import registerForPushNotificationsAsync from '../notifications';
-
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
@@ -15,7 +12,6 @@ Notifications.setNotificationHandler({
 });
 
 export default function Motivation ({route, navigation}) {
-
         const {notification} = route.params || '';
 
         if (notification) {
@@ -26,7 +22,7 @@ export default function Motivation ({route, navigation}) {
                     </View>
 
                     <View style={styles.bodyContent}>
-                        <View>
+                        <View style={styles.authorBox}>
                             <Text style={styles.author}>{notification.request.content.title}</Text>
                         </View>
                         <Text style={styles.quote}>{notification.request.content.data.aps.alert.body}</Text>
@@ -46,11 +42,12 @@ export default function Motivation ({route, navigation}) {
 }
 
 
+
 const styles = StyleSheet.create({
     titleContainer:{
         height: responsive(77),
         width: '100%',
-        paddingTop: 20,
+        paddingTop: responsive(18),
         backgroundColor: '#292929',
         alignItems: 'center',
         justifyContent: 'center',
@@ -59,11 +56,14 @@ const styles = StyleSheet.create({
     bodyContent:{
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 15
+        padding: responsive(15)
     },
     title:{
         color: '#fff',
-        fontSize: responsive(14),
+        fontSize: responsive(20),
+        marginBottom: responsive(10),
+        marginTop: responsive(10),
+        alignItems: 'flex-start'
     },
     container:{
         flex: 1,
@@ -71,12 +71,21 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         backgroundColor: '#000'
     },
+    authorBox:{
+        borderColor: '#fff',
+        borderBottomWidth: responsive(3),
+        marginBottom: responsive(18),
+        paddingLeft: responsive(10),
+        paddingRight: responsive(10)
+    },
     author:{
+        //fontFamily: 'arial',
         color: '#fff',
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: responsive(16),
+        marginBottom: responsive(4),
         fontSize: responsive(18),
-        marginLeft: 'auto'
+        marginLeft: 'auto',
+        fontWeight: "700",
     },
     quote:{
         color: '#fff',
