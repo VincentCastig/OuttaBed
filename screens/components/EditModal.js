@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     },
     datePicker:{
         //fontSize: 33
+        backgroundColor: "white",
         height: heightResponsive(74),
         width: responsive(152)
     },
