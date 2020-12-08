@@ -8,18 +8,19 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
-    "icon": "./assets/OABIcon.png",
+    "icon": "./assets/OuttaBedIcon.png",
     "loading": {
       "icon": "./assets/LoadingIcon.png",
       "hideExponentText": false
     },
     "splash": {
-      "image": "./assets/OutABedSplash.png"
+      "image": "./assets/OutABedSplash.png",
+      "resizeMode": "cover"
     },
     "notification": {
-      "icon": "./assets/OABIcon.png"
+      "icon": "./assets/OuttaBedIcon.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

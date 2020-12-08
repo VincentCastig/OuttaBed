@@ -11,14 +11,14 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default function Motivation ({route, navigation}) {
+export default function Motivation ({route}) {
         const {notification} = route.params || '';
 
         if (notification) {
             return (
                 <View style={styles.container}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>OutABed</Text>
+                        <Text style={styles.title}>OuttaBed</Text>
                     </View>
 
                     <View style={styles.bodyContent}>
