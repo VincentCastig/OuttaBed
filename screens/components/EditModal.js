@@ -91,7 +91,7 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
                                 value={date}
                                 mode={mode}
                                 is24Hour={true}
-                                display="spinner"
+                                display={Platform.OS === "ios" ? "inline" : "default"}
                                 onChange={onChange}
                                 style={styles.datePicker}
                             />

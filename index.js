@@ -32,7 +32,12 @@ massive(connectionString).then(db => {
     sendNotifications()
 });
 
+
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
+app.get('/ok', function(req, res){
+    res.sendFile(__dirname + '/public/index.html');
+});
 
 app.post('/create-user', userController.createUser);
 
