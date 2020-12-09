@@ -46,7 +46,7 @@ export default function HomeScreen({route, navigation}) {
 
     const addTime = () => {
         console.log('adding time ', Constants.deviceId);
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken.data, device_id: Constants.deviceId})
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]', device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
