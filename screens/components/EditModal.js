@@ -91,7 +91,7 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
                                 value={date}
                                 mode={mode}
                                 is24Hour={true}
-                                display="default"
+                                display={Platform.OS === "ios" ? "spinner" : "default"}
                                 onChange={onChange}
                                 style={styles.datePicker}
                             />
@@ -160,8 +160,9 @@ const styles = StyleSheet.create({
     },
     datePicker:{
         //fontSize: 33
+        backgroundColor: "white",
         height: heightResponsive(74),
-        width: responsive(152)
+        width: '100%'
     },
     buttonBox:{
         backgroundColor: '#9b9b9b',

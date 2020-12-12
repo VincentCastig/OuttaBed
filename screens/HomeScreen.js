@@ -51,7 +51,7 @@ export default function HomeScreen({route, navigation}) {
 
     const addTime = () => {
         console.log('adding time ', Constants.deviceId);
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken.data, device_id: Constants.deviceId})
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]', device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -174,28 +174,29 @@ export default function HomeScreen({route, navigation}) {
                 <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
                 <View style={styles.titleContainer}>
                     <View style={styles.addTimeBox}></View>
-                    <Text style={styles.title}>OutABed</Text>
-                    <TouchableWithoutFeedback
+                    <Text style={styles.title}>OuttaBed</Text>
+                    <TouchableOpacity
                         onPress={() => addTime()}
                     >
                         <View style={styles.addTimeBox}>
                             {/*<Entypo name="plus" size={responsive(24)} color="#fff" />*/}
                             <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.loadingBody}>
-                    <View style={styles.noDataBox}>
+                    <View>
                         <TouchableOpacity
                             onPress={() => addTime()}
+                            style={styles.noDataBox}
                         >
                             <Image
                                 style={styles.noDataButton}
                                 source={require('../assets/LoadingIcon.png')}
                             />
+                            <Text style={styles.noDataText}>Add notification</Text>
                         </TouchableOpacity>
-                        <Text style={styles.noDataText}>Add notification</Text>
                     </View>
                 </View>
                 </ImageBackground>
@@ -242,11 +243,6 @@ export default function HomeScreen({route, navigation}) {
                             )}
                             leftOpenValue={0}
                             rightOpenValue={responsive(-90)}
-                            // onRowOpen={(rowKey, rowMap) => {
-                            //     setTimeout(() => {
-                            //         rowMap[rowKey].closeRow()
-                            //     }, 4000)
-                            // }}
                         />
                     </SafeAreaView>
                     {/*{dotsModalVisible ? (*/}
@@ -291,7 +287,7 @@ const styles = StyleSheet.create({
         height: responsive(125),
         width: responsive(125),
         borderRadius: responsive(10),
-        backgroundColor: '#e9f8ff',
+        backgroundColor: '#fff',
     },
     addButton:{
         width:40,

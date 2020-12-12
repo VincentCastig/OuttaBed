@@ -12,11 +12,11 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default function Motivation ({route, navigation}) {
-    const {notification} = route.params || '';
-    let [fontsLoaded] = useFonts({
-        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
-    });
+export default function Motivation ({route}) {
+        const {notification} = route.params || '';
+        let [fontsLoaded] = useFonts({
+            'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
+        });
 
         if (notification) {
             return (
