@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {responsive, heightResponsive} from './components/Responsive';
 import { useFonts, Font } from 'expo-font';
+import { AppLoading } from 'expo';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -16,9 +17,13 @@ export default function Motivation ({route}) {
         const {notification} = route.params || '';
         let [fontsLoaded] = useFonts({
             'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
+            'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
         });
 
-        if (notification) {
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    }
+        else if (notification) {
             return (
                 <View style={styles.container}>
                     <View style={styles.titleContainer}>
@@ -63,14 +68,14 @@ const styles = StyleSheet.create({
     bodyContent:{
         alignItems: 'center',
         justifyContent: 'center',
-        padding: responsive(15)
+        padding: responsive(18),
+        // backgroundColor: 'red'
     },
     title:{
         color: '#fff',
         fontSize: responsive(27),
         marginBottom: responsive(10),
         marginTop: responsive(10),
-        alignItems: 'flex-start',
         fontFamily: 'DancingScript'
     },
     container:{
@@ -81,23 +86,28 @@ const styles = StyleSheet.create({
     },
     authorBox:{
         borderColor: '#fff',
-        borderBottomWidth: responsive(3),
+        borderBottomWidth: responsive(1),
         marginBottom: responsive(18),
         paddingLeft: responsive(10),
-        paddingRight: responsive(10)
+        paddingRight: responsive(10),
+        alignItems: 'center',
+        // backgroundColor: '#fff',
+        width: responsive(280)
     },
     author:{
         //fontFamily: 'arial',
         color: '#fff',
         marginTop: responsive(16),
-        marginBottom: responsive(4),
-        fontSize: responsive(18),
-        marginLeft: 'auto',
+        marginBottom: responsive(10),
+        fontSize: responsive(22),
+        // marginLeft: 'auto',
         fontWeight: "700",
+        fontFamily: 'Noticia_Text'
     },
     quote:{
         color: '#fff',
-        fontSize: responsive(15)
+        fontSize: responsive(15),
+        fontFamily: 'Noticia_Text'
     },
     loadingWrapper:{
         flex: 1,

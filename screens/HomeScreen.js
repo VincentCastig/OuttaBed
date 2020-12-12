@@ -41,6 +41,7 @@ export default function HomeScreen({route, navigation}) {
         'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
         'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
         'Archivo': require('../assets/fonts/Archivo-Regular.ttf'),
+        'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
     });
     const notificationListener = useRef();
     const responseListener = useRef();
@@ -50,7 +51,8 @@ export default function HomeScreen({route, navigation}) {
     };
 
     const addTime = () => {
-        console.log('adding time ', Constants.deviceId);
+        //'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]'
+        //expoPushToken.data
         axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]', device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
