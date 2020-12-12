@@ -5,27 +5,17 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import EditTime from './components/EditModal';
 import {responsive, heightResponsive} from './components/Responsive';
 import axios from "axios/index";
-import {
-    useFonts,
-    Oswald_200ExtraLight,
-    Oswald_300Light,
-    Oswald_400Regular,
-    Oswald_500Medium,
-    Oswald_600SemiBold,
-    Oswald_700Bold,
-} from '@expo-google-fonts/oswald';
+import { AppLoading } from 'expo';
+import { useFonts, Font } from 'expo-font';
 
 export default function Item( {item, navigation, updateTimes} ) {
     const [isEnabled, setIsEnabled] = useState(item.active);
     const [modalVisible, setModalVisible] = useState(false);
     const [dotsModalVisible, setDotsModalVisible] = useState(false);
     let [fontsLoaded] = useFonts({
-        Oswald_200ExtraLight,
-        Oswald_300Light,
-        Oswald_400Regular,
-        Oswald_500Medium,
-        Oswald_600SemiBold,
-        Oswald_700Bold,
+        // 'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
+        'Archivo': require('../assets/fonts/Archivo-Regular.ttf'),
+        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
     });
 
     const windowWidth = Dimensions.get('window').width;
@@ -57,6 +47,9 @@ export default function Item( {item, navigation, updateTimes} ) {
 
 
 
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    }
 return (
     <View style={styles.itemContainer}>
 
@@ -115,6 +108,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         // fontFamily: 'Oswald_300Light',
         //fontSize: 45,
+        fontFamily: 'Archivo',
         fontSize: responsive(32),
         //borderColor: 'red',
         //borderWidth: 1,

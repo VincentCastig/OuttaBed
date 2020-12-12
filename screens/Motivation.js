@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {responsive, heightResponsive} from './components/Responsive';
+import { useFonts, Font } from 'expo-font';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -12,13 +13,16 @@ Notifications.setNotificationHandler({
 });
 
 export default function Motivation ({route, navigation}) {
-        const {notification} = route.params || '';
+    const {notification} = route.params || '';
+    let [fontsLoaded] = useFonts({
+        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
+    });
 
         if (notification) {
             return (
                 <View style={styles.container}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>OutABed</Text>
+                        <Text style={styles.title}>Motivational Quote</Text>
                     </View>
 
                     <View style={styles.bodyContent}>
@@ -33,6 +37,9 @@ export default function Motivation ({route, navigation}) {
         else{
             return (
                 <View style={styles.loadingWrapper}>
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>Motivational Quote</Text>
+                    </View>
                     <View style={styles.loadingBody}>
                         <Text style={styles.noDataText}>Nothing yet</Text>
                     </View>
@@ -60,10 +67,11 @@ const styles = StyleSheet.create({
     },
     title:{
         color: '#fff',
-        fontSize: responsive(20),
+        fontSize: responsive(27),
         marginBottom: responsive(10),
         marginTop: responsive(10),
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        fontFamily: 'DancingScript'
     },
     container:{
         flex: 1,
