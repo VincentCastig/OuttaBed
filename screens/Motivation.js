@@ -31,10 +31,10 @@ export default function Motivation ({route}) {
                     </View>
 
                     <View style={styles.bodyContent}>
-                        <View style={styles.authorBox}>
-                            <Text style={styles.author}>{notification.request.content.title}</Text>
-                        </View>
                         <Text style={styles.quote}>{notification.request.content.data.aps.alert.body}</Text>
+                        <View style={styles.authorBox}>
+                            <Text style={styles.author}>~{notification.request.content.title}</Text>
+                        </View>
                     </View>
                 </View>
             );
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         fontSize: responsive(27),
         marginBottom: responsive(10),
         marginTop: responsive(10),
-        fontFamily: 'DancingScript'
+        fontFamily: 'DancingScript',
     },
     container:{
         flex: 1,
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
     },
     authorBox:{
         borderColor: '#fff',
-        borderBottomWidth: responsive(1),
-        marginBottom: responsive(18),
+        // borderBottomWidth: responsive(1),
+        marginTop: responsive(5),
         paddingLeft: responsive(10),
         paddingRight: responsive(10),
         alignItems: 'center',
@@ -97,17 +97,18 @@ const styles = StyleSheet.create({
     author:{
         //fontFamily: 'arial',
         color: '#fff',
-        marginTop: responsive(16),
+        marginTop: responsive(10),
         marginBottom: responsive(10),
         fontSize: responsive(22),
-        // marginLeft: 'auto',
+        marginLeft: 'auto',
         fontWeight: "700",
-        fontFamily: 'Noticia_Text'
+        fontFamily: 'DancingScript'
     },
     quote:{
         color: '#fff',
         fontSize: responsive(15),
-        fontFamily: 'Noticia_Text'
+        fontFamily: 'Noticia_Text',
+        marginTop: responsive(120),
     },
     loadingWrapper:{
         flex: 1,
