@@ -27,7 +27,6 @@ import Item from './ListItem';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import {responsive, heightResponsive} from './components/Responsive';
 import { useFonts, Font } from 'expo-font';
-//import * as Font from 'expo-font';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -37,6 +36,13 @@ export default function HomeScreen({route, navigation}) {
     const [expoPushToken, setExpoPushToken] = useState(null);
     // const [dotsModalVisible, setDotsModalVisible] = useState(true);
     //const [dimensions, setDimensions] = useState({ window, screen });
+    //assets/fonts/DancingScript-VariableFont_wght.ttf
+    let [fontsLoaded] = useFonts({
+        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
+        'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
+        'Archivo': require('../assets/fonts/Archivo-Regular.ttf'),
+        'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
+    });
     const notificationListener = useRef();
     const responseListener = useRef();
 
@@ -45,7 +51,8 @@ export default function HomeScreen({route, navigation}) {
     };
 
     const addTime = () => {
-        console.log('adding time ', Constants.deviceId);
+        //'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]'
+        //expoPushToken.data
         axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]', device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
@@ -160,8 +167,10 @@ export default function HomeScreen({route, navigation}) {
                 <Item item={item} updateTimes={updateTimes}/>
               );
 
-
-      if(userInfo.length === 0){
+    if (!fontsLoaded) {
+        return <AppLoading />;
+    }
+      else if(userInfo.length === 0){
         return (
             <View style={styles.loadingWrapper}>
                 <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
@@ -203,7 +212,7 @@ export default function HomeScreen({route, navigation}) {
                 <View style={styles.titleContainer}>
                     <View style={styles.addTimeBox}></View>
 
-                    <Text style={styles.header}>Motivation Time </Text>
+                    <Text style={styles.header}>OuttaBed</Text>
 
                     <TouchableOpacity
                         onPress={() => addTime()}
@@ -323,10 +332,11 @@ const styles = StyleSheet.create({
     },
     title:{
         color: '#fff',
-        fontSize: responsive(20),
+        fontSize: responsive(27),
         marginBottom: 10,
         marginTop: 10,
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        fontFamily: 'DancingScript'
     },
     addTimeBox:{
         width: responsive(35),
@@ -334,10 +344,11 @@ const styles = StyleSheet.create({
     },
     header: {
         color: '#fff',
-        fontSize: responsive(23),
+        fontSize: responsive(27),
         marginBottom: 10,
         marginTop: 10,
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        fontFamily: 'DancingScript'
     },
     bodyArea: {
         flex: 1,
