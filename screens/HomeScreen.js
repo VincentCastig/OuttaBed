@@ -62,7 +62,6 @@ export default function HomeScreen({route, navigation}) {
         axios.delete(`https://get-up-now.herokuapp.com/delete-time/${time.id}`)
             .then(res => {
                 setUserInfo(userInfo.filter((item) => item.id !== time.id));
-                console.log('deleteTime res ', res);
             })
             .catch(error => {
                 console.log('deleteTime error', error)
@@ -70,23 +69,23 @@ export default function HomeScreen({route, navigation}) {
     };
 
     useEffect(() => {
-        registerForPushNotificationsAsync().then(token => {
-            setExpoPushToken(token);
-        });
+        // registerForPushNotificationsAsync().then(token => {
+        //     setExpoPushToken(token);
+        // });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log('listener ', response.notification);
-            navigation.navigate("Motivation", {
-                notification: response.notification
-            });
-            console.log('listen');
-        });
-
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener);
-            Notifications.removeNotificationSubscription(responseListener);
-        };
+        // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+        //     console.log('listener ', response.notification);
+        //     navigation.navigate("Motivation", {
+        //         notification: response.notification
+        //     });
+        //     console.log('listen');
+        // });
+        //
+        // return () => {
+        //     Notifications.removeNotificationSubscription(notificationListener);
+        //     Notifications.removeNotificationSubscription(responseListener);
+        // };
     }, []);
 
         useEffect(() => {
@@ -162,7 +161,7 @@ export default function HomeScreen({route, navigation}) {
           });
 
             const renderItem = ({ item }) => (
-                <Item item={item} updateTimes={updateTimes}/>
+                <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime} />
               );
 
     if (!fontsLoaded) {
