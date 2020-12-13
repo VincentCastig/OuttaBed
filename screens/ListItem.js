@@ -1,5 +1,16 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, Switch, TouchableWithoutFeedback, Dimensions, TouchableHighlight} from 'react-native';
+import {
+    View,
+    Text,
+    Button,
+    StyleSheet,
+    Switch,
+    TouchableWithoutFeedback,
+    Dimensions,
+    TouchableHighlight,
+    Modal,
+    Alert
+} from 'react-native';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 // import { SwipeListView } from 'react-native-swipe-list-view';
 import EditTime from './components/EditModal';
@@ -41,9 +52,11 @@ export default function Item( {item, navigation, updateTimes} ) {
         setDotsModalVisible(!dotsModalVisible);
         console.log('modalVisible ', modalVisible);
     };
-    const testButton = () => {
-        console.log('test button');
+    const hideEditBox = () => {
+        setDotsModalVisible(!dotsModalVisible);
     };
+
+    console.log('item index', item.index);
 
 
 
@@ -67,6 +80,49 @@ return (
                         value={isEnabled}
                         style={{ transform: [{ scaleX: responsive(.8) }, { scaleY: responsive(.8) }] }}
                     />
+
+                    <View style={{zIndex: 3}}>
+                        <TouchableHighlight onPress={() => {
+                            showEditBox();
+                        }}>
+                            <View style={styles.horizontalDots}>
+                                <Entypo name="dots-three-horizontal" size={24} color="white" />
+                            </View>
+                        </TouchableHighlight>
+
+
+                        {dotsModalVisible ? (
+                            <Modal
+                                transparent={true}
+                                visible={true}
+                                onRequestClose={() => {
+                                    Alert.alert("Modal has been closed.");
+                                }}>
+                                <TouchableWithoutFeedback onPress={() => {
+                                    showEditBox();
+                                }}>
+                                    <View style={styles.modalBox}></View>
+                                </TouchableWithoutFeedback>
+                            {/*<TouchableHighlight  onPress={() => {*/}
+                                {/*testButton();*/}
+                            {/*}}>*/}
+                                <View style={[styles.dotsModal, {top: responsive(90 * (item.index ))}]} >
+                                    <View style={styles.dotsModalText}>
+                                        <Text>Edit</Text>
+                                    </View>
+                                    <View style={styles.dotsModalText}>
+                                        <Text>Delete</Text>
+                                    </View>
+                                    <View style={styles.dotsModalCancel}>
+                                        <Text>Cancel</Text>
+                                    </View>
+                                </View>
+                            {/*</TouchableHighlight>*/}
+
+                            </Modal>
+                        ): null
+                        }
+                    </View>
                 </View>
             </View>
         </TouchableHighlight>
@@ -125,35 +181,49 @@ const styles = StyleSheet.create({
     //     marginTop: 10,
     //     width: 100
     // },
-    // horizontalDots:{
-    //     color: '#ff0006',
-    //     borderWidth: 1,
-    //    // borderColor: 'white',
-    //     borderRadius: 10,
-    //     width: 50,
-    //     alignItems: 'center'
-    // },
-    // dotsModalBackground:{
-    //     position: 'absolute',
-    //     left:0,
-    //     height: 400,
-    //     width: 350,
-    //     borderWidth: 1,
-    //     borderColor: 'green',
-    //     backgroundColor: '#fff',
-    //     zIndex: 3333
-    // },
-    // dotsModal:{
-    //     width: 100,
-    //     borderRadius: 10,
-    //     position: 'absolute',
-    //     bottom: -45,
-    //     right: 25,
-    //     borderColor: '#fff',
-    //     borderWidth: 1,
-    //     backgroundColor:'#fff',
-    //     zIndex: 3
-    // },
+    horizontalDots:{
+        color: '#ff0006',
+        // borderWidth: 1,
+       // borderColor: 'white',
+        borderRadius: 10,
+        width: 50,
+        alignItems: 'center'
+    },
+    dotsModalBackground:{
+        position: 'absolute',
+        left:0,
+        height: 400,
+        width: 350,
+        borderWidth: 1,
+        borderColor: 'green',
+        backgroundColor: '#fff',
+        zIndex: 3333
+    },
+    modalBox:{
+        // position: 'absolute',
+        // left:0,
+        zIndex: 0,
+        height: '100%',
+        // width: '100%',
+        borderWidth: 1,
+        //borderColor: 'green',
+        backgroundColor: '#fff',
+        opacity: 0.1,
+        // flex: 1,
+        // alignItems: 'center',
+        // justifyContent: 'center'
+    },
+    dotsModal:{
+        width: 100,
+        borderRadius: 10,
+        position: 'absolute',
+        //top: responsive(140),
+        left: responsive(125),
+        borderColor: '#fff',
+        borderWidth: 1,
+        backgroundColor:'#fff',
+        zIndex: 3
+    },
     dotsModalText:{
         color: '#616161',
         padding: 10,

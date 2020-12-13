@@ -73,7 +73,7 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
     return (
         <View >
             <Modal
-                animationType="slide"
+                // animationType="slide"
                 transparent={true}
                 visible={visible}
                 onRequestClose={() => {

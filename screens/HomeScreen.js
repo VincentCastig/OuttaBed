@@ -159,6 +159,7 @@ export default function HomeScreen({route, navigation}) {
 
               time.push(tempTime);
               userInfoItem.title = tempTime + ' ' + period;
+              userInfoItem.index = index + 1.6;
 
               return userInfo[index] = userInfoItem;
           });
