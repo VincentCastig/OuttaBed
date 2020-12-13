@@ -59,14 +59,14 @@ return (
             <View style={styles.timeBox}>
                 <Text style={styles.time}>{item.title} {item.key}</Text>
                 <View style={styles.switchBox}>
-                <Switch
-                    trackColor={{ false: "#000000", true: "#25ff24" }}
-                    thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
-                    ios_backgroundColor="#3e3e3e"
-                    onChange={toggleSwitch}
-                    value={isEnabled}
-                    style={{ transform: [{ scaleX: responsive(.8) }, { scaleY: responsive(.8) }] }}
-                />
+                    <Switch
+                        trackColor={{ false: "#000000", true: "#25ff24" }}
+                        thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onChange={toggleSwitch}
+                        value={isEnabled}
+                        style={{ transform: [{ scaleX: responsive(.8) }, { scaleY: responsive(.8) }] }}
+                    />
                 </View>
             </View>
         </TouchableHighlight>

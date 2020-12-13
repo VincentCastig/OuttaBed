@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: responsive(15),
         fontFamily: 'Noticia_Text',
-        marginTop: responsive(120),
+        marginTop: responsive(40),
     },
     loadingWrapper:{
         flex: 1,
