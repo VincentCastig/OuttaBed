@@ -34,9 +34,6 @@ const windowHeight = Dimensions.get('window').height;
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
-    // const [dotsModalVisible, setDotsModalVisible] = useState(true);
-    //const [dimensions, setDimensions] = useState({ window, screen });
-    //assets/fonts/DancingScript-VariableFont_wght.ttf
     let [fontsLoaded] = useFonts({
         'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
         'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
@@ -159,7 +156,7 @@ export default function HomeScreen({route, navigation}) {
 
               time.push(tempTime);
               userInfoItem.title = tempTime + ' ' + period;
-              userInfoItem.index = index + 1.6;
+              userInfoItem.index = index + 1.5;
 
               return userInfo[index] = userInfoItem;
           });

@@ -9,7 +9,8 @@ import {
     Dimensions,
     TouchableHighlight,
     Modal,
-    Alert
+    Alert,
+    Image
 } from 'react-native';
 import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 // import { SwipeListView } from 'react-native-swipe-list-view';
@@ -109,12 +110,17 @@ return (
                                 <View style={[styles.dotsModal, {top: responsive(90 * (item.index ))}]} >
                                     <View style={styles.dotsModalText}>
                                         <Text>Edit</Text>
+                                        {/*<Image style={styles.iconImage} source={require('../assets/EditTimeIcon.png')} />*/}
+                                        <Image style={styles.iconImage} source={require('../assets/EditIcon2.png')} />
                                     </View>
                                     <View style={styles.dotsModalText}>
                                         <Text>Delete</Text>
+                                        {/*//style={styles.deleteIcon}*/}
+                                        <Image style={styles.iconImage} source={require('../assets/DeleteIconBlack.png')} />
                                     </View>
-                                    <View style={styles.dotsModalCancel}>
+                                    <View style={styles.dotsModalText}>
                                         <Text>Cancel</Text>
+                                        <Image style={styles.iconImage} source={require('../assets/CancelIcon.png')} />
                                     </View>
                                 </View>
                             {/*</TouchableHighlight>*/}
@@ -214,11 +220,11 @@ const styles = StyleSheet.create({
         // justifyContent: 'center'
     },
     dotsModal:{
-        width: 100,
+        width: responsive(100),
         borderRadius: 10,
         position: 'absolute',
         //top: responsive(140),
-        left: responsive(125),
+        left: responsive(115),
         borderColor: '#fff',
         borderWidth: 1,
         backgroundColor:'#fff',
@@ -228,7 +234,14 @@ const styles = StyleSheet.create({
         color: '#616161',
         padding: 10,
         borderBottomColor: '#9b9b9b',
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    iconImage:{
+        width: 22,
+        height: 22,
+        backgroundColor: '#fff'
     },
     dotsModalCancel:{
         color: '#616161',

@@ -36,6 +36,7 @@
     "android": {
       "package": "com.outtabed.outtabed",
       "versionCode": 1
-    }
+    },
+    "description": "Motivation App to Get Out of Bed and Start the Day"
   }
 }
