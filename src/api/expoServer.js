@@ -10,12 +10,12 @@ module.exports = {
     sendNotifications: () => {
 //Create the messages that you want to send to clients
         let notifications = {};
-        let quote = {};
+        let quotes = {};
 
         const getData = async () => {
             await
-            axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
-                quote = res.data;
+            axios.get('http://get-up-now.herokuapp.com/get-quotes').then(res => {
+                quotes = res.data;
             }).catch(error => {
                 console.log('error ', error)
             });
@@ -26,14 +26,18 @@ module.exports = {
             }).catch(error => {
                 console.log('error ', error)
             });
+
         };
 
+
         getData().then(() => {
-            module.exports.sendMessages(notifications, quote);
+            module.exports.sendMessages(notifications, quotes);
         });
     },
 
-    sendMessages: (notifications, quote) => {
+
+
+    sendMessages: (notifications, quotes) => {
             let date = new Date();
             let currentHour = date.getHours();
             let currentMinute = date.getMinutes();
@@ -54,8 +58,8 @@ module.exports = {
                     messages.push({
                         to: notification.token,
                         sound: 'default',
-                        body: quote[0].quote,
-                        title: quote[0].author,
+                        body: quotes[Math.floor(Math.random() * quotes.length)].quote,
+                        title: quotes[Math.floor(Math.random() * quotes.length)].author,
                         data: {withSome: 'data'},
                     })
                 }
