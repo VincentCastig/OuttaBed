@@ -51,6 +51,6 @@ app.get('/get-time/:device_id', userController.getTime);
 
 app.get('/get-all-tokens', userController.getTokens);
 
-app.get('/get-quote', userController.getQuote);
+app.get('/get-quotes', userController.getQuotes);
 
 app.listen(process.env.PORT, () => { console.log(`Listening on port: ${process.env.PORT}`); });
