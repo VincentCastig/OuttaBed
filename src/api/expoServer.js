@@ -55,11 +55,12 @@ module.exports = {
                         continue;
                     }
                     // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
+                    let randomNumber = Math.floor(Math.random() * quotes.length);
                     messages.push({
                         to: notification.token,
                         sound: 'default',
-                        body: quotes[Math.floor(Math.random() * quotes.length)].quote,
-                        title: quotes[Math.floor(Math.random() * quotes.length)].author,
+                        body: quotes[randomNumber].quote,
+                        title: quotes[randomNumber].author,
                         data: {withSome: 'data'},
                     })
                 }
