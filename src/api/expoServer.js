@@ -14,18 +14,18 @@ module.exports = {
 
         const getData = async () => {
             await
-                axios.get('http://get-up-now.herokuapp.com/get-quotes').then(res => {
-                    quotes = res.data;
-                }).catch(error => {
-                    console.log('error ', error)
-                });
+            axios.get('http://get-up-now.herokuapp.com/get-quotes').then(res => {
+                quotes = res.data;
+            }).catch(error => {
+                console.log('error ', error)
+            });
 
             await
-                axios.get('http://get-up-now.herokuapp.com/get-all-tokens').then(res => {
-                    notifications = res.data;
-                }).catch(error => {
-                    console.log('error ', error)
-                });
+            axios.get('http://get-up-now.herokuapp.com/get-all-tokens').then(res => {
+                notifications = res.data;
+            }).catch(error => {
+                console.log('error ', error)
+            });
 
         };
 
@@ -38,21 +38,31 @@ module.exports = {
 
 
     sendMessages: (notifications, quotes) => {
-        let date = new Date();
-        let currentHour = date.getHours();
-        let currentMinute = date.getMinutes();
-        let messages = [];
-        for (let notification of notifications) {
-            let hour = new Date(notification.device_time).getUTCHours();
-            let minute = new Date(notification.device_time).getUTCMinutes();
+            let date = new Date();
+            let currentHour = date.getHours();
+            let currentMinute = date.getMinutes();
+            let messages = [];
+            for (let notification of notifications) {
+                let hour = new Date(notification.device_time).getUTCHours();
+                let minute = new Date(notification.device_time).getUTCMinutes();
 
-            if (hour == currentHour && minute == currentMinute) {
-                console.log('we are in ', notification.token);
-                // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
-                // Check that all your push tokens appear to be valid Expo push tokens
-                if (!Expo.isExpoPushToken(notification.token)) {
-                    console.error(`Push token ${notification.token} is not a valid Expo push token`);
-                    continue;
+                if (hour == currentHour && minute == currentMinute) {
+                    console.log('we are in ', notification.token);
+                    // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
+                    // Check that all your push tokens appear to be valid Expo push tokens
+                    if (!Expo.isExpoPushToken(notification.token)) {
+                        console.error(`Push token ${notification.token} is not a valid Expo push token`);
+                        continue;
+                    }
+                    // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
+                    let randomNumber = Math.floor(Math.random() * quotes.length);
+                    messages.push({
+                        to: notification.token,
+                        sound: 'default',
+                        body: quotes[randomNumber].quote,
+                        title: quotes[randomNumber].author,
+                        data: {withSome: 'data'},
+                    })
                 }
                 // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
                 let randomNumber = Math.floor(Math.random() * quotes.length);
