@@ -18,7 +18,6 @@ import {
 import Constants from 'expo-constants';
 import AppLoading from 'expo-app-loading';
 import axios from 'axios';
-import expoAxios from '../src/api/expoAxios';
 import localHost from '../src/api/localHost';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
