@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {responsive, heightResponsive} from './components/Responsive';
 import { useFonts, Font } from 'expo-font';
@@ -14,18 +14,19 @@ Notifications.setNotificationHandler({
 });
 
 export default function Motivation ({route}) {
-        const {notification} = route.params || '';
-        let [fontsLoaded] = useFonts({
-            'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
-            'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
-        });
+    const {notification} = route.params || '';
+    let [fontsLoaded] = useFonts({
+        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
+        'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
+    });
 
     if (!fontsLoaded) {
         return <AppLoading />;
     }
-        else if (notification) {
-            return (
-                <View style={styles.container}>
+    else if (notification) {
+        return (
+            <View style={styles.container}>
+                <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Motivational Quote</Text>
                     </View>
@@ -36,21 +37,27 @@ export default function Motivation ({route}) {
                             <Text style={styles.author}>~{notification.request.content.title}</Text>
                         </View>
                     </View>
+                </ImageBackground>
+            </View>
+        );
+    }
+    else{
+        return (
+            //<View>
+            <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.container}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Motivational Quote</Text>
                 </View>
-            );
-        }
-        else{
-            return (
-                <View style={styles.loadingWrapper}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Motivational Quote</Text>
-                    </View>
-                    <View style={styles.loadingBody}>
-                        <Text style={styles.noDataText}>Nothing yet</Text>
+                <View style={styles.bodyContent}>
+                    <Text style={styles.quote}>Every morning in Africa, a Gazelle wakes up. It knows it must run faster than the fastest lion or it will be killed. Every morning a Lion wakes up. It knows it must outrun the slowest Gazelle or it will starve to death. It doesn’t matter whether you are a Lion or a Gazelle… when the sun comes up, you’d better be running.</Text>
+                    <View style={styles.authorBox}>
+                        <Text style={styles.author}>~Author Unknown</Text>
                     </View>
                 </View>
-            )
-        }
+            </ImageBackground>
+            // </View>
+        )
+    }
 }
 
 
@@ -82,7 +89,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-        backgroundColor: '#000'
+        //backgroundColor: '#000'
     },
     authorBox:{
         borderColor: '#fff',
@@ -96,7 +103,7 @@ const styles = StyleSheet.create({
     },
     author:{
         //fontFamily: 'arial',
-        color: '#fff',
+        color: '#162757',
         marginTop: responsive(10),
         marginBottom: responsive(10),
         fontSize: responsive(22),
@@ -105,7 +112,7 @@ const styles = StyleSheet.create({
         fontFamily: 'DancingScript'
     },
     quote:{
-        color: '#fff',
+        color: '#162757',
         fontSize: responsive(15),
         fontFamily: 'Noticia_Text',
         marginTop: responsive(40),
@@ -121,10 +128,13 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000'
+        //backgroundColor: '#000'
     },
     noDataText:{
         color: '#fff',
         fontSize: responsive(15)
+    },
+    image:{
+        alignItems: 'center',
     },
 });

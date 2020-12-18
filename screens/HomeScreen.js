@@ -16,9 +16,8 @@ import {
     Dimensions
 } from 'react-native';
 import Constants from 'expo-constants';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import axios from 'axios';
-import expoAxios from '../src/api/expoAxios';
 import localHost from '../src/api/localHost';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
@@ -34,9 +33,6 @@ const windowHeight = Dimensions.get('window').height;
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
-    // const [dotsModalVisible, setDotsModalVisible] = useState(true);
-    //const [dimensions, setDimensions] = useState({ window, screen });
-    //assets/fonts/DancingScript-VariableFont_wght.ttf
     let [fontsLoaded] = useFonts({
         'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
         'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
@@ -65,7 +61,6 @@ export default function HomeScreen({route, navigation}) {
         axios.delete(`https://get-up-now.herokuapp.com/delete-time/${time.id}`)
             .then(res => {
                 setUserInfo(userInfo.filter((item) => item.id !== time.id));
-                console.log('deleteTime res ', res);
             })
             .catch(error => {
                 console.log('deleteTime error', error)
@@ -73,23 +68,23 @@ export default function HomeScreen({route, navigation}) {
     };
 
     useEffect(() => {
-        registerForPushNotificationsAsync().then(token => {
-            setExpoPushToken(token);
-        });
+        // registerForPushNotificationsAsync().then(token => {
+        //     setExpoPushToken(token);
+        // });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            console.log('listener ', response.notification);
-            navigation.navigate("Motivation", {
-                notification: response.notification
-            });
-            console.log('listen');
-        });
-
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener);
-            Notifications.removeNotificationSubscription(responseListener);
-        };
+        // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+        //     console.log('listener ', response.notification);
+        //     navigation.navigate("Motivation", {
+        //         notification: response.notification
+        //     });
+        //     console.log('listen');
+        // });
+        //
+        // return () => {
+        //     Notifications.removeNotificationSubscription(notificationListener);
+        //     Notifications.removeNotificationSubscription(responseListener);
+        // };
     }, []);
 
         useEffect(() => {
@@ -159,16 +154,17 @@ export default function HomeScreen({route, navigation}) {
 
               time.push(tempTime);
               userInfoItem.title = tempTime + ' ' + period;
+              userInfoItem.index = index + 1.5;
 
               return userInfo[index] = userInfoItem;
           });
 
             const renderItem = ({ item }) => (
-                <Item item={item} updateTimes={updateTimes}/>
+                <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime} />
               );
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <View><Text>Loading</Text></View>;
     }
       else if(userInfo.length === 0){
         return (
