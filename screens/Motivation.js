@@ -44,12 +44,15 @@ export default function Motivation ({route}) {
     else{
         return (
             //<View>
-            <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.loadingWrapper}>
+            <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.container}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>Motivational Quote</Text>
                 </View>
-                <View style={styles.loadingBody}>
-                    <Text style={styles.noDataText}>Nothing yet</Text>
+                <View style={styles.bodyContent}>
+                    <Text style={styles.quote}>Every morning in Africa, a Gazelle wakes up. It knows it must run faster than the fastest lion or it will be killed. Every morning a Lion wakes up. It knows it must outrun the slowest Gazelle or it will starve to death. It doesn’t matter whether you are a Lion or a Gazelle… when the sun comes up, you’d better be running.</Text>
+                    <View style={styles.authorBox}>
+                        <Text style={styles.author}>~Author Unknown</Text>
+                    </View>
                 </View>
             </ImageBackground>
             // </View>
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
     },
     author:{
         //fontFamily: 'arial',
-        color: '#fff',
+        color: '#162757',
         marginTop: responsive(10),
         marginBottom: responsive(10),
         fontSize: responsive(22),
@@ -109,7 +112,7 @@ const styles = StyleSheet.create({
         fontFamily: 'DancingScript'
     },
     quote:{
-        color: '#fff',
+        color: '#162757',
         fontSize: responsive(15),
         fontFamily: 'Noticia_Text',
         marginTop: responsive(40),
