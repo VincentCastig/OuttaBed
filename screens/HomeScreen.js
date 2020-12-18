@@ -16,7 +16,7 @@ import {
     Dimensions
 } from 'react-native';
 import Constants from 'expo-constants';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import axios from 'axios';
 import expoAxios from '../src/api/expoAxios';
 import localHost from '../src/api/localHost';
@@ -165,7 +165,7 @@ export default function HomeScreen({route, navigation}) {
               );
 
     if (!fontsLoaded) {
-        return <AppLoading />;
+        return <View><Text>Loading</Text></View>;
     }
       else if(userInfo.length === 0){
         return (
