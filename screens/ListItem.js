@@ -56,6 +56,12 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
         setDotsModalVisible(!dotsModalVisible);
     };
 
+    let swipeRowRef;
+    const onRowDidOpen = () => {
+        // Do whatever actions are needed
+        swipeRowRef.closeRow();
+    };
+
 
 
     if (!fontsLoaded) {
@@ -66,7 +72,12 @@ return (
         <SwipeRow
             rightOpenValue={-120}
             stopRightSwipe={-120}
-            forceCloseToRightThreshold={100}
+            onRowOpen={(rowKey, rowMap) => {
+                setTimeout(() => {
+                    onRowDidOpen()
+                }, 3000)
+            }}
+            ref={ref => swipeRowRef = ref}
             // style={{width: '#73ff79'}}
             disableRightSwipe>
             <View style={styles.hiddenRow}>
