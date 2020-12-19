@@ -63,18 +63,8 @@ module.exports = {
                         data: {withSome: 'data'},
                     })
                 }
-                // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
-                let randomNumber = Math.floor(Math.random() * quotes.length);
-                messages.push({
-                    to: notification.token,
-                    sound: 'default',
-                    body: quotes[randomNumber].quote,
-                    title: quotes[randomNumber].author,
-                    data: {withSome: 'data'},
-                })
             }
-
-
+            
         // The Expo push notification service accepts batches of notifications so
         // that you don't need to send 1000 requests to send 1000 notifications. We
         // recommend you batch your notifications to reduce the number of requests

@@ -10,7 +10,6 @@ const scale = SCREEN_WIDTH / 320;
 
 export function responsive(size) {
     const newSize = size * scale;
-    console.log('newSize ', newSize);
     if (Platform.OS === 'ios') {
         return Math.round(PixelRatio.roundToNearestPixel(newSize))
     } else {
