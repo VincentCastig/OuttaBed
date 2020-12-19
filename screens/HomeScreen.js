@@ -8,6 +8,7 @@ import {
     ImageBackground,
     SafeAreaView,
     View,
+    ScrollView,
     Image,
     FlatList,
     Button,
@@ -23,7 +24,7 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import {responsive, heightResponsive} from './components/Responsive';
 import { useFonts, Font } from 'expo-font';
 
@@ -33,6 +34,7 @@ const windowHeight = Dimensions.get('window').height;
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
+    const [scrollViewOffset, setScrollViewOffset] = useState(0);
     let [fontsLoaded] = useFonts({
         'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
         'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
@@ -67,6 +69,7 @@ export default function HomeScreen({route, navigation}) {
             })
     };
 
+
     useEffect(() => {
         // registerForPushNotificationsAsync().then(token => {
         //     setExpoPushToken(token);
@@ -78,7 +81,6 @@ export default function HomeScreen({route, navigation}) {
         //     navigation.navigate("Motivation", {
         //         notification: response.notification
         //     });
-        //     console.log('listen');
         // });
         //
         // return () => {
@@ -100,11 +102,9 @@ export default function HomeScreen({route, navigation}) {
         }, []);
 
         const updateTimes = (date, id) => {
-            console.log('updating the times ', date, id);
 
             userInfo.forEach((userInfoItem, index) => {
                 if (userInfoItem.id === id) {
-                    console.log('userInfoItem id', userInfoItem.id);
                     return userInfo[index].device_time = date;
                 }
                 return userInfoItem;
@@ -134,7 +134,6 @@ export default function HomeScreen({route, navigation}) {
               else{
                   hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
               }
-              console.log('hours ', hours);
 
               if(hours >= 12 || hours < 0){
                   period = "PM"
@@ -159,9 +158,13 @@ export default function HomeScreen({route, navigation}) {
               return userInfo[index] = userInfoItem;
           });
 
-            const renderItem = ({ item }) => (
-                <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime} />
-              );
+            // const renderItem = ({ item }) => (
+            //     <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime}/>
+            //   );
+    const handleScroll = (event) => {
+        console.log('event.nativeEvent.contentOffset.y ', event.nativeEvent.contentOffset.y);
+        setScrollViewOffset(event.nativeEvent.contentOffset.y);
+    };
 
     if (!fontsLoaded) {
         return <View><Text>Loading</Text></View>;
@@ -222,26 +225,55 @@ export default function HomeScreen({route, navigation}) {
 
                 <View style={styles.bodyArea}>
                     <SafeAreaView style={styles.contentBox}>
-                        <SwipeListView
-                            contentContainerStyle={styles.swipelist}
-                            useFlatList={true}
-                            data={userInfo}
-                            renderItem={renderItem}
-                            keyExtractor={(item) => item.id.toString()}
-                            width={'100%'}
-                            renderHiddenItem={ (rowData, rowMap) => (
-                                <View style={styles.rowBack}>
-                                    <View style={styles.deleteBox}>
-                                        <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
-                                            <Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
+                        {/*<SwipeListView*/}
+                            {/*contentContainerStyle={styles.swipelist}*/}
+                            {/*useFlatList={true}*/}
+                            {/*data={userInfo}*/}
+                            {/*// renderItem={renderItem}*/}
+                            {/*keyExtractor={(item) => item.id.toString()}*/}
+                            {/*width={'100%'}*/}
+                            {/*renderItem={ (rowData, rowMap) => (*/}
 
-                            )}
-                            leftOpenValue={0}
-                            rightOpenValue={responsive(-90)}
-                        />
+                                {/*<SwipeRow*/}
+                                    {/*onLayout={event => {*/}
+                                        {/*console.log(event.nativeEvent.layout);*/}
+                                {/*}}>*/}
+                                    {/*<View style={styles.hiddenRow}*/}
+                                          {/*onLayout={event => {*/}
+                                              {/*console.log(this.layout)*/}
+                                          {/*}}>*/}
+                                        {/*<View style={styles.deleteBox}>*/}
+                                            {/*<TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >*/}
+                                            {/*<Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>*/}
+                                            {/*</TouchableOpacity>*/}
+                                        {/*</View>*/}
+                                    {/*</View>*/}
+
+                                    {/*<Item item={rowData.item} updateTimes={updateTimes} deleteItem={deleteTime}/>*/}
+                                {/*</SwipeRow>*/}
+
+                            {/*)}*/}
+                            {/*leftOpenValue={0}*/}
+                            {/*rightOpenValue={responsive(-90)}*/}
+                        {/*/>*/}
+                        <ScrollView
+                            style={styles.swipelist}
+                            onScroll={handleScroll}
+                        >
+                            {userInfo.map((rowData, key) => {
+                                return (
+                                    <Item
+                                        item={rowData}
+                                        updateTimes={updateTimes}
+                                        deleteItem={deleteTime}
+                                        key={key}
+                                        scrollViewOffset={scrollViewOffset}
+                                    />
+                                )
+                            })}
+                        </ScrollView>
+
+
                     </SafeAreaView>
                     {/*{dotsModalVisible ? (*/}
                         {/*<View style={styles.dotsModalBackground}>*/}
@@ -360,23 +392,25 @@ const styles = StyleSheet.create({
       borderRightWidth: 0,
       width: windowWidth,
       height: '100%',
-      zIndex: 2
+      zIndex: 2,
+      paddingTop: responsive(20)
     },
     swipelist:{
-        alignItems: 'center',
-        marginTop: 20,
+        // alignItems: 'center',
+        marginTop: responsive(25),
+        // backgroundColor: '#ffc299'
     },
-
     text:{
         color: '#fff'
     },
-    rowBack:{
+    hiddenRow:{
         height: responsive(75),
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
         zIndex: -1,
+        // backgroundColor: '#ff959a'
     },
     deleteBox:{
         height: '100%',
