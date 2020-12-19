@@ -33,9 +33,8 @@ module.exports = {
         getData().then(() => {
             module.exports.sendMessages(notifications, quotes);
         });
+
     },
-
-
 
     sendMessages: (notifications, quotes) => {
             let date = new Date();
@@ -74,7 +73,7 @@ module.exports = {
                     data: {withSome: 'data'},
                 })
             }
-        }
+
 
         // The Expo push notification service accepts batches of notifications so
         // that you don't need to send 1000 requests to send 1000 notifications. We
