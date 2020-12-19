@@ -64,8 +64,7 @@ module.exports = {
                     })
                 }
             }
-
-
+            
         // The Expo push notification service accepts batches of notifications so
         // that you don't need to send 1000 requests to send 1000 notifications. We
         // recommend you batch your notifications to reduce the number of requests
