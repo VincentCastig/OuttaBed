@@ -63,15 +63,6 @@ module.exports = {
                         data: {withSome: 'data'},
                     })
                 }
-                // Construct a message (see https://docs.expo.io/push-notifications/sending-notifications/)
-                let randomNumber = Math.floor(Math.random() * quotes.length);
-                messages.push({
-                    to: notification.token,
-                    sound: 'default',
-                    body: quotes[randomNumber].quote,
-                    title: quotes[randomNumber].author,
-                    data: {withSome: 'data'},
-                })
             }
 
 

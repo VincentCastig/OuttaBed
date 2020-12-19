@@ -37,7 +37,6 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
     const setVisible = () => {
         setDotsModalVisible(false);
         setModalVisible(!modalVisible);
-        console.log('modalVisible ', modalVisible);
     };
 
     const toggleSwitch = () => {
