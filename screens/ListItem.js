@@ -22,7 +22,7 @@ import AppLoading from 'expo-app-loading';
 import { useFonts, Font } from 'expo-font';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 
-export default function Item( {item, navigation, updateTimes, deleteItem, scrollViewOffset} ) {
+export default function Item( {item, navigation, updateTimes, deleteItem} ) {
     const [isEnabled, setIsEnabled] = useState(item.active);
     const [modalVisible, setModalVisible] = useState(false);
     const [dotsModalVisible, setDotsModalVisible] = useState(false);
@@ -57,25 +57,16 @@ export default function Item( {item, navigation, updateTimes, deleteItem, scroll
     };
 
 
-    console.log('item scrollViewOffset', scrollViewOffset);
-
-
 
     if (!fontsLoaded) {
         return <AppLoading />;
     }
 return (
-    <View
-        onLayout={event => {
-            let yPosition = event.nativeEvent.layout.y + responsive(158);
-
-
-            setYPosition(yPosition);
-
-        }}>
+    <View>
         <SwipeRow
             rightOpenValue={-120}
             stopRightSwipe={-120}
+            forceCloseToRightThreshold={100}
             // style={{width: '#73ff79'}}
             disableRightSwipe>
             <View style={styles.hiddenRow}>
@@ -106,63 +97,14 @@ return (
                             />
 
                             <View style={{zIndex: 3}}>
-                                <TouchableHighlight onPress={() => {
-                                    showEditBox();
-                                }}>
-                                    <View style={styles.horizontalDots}>
-                                        <Entypo name="dots-three-horizontal" size={24} color="white" />
-                                    </View>
-                                </TouchableHighlight>
+                                {/*<TouchableHighlight onPress={() => {*/}
+                                    {/*showEditBox();*/}
+                                {/*}}>*/}
+                                    {/*<View style={styles.horizontalDots}>*/}
+                                        {/*<Entypo name="dots-three-horizontal" size={24} color="white" />*/}
+                                    {/*</View>*/}
+                                {/*</TouchableHighlight>*/}
 
-
-                                {dotsModalVisible ? (
-                                    <Modal
-                                        transparent={true}
-                                        visible={true}
-                                        onRequestClose={() => {
-                                            Alert.alert("Modal has been closed.");
-                                        }}>
-                                        <TouchableWithoutFeedback onPress={() => {
-                                            showEditBox();
-                                        }}>
-                                            <View style={styles.modalBox}></View>
-                                        </TouchableWithoutFeedback>
-                                    {/*<TouchableHighlight  onPress={() => {*/}
-                                        {/*testButton();*/}
-                                    {/*}}>*/}
-                                        <View style={[styles.dotsModal, {top: yPosition - scrollViewOffset}]} >
-                                            <TouchableOpacity onPress={() => {
-                                                setVisible();
-                                            }}>
-                                                <View style={styles.dotsModalText}>
-                                                    <Text>Edit</Text>
-                                                    {/*<Image style={styles.iconImage} source={require('../assets/EditTimeIcon.png')} />*/}
-                                                    <Image style={styles.iconImage} source={require('../assets/EditIcon2.png')} />
-                                                </View>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => {
-                                                deleteItem(item);
-                                            }}>
-                                                <View style={styles.dotsModalText}>
-                                                    <Text>Delete</Text>
-                                                    {/*//style={styles.deleteIcon}*/}
-                                                    <Image style={styles.iconImage} source={require('../assets/DeleteIconBlack.png')} />
-                                                </View>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => {
-                                                showEditBox();
-                                            }}>
-                                                <View style={styles.dotsModalCancel}>
-                                                    <Text>Cancel</Text>
-                                                    <Image style={styles.iconImage} source={require('../assets/CancelIcon.png')} />
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    {/*</TouchableHighlight>*/}
-
-                                    </Modal>
-                                ): null
-                                }
                             </View>
                         </View>
                     </View>

@@ -29,7 +29,7 @@ export default class App extends React.Component{
                 <Tab.Navigator
                     barStyle={{
                         // backgroundColor: '#1393ff',
-                        //height: responsive(66),
+                        height: responsive(66),
                         backgroundColor: '#292929',
                     }}
 
@@ -39,7 +39,7 @@ export default class App extends React.Component{
                         style: {
                             backgroundColor: '#292929',
                             borderColor: '#292929',
-                            height: heightResponsive(36),
+                            height: responsive(65),
                             alignItems: 'center'
                             //backgroundColor: '#fff'
                         },

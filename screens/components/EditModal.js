@@ -71,7 +71,7 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
     // }
 
     return (
-        <View >
+        <View>
             <Modal
                 // animationType="slide"
                 transparent={true}
@@ -127,14 +127,15 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: responsive(18)
+        marginTop: responsive(18),
+        //backgroundColor: '#fff'
     },
     modalView: {
         //width: 250,
         // height: responsive(250),
         //backgroundColor: '#000',
         width: responsive(193),
-        height: heightResponsive(105),
+        height: responsive(185),
         //margin: responsive(16),
         backgroundColor: "white",
         borderRadius: responsive(16),
@@ -148,20 +149,21 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 5,
+        ///backgroundColor: '#000'
     },
     pickerBox:{
-        margin: responsive(16),
+        margin: responsive(5),
         //\padding: responsive(27),
         // height: 200,
-        height: heightResponsive(70),
+        height: '100%',
         // width: 200,
         width: responsive(152)
     },
     datePicker:{
         //fontSize: 33
         backgroundColor: "white",
-        height: heightResponsive(74),
+        height: '90%',
         width: '100%'
     },
     buttonBox:{

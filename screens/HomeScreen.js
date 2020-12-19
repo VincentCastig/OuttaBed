@@ -34,7 +34,6 @@ const windowHeight = Dimensions.get('window').height;
 export default function HomeScreen({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
-    const [scrollViewOffset, setScrollViewOffset] = useState(0);
     let [fontsLoaded] = useFonts({
         'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
         'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
@@ -158,13 +157,6 @@ export default function HomeScreen({route, navigation}) {
               return userInfo[index] = userInfoItem;
           });
 
-            // const renderItem = ({ item }) => (
-            //     <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime}/>
-            //   );
-    const handleScroll = (event) => {
-        console.log('event.nativeEvent.contentOffset.y ', event.nativeEvent.contentOffset.y);
-        setScrollViewOffset(event.nativeEvent.contentOffset.y);
-    };
 
     if (!fontsLoaded) {
         return <View><Text>Loading</Text></View>;
@@ -225,40 +217,9 @@ export default function HomeScreen({route, navigation}) {
 
                 <View style={styles.bodyArea}>
                     <SafeAreaView style={styles.contentBox}>
-                        {/*<SwipeListView*/}
-                            {/*contentContainerStyle={styles.swipelist}*/}
-                            {/*useFlatList={true}*/}
-                            {/*data={userInfo}*/}
-                            {/*// renderItem={renderItem}*/}
-                            {/*keyExtractor={(item) => item.id.toString()}*/}
-                            {/*width={'100%'}*/}
-                            {/*renderItem={ (rowData, rowMap) => (*/}
-
-                                {/*<SwipeRow*/}
-                                    {/*onLayout={event => {*/}
-                                        {/*console.log(event.nativeEvent.layout);*/}
-                                {/*}}>*/}
-                                    {/*<View style={styles.hiddenRow}*/}
-                                          {/*onLayout={event => {*/}
-                                              {/*console.log(this.layout)*/}
-                                          {/*}}>*/}
-                                        {/*<View style={styles.deleteBox}>*/}
-                                            {/*<TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >*/}
-                                            {/*<Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>*/}
-                                            {/*</TouchableOpacity>*/}
-                                        {/*</View>*/}
-                                    {/*</View>*/}
-
-                                    {/*<Item item={rowData.item} updateTimes={updateTimes} deleteItem={deleteTime}/>*/}
-                                {/*</SwipeRow>*/}
-
-                            {/*)}*/}
-                            {/*leftOpenValue={0}*/}
-                            {/*rightOpenValue={responsive(-90)}*/}
-                        {/*/>*/}
                         <ScrollView
                             style={styles.swipelist}
-                            onScroll={handleScroll}
+                            contentContainerStyle={{alignItems: 'center'}}
                         >
                             {userInfo.map((rowData, key) => {
                                 return (
@@ -267,18 +228,12 @@ export default function HomeScreen({route, navigation}) {
                                         updateTimes={updateTimes}
                                         deleteItem={deleteTime}
                                         key={key}
-                                        scrollViewOffset={scrollViewOffset}
                                     />
                                 )
                             })}
                         </ScrollView>
 
-
                     </SafeAreaView>
-                    {/*{dotsModalVisible ? (*/}
-                        {/*<View style={styles.dotsModalBackground}>*/}
-                        {/*</View>*/}
-                    {/*): null}*/}
                 </View>
             </ImageBackground>
 
@@ -397,6 +352,7 @@ const styles = StyleSheet.create({
     },
     swipelist:{
         // alignItems: 'center',
+        width: '100%',
         marginTop: responsive(25),
         // backgroundColor: '#ffc299'
     },
