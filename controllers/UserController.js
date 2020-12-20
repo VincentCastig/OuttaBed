@@ -65,4 +65,12 @@ module.exports = {
             console.log('error ', error)
         })
     },
+    getQuote: (req, res) => {
+        const db = req.app.get('db');
+
+        db.getQuote().then((data)=>res.status('200').send(data)).catch((error)=> {
+            console.log('error ', error)
+        })
+    }
 }
+

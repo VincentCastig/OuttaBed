@@ -53,4 +53,6 @@ app.get('/get-all-tokens', userController.getTokens);
 
 app.get('/get-quotes', userController.getQuotes);
 
+app.get('/get-quote', userController.getQuote);
+
 app.listen(process.env.PORT, () => { console.log(`Listening on port: ${process.env.PORT}`); });
