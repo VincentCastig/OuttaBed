@@ -24,7 +24,7 @@ export default function Motivation ({route}) {
     });
 
     useEffect(() => {
-        axios.get('http://get-up-now.herokuapp.com/get-quotes').then(res => {
+        axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
             const quoteInfo = res.data[0];
             setQuote(quoteInfo);
             console.log('quoteInfo ', quoteInfo);
