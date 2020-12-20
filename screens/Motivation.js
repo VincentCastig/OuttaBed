@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {responsive, heightResponsive} from './components/Responsive';
 import { useFonts, Font } from 'expo-font';
 import { AppLoading } from 'expo';
+import Constants from "expo-constants/build/Constants";
+import axios from "axios/index";
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -15,10 +17,21 @@ Notifications.setNotificationHandler({
 
 export default function Motivation ({route}) {
     const {notification} = route.params || '';
+    const [quoteInfo, setQuote] = useState([]);
     let [fontsLoaded] = useFonts({
         'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
         'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
     });
+
+    useEffect(() => {
+        axios.get('http://get-up-now.herokuapp.com/get-quotes').then(res => {
+            const quoteInfo = res.data[0];
+            setQuote(quoteInfo);
+            console.log('quoteInfo ', quoteInfo);
+        }).catch(error => {
+            console.log('error ', error)
+        });
+    }, []);
 
     if (!fontsLoaded) {
         return <AppLoading />;
@@ -43,19 +56,17 @@ export default function Motivation ({route}) {
     }
     else{
         return (
-            //<View>
             <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.container}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>Motivational Quote</Text>
                 </View>
                 <View style={styles.bodyContent}>
-                    <Text style={styles.quote}>Every morning in Africa, a Gazelle wakes up. It knows it must run faster than the fastest lion or it will be killed. Every morning a Lion wakes up. It knows it must outrun the slowest Gazelle or it will starve to death. It doesn’t matter whether you are a Lion or a Gazelle… when the sun comes up, you’d better be running.</Text>
+                    <Text style={styles.quote}>{quoteInfo.quote}</Text>
                     <View style={styles.authorBox}>
-                        <Text style={styles.author}>~Author Unknown</Text>
+                        <Text style={styles.author}>{quoteInfo.author}</Text>
                     </View>
                 </View>
             </ImageBackground>
-            // </View>
         )
     }
 }
@@ -115,7 +126,7 @@ const styles = StyleSheet.create({
         color: '#162757',
         fontSize: responsive(15),
         fontFamily: 'Noticia_Text',
-        marginTop: responsive(40),
+        marginTop: responsive(10),
     },
     loadingWrapper:{
         flex: 1,
