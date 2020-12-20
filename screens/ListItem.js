@@ -18,15 +18,13 @@ import { Ionicons, AntDesign, Entypo } from '@expo/vector-icons';
 import EditTime from './components/EditModal';
 import {responsive, heightResponsive} from './components/Responsive';
 import axios from "axios/index";
-import AppLoading from 'expo-app-loading';
+import { AppLoading } from 'expo';
 import { useFonts, Font } from 'expo-font';
-import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 
 export default function Item( {item, navigation, updateTimes, deleteItem} ) {
     const [isEnabled, setIsEnabled] = useState(item.active);
     const [modalVisible, setModalVisible] = useState(false);
     const [dotsModalVisible, setDotsModalVisible] = useState(false);
-    let [yPosition, setYPosition] = useState(0);
     let [fontsLoaded] = useFonts({
         // 'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
         'Archivo': require('../assets/fonts/Archivo-Regular.ttf'),
@@ -39,6 +37,7 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
     const setVisible = () => {
         setDotsModalVisible(false);
         setModalVisible(!modalVisible);
+        console.log('modalVisible ', modalVisible);
     };
 
     const toggleSwitch = () => {
@@ -56,112 +55,111 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
         setDotsModalVisible(!dotsModalVisible);
     };
 
-    let swipeRowRef;
-    const onRowDidOpen = () => {
-        // Do whatever actions are needed
-        if (swipeRowRef) {
-            swipeRowRef.closeRow();
-        }
-    };
+
+    // console.log('item index', item.index);
 
 
 
-    if (!fontsLoaded) {
-        return <AppLoading />;
-    }
-return (
-    <View>
-        <SwipeRow
-            rightOpenValue={-120}
-            // stopRightSwipe={-120}
-            onRowOpen={(rowKey, rowMap) => {
-                setTimeout(() => {
-                    onRowDidOpen()
-                }, 4000)
+    // if (!fontsLoaded) {
+    //     return <AppLoading />;
+    // }
+    return (
+        <View
+            style={styles.itemContainer}
+            onLayout={event => {
+                const layout = event.nativeEvent.layout;
+                // console.log('height:', layout.height);
+                // console.log('width:', layout.width);
+                // console.log('x:', layout.x);
+                console.log('y:', layout.y);
             }}
-            ref={ref => swipeRowRef = ref}
-            // style={{width: '#73ff79'}}
-            disableRightSwipe>
-            <View style={styles.hiddenRow}>
-                <View style={styles.deleteBox}>
-                    <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteItem(item)} >
-                        <Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
+        >
 
-            <View
-                style={styles.itemContainer}
-            >
+            <TouchableHighlight style={styles.itemBox1} onPress={() => {
+                setVisible();
+            }}>
+                <View style={styles.timeBox}>
+                    <Text style={styles.time}>{item.title} {item.key}</Text>
+                    <View style={styles.switchBox}>
+                        <Switch
+                            trackColor={{ false: "#000000", true: "#25ff24" }}
+                            thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
+                            ios_backgroundColor="#3e3e3e"
+                            onChange={toggleSwitch}
+                            value={isEnabled}
+                            style={{ transform: [{ scaleX: responsive(.7) }, { scaleY: responsive(.7) }] }}
+                        />
 
-                <TouchableHighlight style={styles.itemBox1} onPress={() => {
-                    setVisible();
-                }}>
-                    <View style={styles.timeBox}>
-                        <Text style={styles.time}>{item.title} {item.key}</Text>
-                        <View style={styles.switchBox}>
-                            <Switch
-                                trackColor={{ false: "#000000", true: "#25ff24" }}
-                                thumbColor={isEnabled ? "#ffffff" : "#f4f3f4"}
-                                ios_backgroundColor="#3e3e3e"
-                                onChange={toggleSwitch}
-                                value={isEnabled}
-                                style={{ transform: [{ scaleX: responsive(.7) }, { scaleY: responsive(.7) }] }}
-                            />
+                        <View style={{zIndex: 3}}>
+                            <TouchableHighlight onPress={() => {
+                                showEditBox();
+                            }}>
+                                <View style={styles.horizontalDots}>
+                                    <Entypo name="dots-three-horizontal" size={24} color="white" />
+                                </View>
+                            </TouchableHighlight>
 
-                            <View style={{zIndex: 3}}>
-                                {/*<TouchableHighlight onPress={() => {*/}
-                                    {/*showEditBox();*/}
-                                {/*}}>*/}
-                                    {/*<View style={styles.horizontalDots}>*/}
-                                        {/*<Entypo name="dots-three-horizontal" size={24} color="white" />*/}
-                                    {/*</View>*/}
-                                {/*</TouchableHighlight>*/}
 
-                            </View>
+                            {dotsModalVisible ? (
+                                <Modal
+                                    transparent={true}
+                                    visible={true}
+                                    onRequestClose={() => {
+                                        Alert.alert("Modal has been closed.");
+                                    }}>
+                                    <TouchableWithoutFeedback onPress={() => {
+                                        showEditBox();
+                                    }}>
+                                        <View style={styles.modalBox}></View>
+                                    </TouchableWithoutFeedback>
+                                    {/*<TouchableHighlight  onPress={() => {*/}
+                                    {/*testButton();*/}
+                                    {/*}}>*/}
+                                    <View style={[styles.dotsModal, {top: responsive(90 * (item.index ))}]} >
+                                        <TouchableOpacity onPress={() => {
+                                            setVisible();
+                                        }}>
+                                            <View style={styles.dotsModalText}>
+                                                <Text>Edit</Text>
+                                                {/*<Image style={styles.iconImage} source={require('../assets/EditTimeIcon.png')} />*/}
+                                                <Image style={styles.iconImage} source={require('../assets/EditIcon2.png')} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => {
+                                            deleteItem(item);
+                                        }}>
+                                            <View style={styles.dotsModalText}>
+                                                <Text>Delete</Text>
+                                                {/*//style={styles.deleteIcon}*/}
+                                                <Image style={styles.iconImage} source={require('../assets/DeleteIconBlack.png')} />
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => {
+                                            showEditBox();
+                                        }}>
+                                            <View style={styles.dotsModalCancel}>
+                                                <Text>Cancel</Text>
+                                                <Image style={styles.iconImage} source={require('../assets/CancelIcon.png')} />
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
+                                    {/*</TouchableHighlight>*/}
+
+                                </Modal>
+                            ): null
+                            }
                         </View>
                     </View>
-                </TouchableHighlight>
+                </View>
+            </TouchableHighlight>
 
-                <EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>
-            </View>
-        </SwipeRow>
-    </View>
-);
+            <EditTime visible={modalVisible} showEdit={setVisible} newDate={item} updateTimes={updateTimes}></EditTime>
+        </View>
+    );
 
 };
 
 const styles = StyleSheet.create({
-    hiddenRow:{
-        height: responsive(75),
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start',
-        flexWrap: 'wrap',
-        zIndex: -1,
-        // backgroundColor: '#ff959a'
-    },
-    deleteBox:{
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: responsive(50)
-    },
-    deleteRedButton:{
-        width: responsive(39),
-        height: responsive(39),
-        borderRadius: responsive(8),
-        backgroundColor:'#ff0010',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 30
-    },
-    deleteIcon:{
-        width: '60%',
-        height: '60%'
-        // backgroundColor: '#000',
-        // marginRight:5
-    },
     itemContainer:{
         marginBottom: 20,
         backgroundColor: '#292929',
@@ -219,8 +217,8 @@ const styles = StyleSheet.create({
     },
     horizontalDots:{
         color: '#ff0006',
-       //  borderWidth: 1,
-       // borderColor: 'white',
+        //  borderWidth: 1,
+        // borderColor: 'white',
         marginTop: responsive(3),
         borderRadius: 10,
         width: 60,
