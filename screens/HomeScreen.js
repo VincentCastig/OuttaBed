@@ -50,7 +50,7 @@ export default function HomeScreen({route, navigation}) {
     const addTime = () => {
         //'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]'
         //expoPushToken.data
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]', device_id: Constants.deviceId})
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken.data, device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -70,22 +70,21 @@ export default function HomeScreen({route, navigation}) {
 
 
     useEffect(() => {
-        // registerForPushNotificationsAsync().then(token => {
-        //     setExpoPushToken(token);
-        // });
+        registerForPushNotificationsAsync().then(token => {
+            setExpoPushToken(token);
+        });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        //     console.log('listener ', response.notification);
-        //     navigation.navigate("Motivation", {
-        //         notification: response.notification
-        //     });
-        // });
-        //
-        // return () => {
-        //     Notifications.removeNotificationSubscription(notificationListener);
-        //     Notifications.removeNotificationSubscription(responseListener);
-        // };
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            navigation.navigate("Motivation", {
+                notification: response.notification
+            });
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+            Notifications.removeNotificationSubscription(responseListener);
+        };
     }, []);
 
         useEffect(() => {
@@ -140,7 +139,6 @@ export default function HomeScreen({route, navigation}) {
               else{
                   period = "AM"
               }
-
               tempTime = ((hours + 11) % 12 + 1).toString();
               tempTime += ":";
               if(new Date(userInfoItem.device_time).getMinutes() < 10){
@@ -158,40 +156,44 @@ export default function HomeScreen({route, navigation}) {
           });
 
 
+    const renderItem = ({ item }) => (
+        <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime} />
+    );
+
     if (!fontsLoaded) {
-        return <View><Text>Loading</Text></View>;
+        return <AppLoading />;
     }
-      else if(userInfo.length === 0){
+    else if(userInfo.length === 0){
         return (
             <View style={styles.loadingWrapper}>
                 <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
-                <View style={styles.titleContainer}>
-                    <View style={styles.addTimeBox}></View>
-                    <Text style={styles.title}>OuttaBed</Text>
-                    <TouchableOpacity
-                        onPress={() => addTime()}
-                    >
-                        <View style={styles.addTimeBox}>
-                            {/*<Entypo name="plus" size={responsive(24)} color="#fff" />*/}
-                            <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.loadingBody}>
-                    <View>
+                    <View style={styles.titleContainer}>
+                        <View style={styles.addTimeBox}></View>
+                        <Text style={styles.title}>OuttaBed</Text>
                         <TouchableOpacity
                             onPress={() => addTime()}
-                            style={styles.noDataBox}
                         >
-                            <Image
-                                style={styles.noDataButton}
-                                source={require('../assets/LoadingIcon.png')}
-                            />
-                            <Text style={styles.noDataText}>Add notification</Text>
+                            <View style={styles.addTimeBox}>
+                                {/*<Entypo name="plus" size={responsive(24)} color="#fff" />*/}
+                                <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
+                            </View>
                         </TouchableOpacity>
                     </View>
-                </View>
+
+                    <View style={styles.loadingBody}>
+                        <View>
+                            <TouchableOpacity
+                                onPress={() => addTime()}
+                                style={styles.noDataBox}
+                            >
+                                <Image
+                                    style={styles.noDataButton}
+                                    source={require('../assets/LoadingIcon.png')}
+                                />
+                                <Text style={styles.noDataText}>Add notification</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </ImageBackground>
             </View>
         )
@@ -217,23 +219,36 @@ export default function HomeScreen({route, navigation}) {
 
                 <View style={styles.bodyArea}>
                     <SafeAreaView style={styles.contentBox}>
-                        <ScrollView
-                            style={styles.swipelist}
+                        <SwipeListView
                             contentContainerStyle={{alignItems: 'center'}}
-                        >
-                            {userInfo.map((rowData, key) => {
-                                return (
-                                    <Item
-                                        item={rowData}
-                                        updateTimes={updateTimes}
-                                        deleteItem={deleteTime}
-                                        key={key}
-                                    />
-                                )
-                            })}
-                        </ScrollView>
+                            style={styles.swipelist}
+                            useFlatList={true}
+                            data={userInfo}
+                            renderItem={renderItem}
+                            keyExtractor={(item) => item.id.toString()}
+                            width={'100%'}
+                            renderHiddenItem={ (rowData, rowMap) => (
+                                <View style={styles.rowBack}>
+                                    <View style={styles.deleteBox}>
+                                        <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
+                                            <Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
 
+                            )}
+                            leftOpenValue={0}
+                            rightOpenValue={responsive(-90)}
+                            onRowOpen={(rowKey, rowMap) => {
+                                setTimeout(() => {
+                                    if (rowMap[rowKey]) {
+                                        rowMap[rowKey].closeRow()
+                                    }
+                                }, 4000)
+                            }}
+                        />
                     </SafeAreaView>
+
                 </View>
             </ImageBackground>
 
@@ -337,36 +352,31 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         borderColor: 'blue',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     contentBox: {
-      alignItems: "center",
-      justifyContent: "space-between",
-      flexDirection: "column",
-      borderLeftWidth: 0,
-      borderRightWidth: 0,
-      width: windowWidth,
-      height: '100%',
-      zIndex: 2,
-      paddingTop: responsive(20)
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "column",
+        borderLeftWidth: 0,
+        borderRightWidth: 0,
+        width: windowWidth,
+        height: '100%',
+        zIndex: 2
     },
     swipelist:{
-        // alignItems: 'center',
-        width: '100%',
-        marginTop: responsive(25),
-        // backgroundColor: '#ffc299'
+        paddingTop: 30,
     },
     text:{
         color: '#fff'
     },
-    hiddenRow:{
+    rowBack:{
         height: responsive(75),
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
         zIndex: -1,
-        // backgroundColor: '#ff959a'
     },
     deleteBox:{
         height: '100%',
@@ -389,13 +399,4 @@ const styles = StyleSheet.create({
         // backgroundColor: '#000',
         // marginRight:5
     },
-    // dotsModalBackground:{
-    //     width: 50,
-    //     height: 550,
-    //     borderWidth: 2,
-    //     borderColor: 'green',
-    //     position:'absolute',
-    //     top: 0,
-    //     zIndex: 2
-    // }
 });

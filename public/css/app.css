@@ -1,0 +1,33 @@
+
+#contact{
+    background-color: #fff;
+    padding: 100px 0;
+}
+.header, .footer{
+    background-color: #292929;
+    height: 60px;
+}
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.footer-box{
+    display: flex;
+    width: 100%;
+    justify-content: center!important;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+span, a{
+    font-weight: 400;
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #a4b2c2;
+    padding: 0 5px;
+    text-decoration: none;
+}

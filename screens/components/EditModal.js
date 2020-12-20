@@ -42,7 +42,6 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
 
     const saveTime = ({date, id}) => {
         showEdit();
-        console.log('save the date ', date);
         updateTimes(date, id);
         let myDate = new Date(date);
         axios.put(`https://get-up-now.herokuapp.com/add-time`, {id: id, device_time: myDate, device_id: Constants.deviceId}).then(res => console.log('res.data ', res.data)).catch(error => console.log(error));
@@ -60,7 +59,6 @@ export default function EditTime({visible, showEdit, newDate, updateTimes}) {
     // }
 
     let offset = new Date().getTimezoneOffset() * -1;
-    console.log('date in the time picker, ', date);
 
 
     // if (userInfo) {
@@ -135,7 +133,7 @@ const styles = StyleSheet.create({
         // height: responsive(250),
         //backgroundColor: '#000',
         width: responsive(193),
-        height: responsive(185),
+        height: responsive(220),
         //margin: responsive(16),
         backgroundColor: "white",
         borderRadius: responsive(16),
@@ -175,7 +173,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: responsive(16),
         borderBottomRightRadius: responsive(16),
         position: 'absolute',
-        bottom: 2
+        bottom: 0
         //marginTop: responsive(9),
         //height: heightResponsive(12),
     },

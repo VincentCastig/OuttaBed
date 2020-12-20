@@ -16,14 +16,10 @@ import { AppLoading } from 'expo';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-// const tabBarHeight = useBottomTabBarHeight();
-
 
 export default class App extends React.Component{
 
-
     render() {
-
         return (
             <NavigationContainer headerStyle={{backgroundColor: '#a2a8af'}}>
                 <Tab.Navigator
@@ -39,10 +35,11 @@ export default class App extends React.Component{
                         style: {
                             backgroundColor: '#292929',
                             borderColor: '#292929',
+                            borderTopColor:'#292929',
                             height: responsive(67),
                             alignItems: 'center',
-                            paddingTop: responsive(5)
-                            //backgroundColor: '#fff'
+                            paddingTop: responsive(7),
+                            borderTopWidth:1,
                         },
                         labelStyle: {
                             fontSize: responsive(12),
@@ -58,14 +55,12 @@ export default class App extends React.Component{
                                 <Image name="home" color={color} size={12} style={{
                                     height: 30,
                                     width: 30,
-                                    // backgroundColor: color
                                 }}
                                     source={color === '#1393ff' ? require('./assets/HomeIconBlue.png') : require('./assets/HomeIconWhite.png')}/>
                             ),
                         }
                         }
                     />
-
 
                     <Tab.Screen
                         name="Motivation"
@@ -76,7 +71,6 @@ export default class App extends React.Component{
                                 <Image name="home" color={color} size={12} style={{
                                     height: 30,
                                     width: 30,
-                                    // backgroundColor: color
                                 }}
                                        source={color === '#1393ff' ? require('./assets/LoadingIconBlue.png') : require('./assets/LoadingIconWhite.png')}/>
 

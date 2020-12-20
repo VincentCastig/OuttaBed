@@ -27,7 +27,6 @@ export default function Motivation ({route}) {
         axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
             const quoteInfo = res.data[0];
             setQuote(quoteInfo);
-            console.log('quoteInfo ', quoteInfo);
         }).catch(error => {
             console.log('error ', error)
         });
@@ -38,8 +37,7 @@ export default function Motivation ({route}) {
     }
     else if (notification) {
         return (
-            <View style={styles.container}>
-                <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
+                <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.container}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Motivational Quote</Text>
                     </View>
@@ -51,7 +49,6 @@ export default function Motivation ({route}) {
                         </View>
                     </View>
                 </ImageBackground>
-            </View>
         );
     }
     else{
@@ -63,7 +60,7 @@ export default function Motivation ({route}) {
                 <View style={styles.bodyContent}>
                     <Text style={styles.quote}>{quoteInfo.quote}</Text>
                     <View style={styles.authorBox}>
-                        <Text style={styles.author}>{quoteInfo.author}</Text>
+                        <Text style={styles.author}>~{quoteInfo.author}</Text>
                     </View>
                 </View>
             </ImageBackground>
@@ -86,8 +83,7 @@ const styles = StyleSheet.create({
     bodyContent:{
         alignItems: 'center',
         justifyContent: 'center',
-        padding: responsive(18),
-        // backgroundColor: 'red'
+        padding: responsive(18)
     },
     title:{
         color: '#fff',
@@ -109,7 +105,6 @@ const styles = StyleSheet.create({
         paddingLeft: responsive(10),
         paddingRight: responsive(10),
         alignItems: 'center',
-        // backgroundColor: '#fff',
         width: responsive(280)
     },
     author:{
@@ -126,7 +121,7 @@ const styles = StyleSheet.create({
         color: '#162757',
         fontSize: responsive(15),
         fontFamily: 'Noticia_Text',
-        marginTop: responsive(10),
+        marginTop: responsive(8),
     },
     loadingWrapper:{
         flex: 1,
