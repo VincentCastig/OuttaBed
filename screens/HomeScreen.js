@@ -157,40 +157,44 @@ export default function HomeScreen({route, navigation}) {
           });
 
 
+    const renderItem = ({ item }) => (
+        <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime} />
+    );
+
     if (!fontsLoaded) {
-        return <View><Text>Loading</Text></View>;
+        return <AppLoading />;
     }
-      else if(userInfo.length === 0){
+    else if(userInfo.length === 0){
         return (
             <View style={styles.loadingWrapper}>
                 <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
-                <View style={styles.titleContainer}>
-                    <View style={styles.addTimeBox}></View>
-                    <Text style={styles.title}>OuttaBed</Text>
-                    <TouchableOpacity
-                        onPress={() => addTime()}
-                    >
-                        <View style={styles.addTimeBox}>
-                            {/*<Entypo name="plus" size={responsive(24)} color="#fff" />*/}
-                            <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.loadingBody}>
-                    <View>
+                    <View style={styles.titleContainer}>
+                        <View style={styles.addTimeBox}></View>
+                        <Text style={styles.title}>OuttaBed</Text>
                         <TouchableOpacity
                             onPress={() => addTime()}
-                            style={styles.noDataBox}
                         >
-                            <Image
-                                style={styles.noDataButton}
-                                source={require('../assets/LoadingIcon.png')}
-                            />
-                            <Text style={styles.noDataText}>Add notification</Text>
+                            <View style={styles.addTimeBox}>
+                                {/*<Entypo name="plus" size={responsive(24)} color="#fff" />*/}
+                                <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
+                            </View>
                         </TouchableOpacity>
                     </View>
-                </View>
+
+                    <View style={styles.loadingBody}>
+                        <View>
+                            <TouchableOpacity
+                                onPress={() => addTime()}
+                                style={styles.noDataBox}
+                            >
+                                <Image
+                                    style={styles.noDataButton}
+                                    source={require('../assets/LoadingIcon.png')}
+                                />
+                                <Text style={styles.noDataText}>Add notification</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </ImageBackground>
             </View>
         )
@@ -216,23 +220,31 @@ export default function HomeScreen({route, navigation}) {
 
                 <View style={styles.bodyArea}>
                     <SafeAreaView style={styles.contentBox}>
-                        <ScrollView
-                            style={styles.swipelist}
-                            contentContainerStyle={{alignItems: 'center'}}
-                        >
-                            {userInfo.map((rowData, key) => {
-                                return (
-                                    <Item
-                                        item={rowData}
-                                        updateTimes={updateTimes}
-                                        deleteItem={deleteTime}
-                                        key={key}
-                                    />
-                                )
-                            })}
-                        </ScrollView>
+                        <SwipeListView
+                            contentContainerStyle={styles.swipelist}
+                            useFlatList={true}
+                            data={userInfo}
+                            renderItem={renderItem}
+                            keyExtractor={(item) => item.id.toString()}
+                            width={'100%'}
+                            renderHiddenItem={ (rowData, rowMap) => (
+                                <View style={styles.rowBack}>
+                                    <View style={styles.deleteBox}>
+                                        <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
+                                            <Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
 
+                            )}
+                            leftOpenValue={0}
+                            rightOpenValue={responsive(-90)}
+                        />
                     </SafeAreaView>
+                    {/*{dotsModalVisible ? (*/}
+                    {/*<View style={styles.dotsModalBackground}>*/}
+                    {/*</View>*/}
+                    {/*): null}*/}
                 </View>
             </ImageBackground>
 
