@@ -240,9 +240,16 @@ export default function HomeScreen({route, navigation}) {
                             )}
                             leftOpenValue={0}
                             rightOpenValue={responsive(-90)}
+                            onRowOpen={(rowKey, rowMap) => {
+                                setTimeout(() => {
+                                    if (rowMap[rowKey]) {
+                                        rowMap[rowKey].closeRow()
+                                    }
+                                }, 4000)
+                            }}
                         />
                     </SafeAreaView>
-                  
+
                 </View>
             </ImageBackground>
 

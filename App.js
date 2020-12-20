@@ -16,14 +16,10 @@ import { AppLoading } from 'expo';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-// const tabBarHeight = useBottomTabBarHeight();
-
 
 export default class App extends React.Component{
 
-
     render() {
-
         return (
             <NavigationContainer headerStyle={{backgroundColor: '#a2a8af'}}>
                 <Tab.Navigator
@@ -41,7 +37,7 @@ export default class App extends React.Component{
                             borderColor: '#292929',
                             height: responsive(67),
                             alignItems: 'center',
-                            paddingTop: responsive(5)
+                            paddingTop: responsive(7)
                             //backgroundColor: '#fff'
                         },
                         labelStyle: {
@@ -65,7 +61,6 @@ export default class App extends React.Component{
                         }
                         }
                     />
-
 
                     <Tab.Screen
                         name="Motivation"
