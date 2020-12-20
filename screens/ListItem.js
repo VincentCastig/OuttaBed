@@ -59,7 +59,9 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
     let swipeRowRef;
     const onRowDidOpen = () => {
         // Do whatever actions are needed
-        swipeRowRef.closeRow();
+        if (swipeRowRef) {
+            swipeRowRef.closeRow();
+        }
     };
 
 
@@ -82,7 +84,7 @@ return (
             disableRightSwipe>
             <View style={styles.hiddenRow}>
                 <View style={styles.deleteBox}>
-                    <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData)} >
+                    <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteItem(item)} >
                         <Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>
                     </TouchableOpacity>
                 </View>

@@ -39,8 +39,9 @@ export default class App extends React.Component{
                         style: {
                             backgroundColor: '#292929',
                             borderColor: '#292929',
-                            height: responsive(65),
-                            alignItems: 'center'
+                            height: responsive(67),
+                            alignItems: 'center',
+                            paddingTop: responsive(5)
                             //backgroundColor: '#fff'
                         },
                         labelStyle: {
