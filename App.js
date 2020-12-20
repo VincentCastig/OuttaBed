@@ -35,6 +35,7 @@ export default class App extends React.Component{
                         style: {
                             backgroundColor: '#292929',
                             borderColor: '#292929',
+                            borderTopColor:'#292929',
                             height: responsive(67),
                             alignItems: 'center',
                             paddingTop: responsive(7)

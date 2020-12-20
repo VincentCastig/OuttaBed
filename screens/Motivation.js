@@ -37,7 +37,7 @@ export default function Motivation ({route}) {
     }
     else if (notification) {
         return (
-                <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.container}>
+                <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.container}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Motivational Quote</Text>
                     </View>

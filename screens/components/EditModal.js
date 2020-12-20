@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         // height: responsive(250),
         //backgroundColor: '#000',
         width: responsive(193),
-        height: responsive(185),
+        height: responsive(220),
         //margin: responsive(16),
         backgroundColor: "white",
         borderRadius: responsive(16),
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: responsive(16),
         borderBottomRightRadius: responsive(16),
         position: 'absolute',
-        bottom: 2
+        bottom: 0
         //marginTop: responsive(9),
         //height: heightResponsive(12),
     },
