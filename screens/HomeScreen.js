@@ -50,7 +50,7 @@ export default function HomeScreen({route, navigation}) {
     const addTime = () => {
         //'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]'
         //expoPushToken.data
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: 'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]', device_id: Constants.deviceId})
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken.data, device_id: Constants.deviceId})
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -70,22 +70,22 @@ export default function HomeScreen({route, navigation}) {
 
 
     useEffect(() => {
-        // registerForPushNotificationsAsync().then(token => {
-        //     setExpoPushToken(token);
-        // });
+        registerForPushNotificationsAsync().then(token => {
+            setExpoPushToken(token);
+        });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-        //     console.log('listener ', response.notification);
-        //     navigation.navigate("Motivation", {
-        //         notification: response.notification
-        //     });
-        // });
-        //
-        // return () => {
-        //     Notifications.removeNotificationSubscription(notificationListener);
-        //     Notifications.removeNotificationSubscription(responseListener);
-        // };
+        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+            console.log('listener ', response.notification);
+            navigation.navigate("Motivation", {
+                notification: response.notification
+            });
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener);
+            Notifications.removeNotificationSubscription(responseListener);
+        };
     }, []);
 
         useEffect(() => {
@@ -140,7 +140,6 @@ export default function HomeScreen({route, navigation}) {
               else{
                   period = "AM"
               }
-
               tempTime = ((hours + 11) % 12 + 1).toString();
               tempTime += ":";
               if(new Date(userInfoItem.device_time).getMinutes() < 10){
@@ -388,14 +387,5 @@ const styles = StyleSheet.create({
         height: '60%'
         // backgroundColor: '#000',
         // marginRight:5
-    },
-    // dotsModalBackground:{
-    //     width: 50,
-    //     height: 550,
-    //     borderWidth: 2,
-    //     borderColor: 'green',
-    //     position:'absolute',
-    //     top: 0,
-    //     zIndex: 2
-    // }
+    }
 });
