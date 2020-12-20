@@ -73,11 +73,11 @@ return (
     <View>
         <SwipeRow
             rightOpenValue={-120}
-            stopRightSwipe={-120}
+            // stopRightSwipe={-120}
             onRowOpen={(rowKey, rowMap) => {
                 setTimeout(() => {
                     onRowDidOpen()
-                }, 3000)
+                }, 4000)
             }}
             ref={ref => swipeRowRef = ref}
             // style={{width: '#73ff79'}}

@@ -347,13 +347,14 @@ const styles = StyleSheet.create({
       width: windowWidth,
       height: '100%',
       zIndex: 2,
-      paddingTop: responsive(20)
+      paddingTop: responsive(20),
+        // backgroundColor: '#ffc299'
     },
     swipelist:{
         // alignItems: 'center',
         width: '100%',
-        marginTop: responsive(25),
-        // backgroundColor: '#ffc299'
+        paddingTop: responsive(35),
+        // backgroundColor: '#ff84f1'
     },
     text:{
         color: '#fff'
