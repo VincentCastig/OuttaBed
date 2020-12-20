@@ -38,8 +38,8 @@ export default class App extends React.Component{
                             borderTopColor:'#292929',
                             height: responsive(67),
                             alignItems: 'center',
-                            paddingTop: responsive(7)
-                            //backgroundColor: '#fff'
+                            paddingTop: responsive(7),
+                            borderTopWidth:1,
                         },
                         labelStyle: {
                             fontSize: responsive(12),
@@ -55,7 +55,6 @@ export default class App extends React.Component{
                                 <Image name="home" color={color} size={12} style={{
                                     height: 30,
                                     width: 30,
-                                    // backgroundColor: color
                                 }}
                                     source={color === '#1393ff' ? require('./assets/HomeIconBlue.png') : require('./assets/HomeIconWhite.png')}/>
                             ),
@@ -72,7 +71,6 @@ export default class App extends React.Component{
                                 <Image name="home" color={color} size={12} style={{
                                     height: 30,
                                     width: 30,
-                                    // backgroundColor: color
                                 }}
                                        source={color === '#1393ff' ? require('./assets/LoadingIconBlue.png') : require('./assets/LoadingIconWhite.png')}/>
 

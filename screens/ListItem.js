@@ -37,7 +37,6 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
     const setVisible = () => {
         setDotsModalVisible(false);
         setModalVisible(!modalVisible);
-        console.log('modalVisible ', modalVisible);
     };
 
     const toggleSwitch = () => {
@@ -82,13 +81,6 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
                         />
 
                         <View style={{zIndex: 3}}>
-                            {/*<TouchableHighlight onPress={() => {*/}
-                                {/*showEditBox();*/}
-                            {/*}}>*/}
-                                {/*<View style={styles.horizontalDots}>*/}
-                                    {/*<Entypo name="dots-three-horizontal" size={24} color="white" />*/}
-                                {/*</View>*/}
-                            {/*</TouchableHighlight>*/}
                         </View>
                     </View>
                 </View>
