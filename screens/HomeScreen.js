@@ -221,7 +221,8 @@ export default function HomeScreen({route, navigation}) {
                 <View style={styles.bodyArea}>
                     <SafeAreaView style={styles.contentBox}>
                         <SwipeListView
-                            contentContainerStyle={styles.swipelist}
+                            contentContainerStyle={{alignItems: 'center'}}
+                            style={styles.swipelist}
                             useFlatList={true}
                             data={userInfo}
                             renderItem={renderItem}
@@ -241,10 +242,7 @@ export default function HomeScreen({route, navigation}) {
                             rightOpenValue={responsive(-90)}
                         />
                     </SafeAreaView>
-                    {/*{dotsModalVisible ? (*/}
-                    {/*<View style={styles.dotsModalBackground}>*/}
-                    {/*</View>*/}
-                    {/*): null}*/}
+                  
                 </View>
             </ImageBackground>
 
@@ -348,37 +346,31 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         borderColor: 'blue',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     contentBox: {
-      alignItems: "center",
-      justifyContent: "space-between",
-      flexDirection: "column",
-      borderLeftWidth: 0,
-      borderRightWidth: 0,
-      width: windowWidth,
-      height: '100%',
-      zIndex: 2,
-      paddingTop: responsive(20),
-        // backgroundColor: '#ffc299'
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexDirection: "column",
+        borderLeftWidth: 0,
+        borderRightWidth: 0,
+        width: windowWidth,
+        height: '100%',
+        zIndex: 2
     },
     swipelist:{
-        // alignItems: 'center',
-        width: '100%',
-        paddingTop: responsive(35),
-        // backgroundColor: '#ff84f1'
+        paddingTop: 30,
     },
     text:{
         color: '#fff'
     },
-    hiddenRow:{
+    rowBack:{
         height: responsive(75),
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         flexWrap: 'wrap',
         zIndex: -1,
-        // backgroundColor: '#ff959a'
     },
     deleteBox:{
         height: '100%',
@@ -400,5 +392,5 @@ const styles = StyleSheet.create({
         height: '60%'
         // backgroundColor: '#000',
         // marginRight:5
-    }
+    },
 });

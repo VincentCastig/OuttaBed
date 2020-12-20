@@ -64,16 +64,7 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
     //     return <AppLoading />;
     // }
     return (
-        <View
-            style={styles.itemContainer}
-            onLayout={event => {
-                const layout = event.nativeEvent.layout;
-                // console.log('height:', layout.height);
-                // console.log('width:', layout.width);
-                // console.log('x:', layout.x);
-                console.log('y:', layout.y);
-            }}
-        >
+        <View style={styles.itemContainer}>
 
             <TouchableHighlight style={styles.itemBox1} onPress={() => {
                 setVisible();
@@ -91,63 +82,13 @@ export default function Item( {item, navigation, updateTimes, deleteItem} ) {
                         />
 
                         <View style={{zIndex: 3}}>
-                            <TouchableHighlight onPress={() => {
-                                showEditBox();
-                            }}>
-                                <View style={styles.horizontalDots}>
-                                    <Entypo name="dots-three-horizontal" size={24} color="white" />
-                                </View>
-                            </TouchableHighlight>
-
-
-                            {dotsModalVisible ? (
-                                <Modal
-                                    transparent={true}
-                                    visible={true}
-                                    onRequestClose={() => {
-                                        Alert.alert("Modal has been closed.");
-                                    }}>
-                                    <TouchableWithoutFeedback onPress={() => {
-                                        showEditBox();
-                                    }}>
-                                        <View style={styles.modalBox}></View>
-                                    </TouchableWithoutFeedback>
-                                    {/*<TouchableHighlight  onPress={() => {*/}
-                                    {/*testButton();*/}
-                                    {/*}}>*/}
-                                    <View style={[styles.dotsModal, {top: responsive(90 * (item.index ))}]} >
-                                        <TouchableOpacity onPress={() => {
-                                            setVisible();
-                                        }}>
-                                            <View style={styles.dotsModalText}>
-                                                <Text>Edit</Text>
-                                                {/*<Image style={styles.iconImage} source={require('../assets/EditTimeIcon.png')} />*/}
-                                                <Image style={styles.iconImage} source={require('../assets/EditIcon2.png')} />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => {
-                                            deleteItem(item);
-                                        }}>
-                                            <View style={styles.dotsModalText}>
-                                                <Text>Delete</Text>
-                                                {/*//style={styles.deleteIcon}*/}
-                                                <Image style={styles.iconImage} source={require('../assets/DeleteIconBlack.png')} />
-                                            </View>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => {
-                                            showEditBox();
-                                        }}>
-                                            <View style={styles.dotsModalCancel}>
-                                                <Text>Cancel</Text>
-                                                <Image style={styles.iconImage} source={require('../assets/CancelIcon.png')} />
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                    {/*</TouchableHighlight>*/}
-
-                                </Modal>
-                            ): null
-                            }
+                            {/*<TouchableHighlight onPress={() => {*/}
+                                {/*showEditBox();*/}
+                            {/*}}>*/}
+                                {/*<View style={styles.horizontalDots}>*/}
+                                    {/*<Entypo name="dots-three-horizontal" size={24} color="white" />*/}
+                                {/*</View>*/}
+                            {/*</TouchableHighlight>*/}
                         </View>
                     </View>
                 </View>
