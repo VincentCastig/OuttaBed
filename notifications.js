@@ -13,7 +13,6 @@ const registerForPushNotificationsAsync = async () => {
             finalStatus = status;
         }
         if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
             return;
         }
         const token = await Notifications.getExpoPushTokenAsync();
