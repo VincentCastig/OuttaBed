@@ -1,3 +1,3 @@
 SELECT author, quote FROM quotes
-ORDER BY RANDOM()
+WHERE active = TRUE
 LIMIT 1;
