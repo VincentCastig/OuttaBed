@@ -71,6 +71,22 @@ module.exports = {
         db.getQuote().then((data)=>res.status('200').send(data)).catch((error)=> {
             console.log('error ', error)
         })
+    },
+    getQuoteId: (req, res) => {
+        const db = req.app.get('db');
+
+        db.getQuoteId().then((data)=>res.status('200').send(data)).catch((error)=> {
+            console.log('error ', error)
+        })
+    },
+    setActiveQuote: (req, res) => {
+        const db = req.app.get('db');
+
+        const {id} = req.body;
+
+        db.setActiveQuote(id).then((data)=>res.status('200').send(data)).catch((error)=> {
+            console.log('error ', error)
+        })
     }
 }
 

@@ -1,0 +1,3 @@
+SELECT id FROM quotes
+ORDER BY RANDOM()
+LIMIT 1;

@@ -15,6 +15,10 @@ cron.schedule('* * * * *', function () {
     sendNotifications()
 });
 
+cron.schedule('0 6 * * *', function () {
+    sendActiveQuote()
+});
+
 const app = express();
 app.use(json());
 app.use(cors());
@@ -54,5 +58,9 @@ app.get('/get-all-tokens', userController.getTokens);
 app.get('/get-quotes', userController.getQuotes);
 
 app.get('/get-quote', userController.getQuote);
+
+app.get('/get-quote-id', userController.getQuoteId);
+
+app.put('/set-active-quote', userController.setActiveQuote);
 
 app.listen(process.env.PORT, () => { console.log(`Listening on port: ${process.env.PORT}`); });
