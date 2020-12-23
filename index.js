@@ -11,15 +11,13 @@ const userController = require('./controllers/UserController');
 const { Expo } = require('expo-server-sdk');
 const {sendNotifications, sendActiveQuote} = require('./src/api/expoServer');
 
-// cron.schedule('* * * * *', function () {
-//     sendNotifications()
-// });
-//
-// cron.schedule('0 6 * * *', function () {
-//     sendActiveQuote()
-// });
+cron.schedule('* * * * *', function () {
+    sendNotifications()
+});
 
-sendActiveQuote();
+cron.schedule('0 6 * * *', function () {
+    sendActiveQuote()
+});
 
 const app = express();
 app.use(json());

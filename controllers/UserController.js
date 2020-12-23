@@ -84,8 +84,6 @@ module.exports = {
 
         const {id} = req.body;
 
-        console.log('dddd ', id);
-
         db.setActiveQuote(id).then((data)=>res.status('200').send(data)).catch((error)=> {
             console.log('error ', error)
         })

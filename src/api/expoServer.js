@@ -67,7 +67,6 @@ module.exports = {
                 let minute = new Date(notification.device_time).getUTCMinutes();
 
                 if (hour == currentHour && minute == currentMinute) {
-                    console.log('we are in ', notification.token);
                     // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
                     // Check that all your push tokens appear to be valid Expo push tokens
                     if (!Expo.isExpoPushToken(notification.token)) {
