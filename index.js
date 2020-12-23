@@ -9,7 +9,7 @@ const cron = require('node-cron');
 // const config = require('./config/config.js');
 const userController = require('./controllers/UserController');
 const { Expo } = require('expo-server-sdk');
-const {sendNotifications} = require('./src/api/expoServer');
+const {sendNotifications, sendActiveQuote} = require('./src/api/expoServer');
 
 cron.schedule('* * * * *', function () {
     sendNotifications()
