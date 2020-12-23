@@ -31,7 +31,7 @@ import { useFonts, Font } from 'expo-font';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function HomeScreen({route, navigation}) {
+export default function Notification({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
     let [fontsLoaded] = useFonts({
@@ -49,8 +49,10 @@ export default function HomeScreen({route, navigation}) {
 
     const addTime = () => {
         //'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]'
-        //expoPushToken.data
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {token: expoPushToken.data, device_id: Constants.deviceId})
+        axios.post(`https://get-up-now.herokuapp.com/create-user`, {
+            token: expoPushToken.data,
+            device_id: Constants.deviceId
+        })
             .then((res) => {
                 console.log('res ', res.data[0]);
                 addIt(res.data[0]);
@@ -71,12 +73,13 @@ export default function HomeScreen({route, navigation}) {
 
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => {
+            console.log('token ', token);
             setExpoPushToken(token);
         });
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            navigation.navigate("Motivation", {
+            navigation.navigate("Notification", {
                 notification: response.notification
             });
         });
@@ -160,8 +163,23 @@ export default function HomeScreen({route, navigation}) {
         <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime} />
     );
 
-    if (!fontsLoaded) {
+    if (!fontsLoaded || expoPushToken === 0) {
         return <AppLoading />;
+    }
+    else if (expoPushToken == 'false'){
+        return (
+            <View style={styles.errorWrapper}>
+                <View style={styles.image}>
+                    <View style={styles.errorBody}>
+                            <Text style={styles.text1}>Whoops...</Text>
+
+                            <Text style={styles.text2}>In order to set your notification times, you need to enable notifications for this app.</Text>
+
+                            <Text style={styles.text2}>You can do this by going to Settings > OuttaBed > Notifications and switching Allow Notifications to On.</Text>
+                    </View>
+                </View>
+            </View>
+        )
     }
     else if(userInfo.length === 0){
         return (
@@ -207,14 +225,7 @@ export default function HomeScreen({route, navigation}) {
 
                     <Text style={styles.header}>OuttaBed</Text>
 
-                    <TouchableOpacity
-                        onPress={() => addTime()}
-                    >
-                        <View style={styles.addTimeBox}>
-                            {/*<Entypo name="plus" size={responsive(23)} color="#fff" />*/}
-                            <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
-                        </View>
-                    </TouchableOpacity>
+                    <View></View>
                 </View>
 
                 <View style={styles.bodyArea}>
@@ -264,11 +275,34 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start'
     },
+    errorWrapper:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     loadingBody: {
         flex: 1,
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    errorBody:{
+        flex: 1,
+        width: '80%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        //backgroundColor: '#000'
+    },
+    text1:{
+        marginBottom: responsive(20),
+        fontSize: responsive(16),
+        textAlign: 'center'
+    },
+    text2:{
+        marginBottom: responsive(20),
+        color: '#5d636c',
+        fontSize: responsive(14),
+        textAlign: 'center'
     },
     noDataBox:{
         //backgroundColor: '#ff725c',

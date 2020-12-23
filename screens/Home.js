@@ -15,7 +15,7 @@ Notifications.setNotificationHandler({
     }),
 });
 
-export default function Motivation ({route}) {
+export default function Home ({route}) {
     const {notification} = route.params || '';
     const [quoteInfo, setQuote] = useState([]);
     let [fontsLoaded] = useFonts({
@@ -35,9 +35,10 @@ export default function Motivation ({route}) {
     if (!fontsLoaded) {
         return <AppLoading />;
     }
+
     else if (notification) {
         return (
-                <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.container}>
+                <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Motivational Quote</Text>
                     </View>
@@ -53,7 +54,7 @@ export default function Motivation ({route}) {
     }
     else{
         return (
-            <ImageBackground source={require('../assets/pexels-eberhard-grossgasteiger-2088210.jpg')} style={styles.container}>
+            <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>Motivational Quote</Text>
                 </View>
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     author:{
         //fontFamily: 'arial',
         color: '#162757',
-        marginTop: responsive(10),
+        marginTop: responsive(1),
         marginBottom: responsive(10),
         fontSize: responsive(22),
         marginLeft: 'auto',

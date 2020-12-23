@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Image } from 'react-native';
 // import { AppLoading } from 'expo';
-import HomeScreen from './screens/HomeScreen';
+import Home from './screens/Home';
 import EditScreen from './screens/EditTime';
-import MotivationScreen from './screens/Motivation';
+import Notification from './screens/Notification';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -49,7 +49,7 @@ export default class App extends React.Component{
 
                     <Tab.Screen
                         name="Home"
-                        component={HomeScreen}
+                        component={Home}
                         options={{
                             tabBarIcon: ({color, size}) => (
                                 <Image name="home" color={color} size={12} style={{
@@ -63,8 +63,8 @@ export default class App extends React.Component{
                     />
 
                     <Tab.Screen
-                        name="Motivation"
-                        component={MotivationScreen}
+                        name="Notification"
+                        component={Notification}
                         options={{
                             tabBarIcon: ({color, size}) => (
 

@@ -36,6 +36,24 @@ module.exports = {
 
     },
 
+    sendActiveQuote: () => {
+        const getQuoteId = () => {
+            axios.get('http://get-up-now.herokuapp.com/get-quote-id').then(res => {
+                console.log('res getQuoteId', res);
+            }).catch(error => {
+                console.log('error getQuoteId', error)
+            });
+        };
+
+        getQuoteId().then(() => {
+            axios.put('http://get-up-now.herokuapp.com/set-active-token').then(res => {
+                console.log('res set-active-token', res);
+            }).catch(error => {
+                console.log('error set-active-token', error)
+            });
+        });
+    },
+
     sendMessages: (notifications, quotes) => {
             let date = new Date();
             let currentHour = date.getHours();
