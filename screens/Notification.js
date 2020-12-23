@@ -229,36 +229,39 @@ export default function Notification({route, navigation}) {
                 </View>
 
                 <View style={styles.bodyArea}>
-                    <SafeAreaView style={styles.contentBox}>
-                        <SwipeListView
-                            contentContainerStyle={{alignItems: 'center'}}
-                            style={styles.swipelist}
-                            useFlatList={true}
-                            data={userInfo}
-                            renderItem={renderItem}
-                            keyExtractor={(item) => item.id.toString()}
-                            width={'100%'}
-                            renderHiddenItem={ (rowData, rowMap) => (
-                                <View style={styles.rowBack}>
-                                    <View style={styles.deleteBox}>
-                                        <TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >
-                                            <Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
+                    <View style={styles.swipelist}>
+                        <Item item={userInfo[0]} updateTimes={updateTimes} deleteItem={deleteTime}/>
+                    </View>
+                    {/*<SafeAreaView style={styles.contentBox}>*/}
+                        {/*<SwipeListView*/}
+                            {/*contentContainerStyle={{alignItems: 'center'}}*/}
+                            {/*style={styles.swipelist}*/}
+                            {/*useFlatList={true}*/}
+                            {/*data={userInfo}*/}
+                            {/*renderItem={renderItem}*/}
+                            {/*keyExtractor={(item) => item.id.toString()}*/}
+                            {/*width={'100%'}*/}
+                            {/*renderHiddenItem={ (rowData, rowMap) => (*/}
+                                {/*<View style={styles.rowBack}>*/}
+                                    {/*<View style={styles.deleteBox}>*/}
+                                        {/*<TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >*/}
+                                            {/*<Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>*/}
+                                        {/*</TouchableOpacity>*/}
+                                    {/*</View>*/}
+                                {/*</View>*/}
 
-                            )}
-                            leftOpenValue={0}
-                            rightOpenValue={responsive(-90)}
-                            onRowOpen={(rowKey, rowMap) => {
-                                setTimeout(() => {
-                                    if (rowMap[rowKey]) {
-                                        rowMap[rowKey].closeRow()
-                                    }
-                                }, 4000)
-                            }}
-                        />
-                    </SafeAreaView>
+                            {/*)}*/}
+                            {/*leftOpenValue={0}*/}
+                            {/*rightOpenValue={responsive(-90)}*/}
+                            {/*onRowOpen={(rowKey, rowMap) => {*/}
+                                {/*setTimeout(() => {*/}
+                                    {/*if (rowMap[rowKey]) {*/}
+                                        {/*rowMap[rowKey].closeRow()*/}
+                                    {/*}*/}
+                                {/*}, 4000)*/}
+                            {/*}}*/}
+                        {/*/>*/}
+                    {/*</SafeAreaView>*/}
 
                 </View>
             </ImageBackground>

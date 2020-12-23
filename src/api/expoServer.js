@@ -26,14 +26,11 @@ module.exports = {
             }).catch(error => {
                 console.log('error ', error)
             });
-
         };
-
 
         getData().then(() => {
             module.exports.sendMessages(notifications, quotes);
         });
-
     },
 
     sendActiveQuote: () => {
