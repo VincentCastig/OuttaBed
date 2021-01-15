@@ -45,9 +45,9 @@ export default function Home ({route}) {
                     </View>
 
                     <View style={styles.bodyContent}>
-                        <Text style={styles.quote}>{notification.request.content.data.aps.alert.body}</Text>
+                        <Text style={styles.quote}>{notification.request.content.data.quote}</Text>
                         <View style={styles.authorBox}>
-                            <Text style={styles.author}>~{notification.request.content.title}</Text>
+                            <Text style={styles.author}>~{notification.request.content.data.author}</Text>
                         </View>
                     </View>
                 </ImageBackground>
@@ -135,8 +135,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        //backgroundColor: '#000'
+        justifyContent: 'center'
     },
     noDataText:{
         color: '#fff',

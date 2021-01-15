@@ -35,10 +35,7 @@ export default function Notification({route, navigation}) {
     const [userInfo, setUserInfo] = useState([]);
     const [expoPushToken, setExpoPushToken] = useState(null);
     let [fontsLoaded] = useFonts({
-        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
-        'Frank_Ruhl_Libre': require('../assets/fonts/FrankRuhlLibre-Black.ttf'),
-        'Archivo': require('../assets/fonts/Archivo-Regular.ttf'),
-        'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
+        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf')
     });
     const notificationListener = useRef();
     const responseListener = useRef();
@@ -48,13 +45,11 @@ export default function Notification({route, navigation}) {
     };
 
     const addTime = () => {
-        //'ExponentPushToken[mRvRnVGCFGpCKfpBpi5Dn5]'
         axios.post(`https://get-up-now.herokuapp.com/create-user`, {
             token: expoPushToken.data,
             device_id: Constants.deviceId
         })
             .then((res) => {
-                console.log('res ', res.data[0]);
                 addIt(res.data[0]);
             })
             .catch((error) => console.log('createUser error ', error));
@@ -73,7 +68,6 @@ export default function Notification({route, navigation}) {
 
     useEffect(() => {
         registerForPushNotificationsAsync().then(token => {
-            console.log('token ', token);
             setExpoPushToken(token);
         });
 
@@ -192,7 +186,6 @@ export default function Notification({route, navigation}) {
                             onPress={() => addTime()}
                         >
                             <View style={styles.addTimeBox}>
-                                {/*<Entypo name="plus" size={responsive(24)} color="#fff" />*/}
                                 <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
                             </View>
                         </TouchableOpacity>
@@ -232,36 +225,6 @@ export default function Notification({route, navigation}) {
                     <View style={styles.swipelist}>
                         <Item item={userInfo[0]} updateTimes={updateTimes} deleteItem={deleteTime}/>
                     </View>
-                    {/*<SafeAreaView style={styles.contentBox}>*/}
-                        {/*<SwipeListView*/}
-                            {/*contentContainerStyle={{alignItems: 'center'}}*/}
-                            {/*style={styles.swipelist}*/}
-                            {/*useFlatList={true}*/}
-                            {/*data={userInfo}*/}
-                            {/*renderItem={renderItem}*/}
-                            {/*keyExtractor={(item) => item.id.toString()}*/}
-                            {/*width={'100%'}*/}
-                            {/*renderHiddenItem={ (rowData, rowMap) => (*/}
-                                {/*<View style={styles.rowBack}>*/}
-                                    {/*<View style={styles.deleteBox}>*/}
-                                        {/*<TouchableOpacity  style={styles.deleteRedButton} onPress={() => deleteTime(rowData.item)} >*/}
-                                            {/*<Image source={require('../assets/DeleteIcon.png')} style={styles.deleteIcon}/>*/}
-                                        {/*</TouchableOpacity>*/}
-                                    {/*</View>*/}
-                                {/*</View>*/}
-
-                            {/*)}*/}
-                            {/*leftOpenValue={0}*/}
-                            {/*rightOpenValue={responsive(-90)}*/}
-                            {/*onRowOpen={(rowKey, rowMap) => {*/}
-                                {/*setTimeout(() => {*/}
-                                    {/*if (rowMap[rowKey]) {*/}
-                                        {/*rowMap[rowKey].closeRow()*/}
-                                    {/*}*/}
-                                {/*}, 4000)*/}
-                            {/*}}*/}
-                        {/*/>*/}
-                    {/*</SafeAreaView>*/}
 
                 </View>
             </ImageBackground>
@@ -308,7 +271,6 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     noDataBox:{
-        //backgroundColor: '#ff725c',
         justifyContent: 'center',
         alignItems: 'center',
         shadowColor: "#000",
