@@ -79,7 +79,7 @@ export default function Notification({route, navigation}) {
 
         // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
         responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            navigation.navigate("Notification", {
+            navigation.navigate("Home", {
                 notification: response.notification
             });
         });

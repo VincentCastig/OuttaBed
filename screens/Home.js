@@ -37,6 +37,7 @@ export default function Home ({route}) {
     }
 
     else if (notification) {
+        console.log('notification ', notification);
         return (
                 <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
                     <View style={styles.titleContainer}>
