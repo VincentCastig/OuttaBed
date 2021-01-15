@@ -80,7 +80,7 @@ module.exports = {
                         sound: 'default',
                         body: quotes[randomNumber].quote,
                         title: quotes[randomNumber].author,
-                        data: {withSome: 'data'},
+                        data: quotes[randomNumber],
                     })
                 }
             }
