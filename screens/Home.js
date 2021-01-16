@@ -24,7 +24,7 @@ export default function Home ({route}) {
     });
 
     useEffect(() => {
-        axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
+        axios.get('http://outtabed-beta.herokuapp.com//get-quote').then(res => {
             const quoteInfo = res.data[0];
             setQuote(quoteInfo);
         }).catch(error => {
@@ -36,23 +36,6 @@ export default function Home ({route}) {
         return <AppLoading />;
     }
 
-    else if (notification) {
-        console.log('notification ', notification);
-        return (
-                <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Motivational Quote</Text>
-                    </View>
-
-                    <View style={styles.bodyContent}>
-                        <Text style={styles.quote}>{notification.request.content.data.quote}</Text>
-                        <View style={styles.authorBox}>
-                            <Text style={styles.author}>~{notification.request.content.data.author}</Text>
-                        </View>
-                    </View>
-                </ImageBackground>
-        );
-    }
     else{
         return (
             <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
