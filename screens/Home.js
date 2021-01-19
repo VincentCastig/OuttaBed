@@ -24,7 +24,7 @@ export default function Home ({route}) {
     });
 
     useEffect(() => {
-        axios.get('http://outtabed-beta.herokuapp.com//get-quote').then(res => {
+        axios.get('http://get-up-now.herokuapp.com//get-quote').then(res => {
             const quoteInfo = res.data[0];
             setQuote(quoteInfo);
         }).catch(error => {
