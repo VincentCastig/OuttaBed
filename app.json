@@ -31,7 +31,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.outtabed.outtabed",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.0"
     },
     "android": {
       "package": "com.outtabed.outtabed",

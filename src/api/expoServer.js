@@ -75,9 +75,9 @@ module.exports = {
                     messages.push({
                         to: notification.token,
                         sound: 'default',
-                        body: quotes[randomNumber].quote,
-                        title: quotes[randomNumber].author,
-                        data: {author: quotes[randomNumber].author, quote: quotes[randomNumber].quote,},
+                        body: 'Daily Motivational Quote',
+                        // title: quotes[randomNumber].author,
+                        data: {author: quotes[randomNumber].author, quote: quotes[randomNumber].quote},
                     })
                 }
             }

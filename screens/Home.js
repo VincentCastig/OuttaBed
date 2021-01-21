@@ -36,23 +36,6 @@ export default function Home ({route}) {
         return <AppLoading />;
     }
 
-    else if (notification) {
-        console.log('notification ', notification);
-        return (
-                <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Motivational Quote</Text>
-                    </View>
-
-                    <View style={styles.bodyContent}>
-                        <Text style={styles.quote}>{notification.request.content.data.aps.alert.body}</Text>
-                        <View style={styles.authorBox}>
-                            <Text style={styles.author}>~{notification.request.content.title}</Text>
-                        </View>
-                    </View>
-                </ImageBackground>
-        );
-    }
     else{
         return (
             <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
@@ -135,8 +118,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        //backgroundColor: '#000'
+        justifyContent: 'center'
     },
     noDataText:{
         color: '#fff',
