@@ -214,7 +214,7 @@ export default function Notification({route, navigation}) {
         <View style={styles.container }>
             <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
                 <View style={styles.titleContainer}>
-                    <View style={styles.addTimeBox}></View>
+                    <View></View>
 
                     <Text style={styles.header}>OuttaBed</Text>
 
