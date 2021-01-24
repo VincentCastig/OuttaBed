@@ -15,7 +15,7 @@ cron.schedule('* * * * *', function () {
     sendNotifications()
 });
 
-cron.schedule('0 6 * * *', function () {
+cron.schedule('0 0 * * *', function () {
     sendActiveQuote()
 });
 
