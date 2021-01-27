@@ -15,9 +15,9 @@ cron.schedule('* * * * *', function () {
     sendNotifications()
 });
 
-cron.schedule('0 4 * * *', function () {
-    sendActiveQuote()
-});
+// cron.schedule('0 4 * * *', function () {
+//     sendActiveQuote()
+// });
 
 
 const app = express();
