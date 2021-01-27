@@ -15,9 +15,10 @@ cron.schedule('* * * * *', function () {
     sendNotifications()
 });
 
-cron.schedule('0 0 * * *', function () {
+cron.schedule('0 4 * * *', function () {
     sendActiveQuote()
 });
+
 
 const app = express();
 app.use(json());
