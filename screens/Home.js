@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ImageBackground} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground, Linking} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import {responsive, heightResponsive} from './components/Responsive';
 import { useFonts, Font } from 'expo-font';
@@ -36,22 +36,6 @@ export default function Home ({route}) {
         return <AppLoading />;
     }
 
-    else if (notification) {
-        return (
-                <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
-                    <View style={styles.titleContainer}>
-                        <Text style={styles.title}>Motivational Quote</Text>
-                    </View>
-
-                    <View style={styles.bodyContent}>
-                        <Text style={styles.quote}>{notification.request.content.data.aps.alert.body}</Text>
-                        <View style={styles.authorBox}>
-                            <Text style={styles.author}>~{notification.request.content.title}</Text>
-                        </View>
-                    </View>
-                </ImageBackground>
-        );
-    }
     else{
         return (
             <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
@@ -84,7 +68,8 @@ const styles = StyleSheet.create({
     bodyContent:{
         alignItems: 'center',
         justifyContent: 'center',
-        padding: responsive(18)
+        padding: responsive(18),
+        paddingTop: responsive(13)
     },
     title:{
         color: '#fff',
@@ -109,9 +94,8 @@ const styles = StyleSheet.create({
         width: responsive(280)
     },
     author:{
-        //fontFamily: 'arial',
-        color: '#162757',
-        marginTop: responsive(1),
+        color: '#000931',
+        marginTop: responsive(5),
         marginBottom: responsive(10),
         fontSize: responsive(22),
         marginLeft: 'auto',
@@ -119,7 +103,7 @@ const styles = StyleSheet.create({
         fontFamily: 'DancingScript'
     },
     quote:{
-        color: '#162757',
+        color: '#292929',
         fontSize: responsive(15),
         fontFamily: 'Noticia_Text',
         marginTop: responsive(8),
@@ -134,8 +118,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        //backgroundColor: '#000'
+        justifyContent: 'center'
     },
     noDataText:{
         color: '#fff',

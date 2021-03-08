@@ -1,1 +1,1 @@
-UPDATE quotes SET active = NOT active WHERE id = $1 OR active = TRUE
+UPDATE quotes SET active = TRUE WHERE quote_id = $1
