@@ -52,7 +52,7 @@ module.exports = {
     getTokens: (req, res) => {
         const db = req.app.get('db');
 
-        console.log('dbm');
+        console.log('dbm', db);
 
         db.getTokens().then((data)=>res.status('200').send(data)).catch((error)=> {
             console.log('error')
