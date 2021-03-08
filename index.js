@@ -34,7 +34,6 @@ app.use(function(req, res, next) {
 const connectionString = process.env.DATABASE_URL; //Connects to heroku
 massive(connectionString).then(db => {
     app.set('db', db);
-    sendNotifications()
 });
 
 
