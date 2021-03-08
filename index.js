@@ -37,7 +37,7 @@ massive(connectionString).then(db => {
 });
 
 
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+// process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 app.get('/privacy-policy', function(req, res){
     res.sendFile(__dirname + '/public/privacy.html');
