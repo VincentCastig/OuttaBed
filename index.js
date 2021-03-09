@@ -33,8 +33,7 @@ app.use(function(req, res, next) {
 
 const connectionString = process.env.DATABASE_URL; //Connects to heroku
 massive(connectionString).then(db => {
-    console.log('dbdb ', db);
-    app.set('db', db);
+    app.set('db', 'postgres://eutwqgfisumfqc:f4a968dd033cadbef0116eee19577fe97be86ea51893bc3d09de257f0ae157e4@ec2-54-161-239-198.compute-1.amazonaws.com:5432/d9olvpk6n74q58?ssl=true');
 });
 
 
