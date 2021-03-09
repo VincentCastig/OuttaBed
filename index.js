@@ -11,9 +11,9 @@ const userController = require('./controllers/UserController');
 const { Expo } = require('expo-server-sdk');
 const {sendNotifications, sendActiveQuote} = require('./src/api/expoServer');
 //
-cron.schedule('* * * * *', function () {
-    sendNotifications()
-});
+// cron.schedule('* * * * *', function () {
+//     sendNotifications()
+// });
 
 // cron.schedule('0 4 * * *', function () {
 //     sendActiveQuote()
@@ -31,13 +31,13 @@ app.use(function(req, res, next) {
     next();
 });
 
-const connectionString = process.env.HEROKU_POSTGRESQL_BLACK; //Connects to heroku
+const connectionString = process.env.HEROKU_POSTGRESQL; //Connects to heroku
 massive(connectionString).then(db => {
     app.set('db', db);
 });
 
 
-//process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 app.get('/privacy-policy', function(req, res){
     res.sendFile(__dirname + '/public/privacy.html');

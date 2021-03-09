@@ -14,14 +14,14 @@ module.exports = {
 
         const getData = async () => {
             await
-            axios.get('/get-quotes').then(res => {
+            axios.get('http://get-up-now.herokuapp.com/get-quotes').then(res => {
                 quotes = res.data;
             }).catch(error => {
                 console.log('error ', error)
             });
 
             await
-            axios.get('/get-all-tokens').then(res => {
+            axios.get('http://get-up-now.herokuapp.com/get-all-tokens').then(res => {
                 notifications = res.data;
             }).catch(error => {
                 console.log('error ', error)
@@ -36,7 +36,7 @@ module.exports = {
     sendActiveQuote: () => {
         let id = new Date().getDate();
 
-        axios.put('/set-active-quote', {id}).then(res => {
+        axios.put('http://get-up-now.herokuapp.com/set-active-quote', {id}).then(res => {
             console.log('res set-active-token', res);
         }).catch(error => {
             console.log('error set-active-token', error)
