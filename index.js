@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-const connectionString = process.env.HEROKU_POSTGRESQL_BLACK_URL; //Connects to heroku
+const connectionString = process.env.HEROKU_POSTGRESQL_BLACK; //Connects to heroku
 massive(connectionString).then(db => {
     app.set('db', db);
 });
