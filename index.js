@@ -11,9 +11,9 @@ const userController = require('./controllers/UserController');
 const { Expo } = require('expo-server-sdk');
 const {sendNotifications, sendActiveQuote} = require('./src/api/expoServer');
 //
-cron.schedule('* * * * *', function () {
-    sendNotifications()
-});
+// cron.schedule('* * * * *', function () {
+//     sendNotifications()
+// });
 
 // cron.schedule('0 4 * * *', function () {
 //     sendActiveQuote()
@@ -33,7 +33,11 @@ app.use(function(req, res, next) {
 
 const connectionString = process.env.DATABASE_URL; //Connects to heroku
 massive(connectionString).then(db => {
-    app.set('db', 'postgres://eutwqgfisumfqc:f4a968dd033cadbef0116eee19577fe97be86ea51893bc3d09de257f0ae157e4@ec2-54-161-239-198.compute-1.amazonaws.com:5432/d9olvpk6n74q58?ssl=true');
+    app.set('db', db);
+
+    app.listen(process.env.PORT, () => { console.log(`Listening on port: ${process.env.PORT}`); });
+}).catch(error => {
+    console.log(error)
 });
 
 
@@ -63,4 +67,3 @@ app.get('/get-quote-id', userController.getQuoteId);
 
 app.put('/set-active-quote', userController.setActiveQuote);
 
-app.listen(process.env.PORT, () => { console.log(`Listening on port: ${process.env.PORT}`); });
