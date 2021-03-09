@@ -42,9 +42,6 @@ module.exports = {
             console.log('error set-active-token', error)
         });
 
-
-
-
     },
 
     sendMessages: (notifications, quotes) => {
