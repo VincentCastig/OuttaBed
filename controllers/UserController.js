@@ -84,13 +84,17 @@ module.exports = {
 
         const {id} = req.body;
 
-        db.setQuotesInactive().then((data)=>res.status('200').send(data)).catch((error)=> {
-            console.log('error ', error)
-        });
+        db.setQuotesInactive()
+            .then((data)=> {
+                db.setActiveQuote(id).then((data)=> res.status('200').send(data)).catch((error)=> {
+                    console.log('error ', error)
+                });
+                res.status('200').send(data)
+            })
+            .catch((error)=> {
+                console.log('error ', error)
+            });
 
-        db.setActiveQuote(id).then((data)=>res.status('200').send(data)).catch((error)=> {
-            console.log('error ', error)
-        })
     }
 }
 

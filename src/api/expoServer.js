@@ -35,6 +35,7 @@ module.exports = {
 
     sendActiveQuote: () => {
         let id = new Date().getDate();
+        console.log('id ', id);
 
         axios.put('http://get-up-now.herokuapp.com/set-active-quote', {id}).then(res => {
             console.log('res set-active-token', res);
