@@ -1,21 +1,24 @@
-import React, {useState} from 'react';
-import {View, Button, Platform} from 'react-native';
+import React, { useState } from 'react';
+import { View, Button, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function EditScreen({route, navigation}) {
+export default function EditScreen({ route, navigation }) {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('time');
   const [show, setShow] = useState(false);
 
-  console.log(new Date(1598051730000));
+  const { newDate } = route.params;
 
   const onChange = (event, selectedDate) => {
+    // For Android, dismiss the picker after selection
+    if (Platform.OS !== 'ios') {
+      setShow(false);
+    }
     const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
     setDate(currentDate);
   };
 
-  const showMode = currentMode => {
+  const showMode = (currentMode) => {
     setShow(true);
     setMode(currentMode);
   };
@@ -28,14 +31,15 @@ export default function EditScreen({route, navigation}) {
     showMode('time');
   };
 
-  const { newDate } = route.params;
-
   return (
     <View>
       <View>
         <Button onPress={showTimepicker} title="Show time picker!" />
+        {/* If you want to show date picker button, you can uncomment below */}
+        {/* <Button onPress={showDatepicker} title="Show date picker!" /> */}
       </View>
-      {/* {show && ( */}
+
+      {show && (
         <DateTimePicker
           testID="dateTimePicker"
           timeZoneOffsetInMinutes={0}
@@ -45,7 +49,7 @@ export default function EditScreen({route, navigation}) {
           display="default"
           onChange={onChange}
         />
-      {/* )} */}
+      )}
     </View>
   );
-};
+}

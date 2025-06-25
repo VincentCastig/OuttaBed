@@ -1,93 +1,59 @@
 import React from 'react';
-import { Button, Image } from 'react-native';
-// import { AppLoading } from 'expo';
+import { Image } from 'react-native';
 import Home from './screens/Home';
-import EditScreen from './screens/EditTime';
 import Notification from './screens/Notification';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { responsive } from './screens/components/Responsive';
 
-import registerForPushNotificationsAsync from './notifications';
-//import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createBottomTabNavigator, useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import {responsive, heightResponsive} from './screens/components/Responsive';
-import { AppLoading } from 'expo';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
-export default class App extends React.Component{
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarActiveTintColor: '#1393ff',
+          tabBarInactiveTintColor: 'white',
+          tabBarStyle: {
+            backgroundColor: '#292929',
+            height: responsive(67),
+            borderTopColor: '#292929',
+            borderTopWidth: 1,
+            paddingTop: responsive(7),
+          },
+          tabBarLabelStyle: {
+            fontSize: responsive(12),
+          },
+          tabBarIcon: ({ color, size }) => {
+            let iconSource;
 
-    render() {
-        return (
-            <NavigationContainer headerStyle={{backgroundColor: '#a2a8af'}}>
-                <Tab.Navigator
-                    barStyle={{
-                        // backgroundColor: '#1393ff',
-                        height: responsive(66),
-                        backgroundColor: '#292929',
-                    }}
+            if (route.name === 'Home') {
+              iconSource =
+                color === '#1393ff'
+                  ? require('./assets/HomeIconBlue.png')
+                  : require('./assets/HomeIconWhite.png');
+            } else if (route.name === 'Notification') {
+              iconSource =
+                color === '#1393ff'
+                  ? require('./assets/LoadingIconBlue.png')
+                  : require('./assets/LoadingIconWhite.png');
+            }
 
-                    tabBarOptions={{
-                        activeTintColor: '#1393ff',
-                        inactiveTintColor: "white",
-                        style: {
-                            backgroundColor: '#292929',
-                            borderColor: '#292929',
-                            borderTopColor:'#292929',
-                            height: responsive(67),
-                            alignItems: 'center',
-                            paddingTop: responsive(7),
-                            borderTopWidth:1,
-                        },
-                        labelStyle: {
-                            fontSize: responsive(12),
-                        }
-                    }}
-                >
-
-                    <Tab.Screen
-                        name="Home"
-                        component={Home}
-                        options={{
-                            tabBarIcon: ({color, size}) => (
-                                <Image name="home" color={color} size={12} style={{
-                                    height: 30,
-                                    width: 30,
-                                }}
-                                    source={color === '#1393ff' ? require('./assets/HomeIconBlue.png') : require('./assets/HomeIconWhite.png')}/>
-                            ),
-                        }
-                        }
-                    />
-
-                    <Tab.Screen
-                        name="Notification"
-                        component={Notification}
-                        options={{
-                            tabBarIcon: ({color, size}) => (
-
-                                <Image name="home" color={color} size={12} style={{
-                                    height: 30,
-                                    width: 30,
-                                }}
-                                       source={color === '#1393ff' ? require('./assets/LoadingIconBlue.png') : require('./assets/LoadingIconWhite.png')}/>
-
-                            )
-                        }}
-                    />
-                </Tab.Navigator>
-            </NavigationContainer>
-        );
-    }
+            return (
+              <Image
+                source={iconSource}
+                style={{ width: 30, height: 30 }}
+                resizeMode="contain"
+              />
+            );
+          },
+        })}
+      >
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Notification" component={Notification} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
