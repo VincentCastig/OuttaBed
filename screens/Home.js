@@ -1,56 +1,59 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ImageBackground, Linking} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import {responsive, heightResponsive} from './components/Responsive';
-import { useFonts, Font } from 'expo-font';
-import { AppLoading } from 'expo';
-import Constants from "expo-constants/build/Constants";
-import axios from "axios/index";
+import { responsive, heightResponsive } from './components/Responsive';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import Constants from 'expo-constants';
+import axios from 'axios';
 
 Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
 });
 
-export default function Home ({route}) {
-    const {notification} = route.params || '';
-    const [quoteInfo, setQuote] = useState([]);
-    let [fontsLoaded] = useFonts({
-        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
-        'Noticia_Text': require('../assets/fonts/NoticiaText-Regular.ttf'),
-    });
+export default function Home({ route = {} }) {
+  const { notification } = route.params || {};
+  const [quoteInfo, setQuote] = useState({});
+  const [fontsLoaded] = useFonts({
+    DancingScript: require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
+    Noticia_Text: require('../assets/fonts/NoticiaText-Regular.ttf'),
+  });
 
-    useEffect(() => {
-        axios.get('http://get-up-now.herokuapp.com/get-quote').then(res => {
-            const quoteInfo = res.data[0];
-            setQuote(quoteInfo);
-        }).catch(error => {
-            console.log('error ', error)
-        });
-    }, []);
+  useEffect(() => {
+    axios
+      .get('http://get-up-now.herokuapp.com/get-quote')
+      .then(res => {
+        setQuote(res.data[0]);
+      })
+      .catch(error => {
+        console.log('error ', error);
+      });
+  }, []);
 
-    if (!fontsLoaded) {
-        return <AppLoading />;
-    }
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
-    else{
-        return (
-            <ImageBackground source={require('../assets/pexels-daria-obymaha-1684151.jpg')} style={styles.container}>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Motivational Quote</Text>
-                </View>
-                <View style={styles.bodyContent}>
-                    <Text style={styles.quote}>{quoteInfo.quote}</Text>
-                    <View style={styles.authorBox}>
-                        <Text style={styles.author}>~{quoteInfo.author}</Text>
-                    </View>
-                </View>
-            </ImageBackground>
-        )
-    }
+  return (
+    <ImageBackground
+      source={require('../assets/pexels-daria-obymaha-1684151.jpg')}
+      style={styles.container}
+    >
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Motivational Quote</Text>
+      </View>
+      <View style={styles.bodyContent}>
+        <Text style={styles.quote}>{quoteInfo.quote}</Text>
+        <View style={styles.authorBox}>
+          <Text style={styles.author}>~{quoteInfo.author}</Text>
+        </View>
+      </View>
+    </ImageBackground>
+  );
 }
 
 

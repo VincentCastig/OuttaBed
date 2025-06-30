@@ -1,238 +1,224 @@
-
-import React, {Component, useState, ListView, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    ImageBackground,
-    SafeAreaView,
-    View,
-    ScrollView,
-    Image,
-    FlatList,
-    Button,
-    Switch,
-    TouchableWithoutFeedback,
-    Dimensions
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  View,
+  Image,
+  Dimensions,
 } from 'react-native';
 import Constants from 'expo-constants';
 import AppLoading from 'expo-app-loading';
 import axios from 'axios';
-import localHost from '../src/api/localHost';
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
 import registerForPushNotificationsAsync from '../notifications';
 import Item from './ListItem';
-import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
-import {responsive, heightResponsive} from './components/Responsive';
-import { useFonts, Font } from 'expo-font';
+import { responsive } from './components/Responsive';
+import { useFonts } from 'expo-font';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function Notification({route, navigation}) {
-    const [userInfo, setUserInfo] = useState([]);
-    const [expoPushToken, setExpoPushToken] = useState(null);
-    let [fontsLoaded] = useFonts({
-        'DancingScript': require('../assets/fonts/DancingScript-VariableFont_wght.ttf')
+export default function Notification({ route, navigation }) {
+  const [userInfo, setUserInfo] = useState([]);
+  const [expoPushToken, setExpoPushToken] = useState(null);
+
+  const [fontsLoaded] = useFonts({
+    DancingScript: require('../assets/fonts/DancingScript-VariableFont_wght.ttf'),
+  });
+
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
+  // Add a new time object to state
+  const addIt = (data) => {
+    setUserInfo((prev) => [...prev, data]);
+  };
+
+  // Add a new user/time on the backend and update state
+  const addTime = () => {
+    if (!expoPushToken) return;
+    axios
+      .post(`https://get-up-now.herokuapp.com/create-user`, {
+        token: expoPushToken,
+        device_id: Constants.deviceId,
+      })
+      .then((res) => {
+        if (res.data && res.data.length > 0) {
+          addIt(res.data[0]);
+        }
+      })
+      .catch((error) => console.log('createUser error ', error));
+  };
+
+  // Delete a time entry from backend and state
+  const deleteTime = (time) => {
+    axios
+      .delete(`https://get-up-now.herokuapp.com/delete-time/${time.id}`)
+      .then(() => {
+        setUserInfo((prev) => prev.filter((item) => item.id !== time.id));
+      })
+      .catch((error) => {
+        console.log('deleteTime error', error);
+      });
+  };
+
+  // Setup notification listeners on mount
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => {
+      setExpoPushToken(token);
     });
-    const notificationListener = useRef();
-    const responseListener = useRef();
 
-    const addIt = (data) => {
-        setUserInfo(userInfo => [...userInfo, data]);
-    };
-
-    const addTime = () => {
-        axios.post(`https://get-up-now.herokuapp.com/create-user`, {
-            token: expoPushToken.data,
-            device_id: Constants.deviceId
-        })
-            .then((res) => {
-                addIt(res.data[0]);
-            })
-            .catch((error) => console.log('createUser error ', error));
-    };
-
-    const deleteTime = (time) => {
-        axios.delete(`https://get-up-now.herokuapp.com/delete-time/${time.id}`)
-            .then(res => {
-                setUserInfo(userInfo.filter((item) => item.id !== time.id));
-            })
-            .catch(error => {
-                console.log('deleteTime error', error)
-            })
-    };
-
-
-    useEffect(() => {
-        registerForPushNotificationsAsync().then(token => {
-            setExpoPushToken(token);
-        });
-
-        // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-            navigation.navigate("Home", {
-                notification: response.notification
-            });
-        });
-
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener);
-            Notifications.removeNotificationSubscription(responseListener);
-        };
-    }, []);
-
-        useEffect(() => {
-            axios.get(`https://get-up-now.herokuapp.com/get-time/${Constants.deviceId}`).then(res => {
-                    const user_info = res.data.map(timeData => {
-                        return timeData;
-                    });
-                    setUserInfo(user_info);
-
-            }).catch(error => {
-                console.log('the get-device-id error ', error)
-            });
-        }, []);
-
-        const updateTimes = (date, id) => {
-
-            userInfo.forEach((userInfoItem, index) => {
-                if (userInfoItem.id === id) {
-                    return userInfo[index].device_time = date;
-                }
-                return userInfoItem;
-            });
-            setUserInfo([]);
-            setUserInfo(userInfo);
-        };
-
-        userInfo.forEach((userInfoItem, index) => {
-            if (typeof userInfoItem.device_time == 'number') {
-                return;
-            }
-            return userInfo[index].device_time = Date.parse(userInfoItem.device_time);
-        });
-
-          let time = [];
-          let period = "";
-          let offset = new Date().getTimezoneOffset() * -1;
-
-          userInfo.forEach((userInfoItem, index) => {
-              let tempTime = "";
-              let hours = '';
-
-              if (offset < 0) {
-                  hours = new Date(userInfoItem.device_time).getUTCHours() + (offset/60);
-              }
-              else{
-                  hours = new Date(userInfoItem.device_time).getUTCHours() - (offset/60);
-              }
-
-              if(hours >= 12 || hours < 0){
-                  period = "PM"
-              }
-              else{
-                  period = "AM"
-              }
-              tempTime = ((hours + 11) % 12 + 1).toString();
-              tempTime += ":";
-              if(new Date(userInfoItem.device_time).getMinutes() < 10){
-                  tempTime += "0" + new Date(userInfoItem.device_time).getMinutes();
-              }
-              else{
-                  tempTime += new Date(userInfoItem.device_time).getMinutes();
-              }
-
-              time.push(tempTime);
-              userInfoItem.title = tempTime + ' ' + period;
-              userInfoItem.index = index + 1.5;
-
-              return userInfo[index] = userInfoItem;
-          });
-
-
-    const renderItem = ({ item }) => (
-        <Item item={item} updateTimes={updateTimes} deleteItem={deleteTime} />
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        navigation.navigate('Home', { notification: response.notification });
+      }
     );
 
-    if (!fontsLoaded || expoPushToken === 0) {
-        return <AppLoading />;
-    }
-    else if (expoPushToken == 'false'){
-        return (
-            <View style={styles.errorWrapper}>
-                <View style={styles.image}>
-                    <View style={styles.errorBody}>
-                            <Text style={styles.text1}>Whoops...</Text>
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
-                            <Text style={styles.text2}>In order to set your notification times, you need to enable notifications for this app.</Text>
+  // Fetch existing times for this device on mount and when token updates
+  useEffect(() => {
+    if (!expoPushToken) return;
 
-                            <Text style={styles.text2}>You can do this by going to Settings > OuttaBed > Notifications and switching Allow Notifications to On.</Text>
-                    </View>
-                </View>
-            </View>
-        )
-    }
-    else if(userInfo.length === 0){
-        return (
-            <View style={styles.loadingWrapper}>
-                <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
-                    <View style={styles.titleContainer}>
-                        <View style={styles.addTimeBox}></View>
-                        <Text style={styles.title}>OuttaBed</Text>
-                        <TouchableOpacity
-                            onPress={() => addTime()}
-                        >
-                            <View style={styles.addTimeBox}>
-                                <Image source={require('../assets/AddIcon.png')} style={styles.addImage}/>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+    axios
+      .get(`https://get-up-now.herokuapp.com/get-time/${Constants.deviceId}`)
+      .then((res) => {
+        const user_info = res.data.map((timeData) => {
+          // Parse device_time to number if needed
+          if (typeof timeData.device_time !== 'number') {
+            timeData.device_time = Date.parse(timeData.device_time);
+          }
+          return timeData;
+        });
+        setUserInfo(user_info);
+      })
+      .catch((error) => {
+        console.log('the get-device-id error ', error);
+      });
+  }, [expoPushToken]);
 
-                    <View style={styles.loadingBody}>
-                        <View>
-                            <TouchableOpacity
-                                onPress={() => addTime()}
-                                style={styles.noDataBox}
-                            >
-                                <Image
-                                    style={styles.noDataButton}
-                                    source={require('../assets/LoadingIcon.png')}
-                                />
-                                <Text style={styles.noDataText}>Add notification</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </ImageBackground>
-            </View>
-        )
-    }
+  // Update a specific time entry in state
+  const updateTimes = (date, id) => {
+    setUserInfo((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, device_time: date } : item
+      )
+    );
+  };
 
+  // Format time strings for display
+  userInfo.forEach((userInfoItem, index) => {
+    let offset = new Date().getTimezoneOffset() * -1;
+    let hours =
+      offset < 0
+        ? new Date(userInfoItem.device_time).getUTCHours() + offset / 60
+        : new Date(userInfoItem.device_time).getUTCHours() - offset / 60;
+
+    let period = hours >= 12 || hours < 0 ? 'PM' : 'AM';
+    let displayHour = ((hours + 11) % 12) + 1;
+    let minutes = new Date(userInfoItem.device_time).getMinutes();
+
+    let tempTime = `${displayHour}:${minutes < 10 ? '0' : ''}${minutes}`;
+    userInfoItem.title = `${tempTime} ${period}`;
+    userInfoItem.index = index + 1.5;
+  });
+
+  // If fonts aren't loaded or token is null, show loading
+  if (!fontsLoaded || expoPushToken === null) {
+    return <AppLoading />;
+  }
+
+  // Show error if notifications are disabled
+  if (expoPushToken === 'false') {
     return (
-        <View style={styles.container }>
-            <ImageBackground source={require('../assets/pexels-patryk-kamenczak-775219.jpg')} style={styles.image}>
-                <View style={styles.titleContainer}>
-                    <View></View>
-
-                    <Text style={styles.header}>OuttaBed</Text>
-
-                    <View></View>
-                </View>
-
-                <View style={styles.bodyArea}>
-                    <View style={styles.swipelist}>
-                        <Item item={userInfo[0]} updateTimes={updateTimes} deleteItem={deleteTime}/>
-                    </View>
-
-                </View>
-            </ImageBackground>
-
+      <View style={styles.errorWrapper}>
+        <View style={styles.image}>
+          <View style={styles.errorBody}>
+            <Text style={styles.text1}>Whoops...</Text>
+            <Text style={styles.text2}>
+              In order to set your notification times, you need to enable
+              notifications for this app.
+            </Text>
+            <Text style={styles.text2}>
+              You can do this by going to Settings &gt; OuttaBed &gt;
+              Notifications and switching Allow Notifications to On.
+            </Text>
+          </View>
         </View>
+      </View>
     );
+  }
 
+  // Show initial empty state if no times exist
+  if (userInfo.length === 0) {
+    return (
+      <View style={styles.loadingWrapper}>
+        <ImageBackground
+          source={require('../assets/pexels-patryk-kamenczak-775219.jpg')}
+          style={styles.image}
+        >
+          <View style={styles.titleContainer}>
+            <View style={styles.addTimeBox}></View>
+            <Text style={styles.title}>OuttaBed</Text>
+            <TouchableOpacity onPress={addTime}>
+              <View style={styles.addTimeBox}>
+                <Image
+                  source={require('../assets/AddIcon.png')}
+                  style={styles.addImage}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.loadingBody}>
+            <TouchableOpacity onPress={addTime} style={styles.noDataBox}>
+              <Image
+                style={styles.noDataButton}
+                source={require('../assets/LoadingIcon.png')}
+              />
+              <Text style={styles.noDataText}>Add notification</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('../assets/pexels-patryk-kamenczak-775219.jpg')}
+        style={styles.image}
+      >
+        <View style={styles.titleContainer}>
+          <View />
+          <Text style={styles.header}>OuttaBed</Text>
+          <View />
+        </View>
+
+        <View style={styles.bodyArea}>
+          <View style={styles.swipelist}>
+            {userInfo.map((item) => (
+              <Item
+                key={item.id}
+                item={item}
+                updateTimes={updateTimes}
+                deleteItem={deleteTime}
+              />
+            ))}
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
+  );
 }
+
 
 
 const styles = StyleSheet.create({
@@ -308,8 +294,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    image:{
+    // image:{
+    //     alignItems: 'center',
+    // },
+    image: {
+        flex: 1,
+        width: '100%',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     addImage:{
         height: responsive(19),
