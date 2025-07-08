@@ -34,7 +34,10 @@ app.use(function(req, res, next) {
 const connectionString = process.env.HEROKU_POSTGRESQL; //Connects to heroku
 massive(connectionString).then(db => {
     app.set('db', db);
-});
+})
+.catch(err => {
+    console.error('Database connection error:', err);
+  });
 
 
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
